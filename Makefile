@@ -6,26 +6,21 @@ endif
 
 DOCKER_BUILD_CMD = docker-compose build $(BUNDLE_FLAGS)
 
-build:
-	$(MAKE) stop
+build: stop
 	$(DOCKER_BUILD_CMD)
 
-serve:
-	$(MAKE) build
+serve: build
 	docker-compose up -d
 
-lint:
-	$(MAKE) build
+lint: build
 	docker-compose run --rm app bundle exec govuk-lint-ruby
 
-test:
-	$(MAKE) serve
+test: serve
 	./mysql/bin/wait_for_mysql
-	docker-compose run --rm app rspec
-	$(MAKE) stop
+	docker-compose run --rm app bundle exec rspec
 
 stop:
 	docker-compose kill
 	docker-compose rm -f
 
-.PHONY: test serve stop lint
+.PHONY: test
