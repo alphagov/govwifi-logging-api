@@ -10,7 +10,7 @@ build: stop
 	$(DOCKER_BUILD_CMD)
 
 serve: build
-	docker-compose up -d
+	docker-compose up
 
 lint: build
 	docker-compose run --rm app bundle exec govuk-lint-ruby
