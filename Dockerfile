@@ -10,4 +10,6 @@ RUN apk --update --upgrade add build-base mysql-dev && \
   find / -type f -iname \*.apk-new -delete && \
   rm -rf /var/cache/apk/*
 
+ADD . /app
+
 CMD ["bundle", "exec", "rackup", "-o", "0.0.0.0", "-p", "8080"]
