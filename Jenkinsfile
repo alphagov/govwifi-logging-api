@@ -94,7 +94,7 @@ def deploy(deploy_environment) {
       docker.withRegistry(env.AWS_ECS_API_REGISTRY) {
         sh("eval \$(aws ecr get-login --no-include-email)")
         def appImage = docker.build(
-          "govwifi/authorisation-api:${deploy_environment}",
+          "govwifi/logging-api:${deploy_environment}",
           "--build-arg BUNDLE_INSTALL_CMD='bundle install --without test' ."
         )
         appImage.push()
