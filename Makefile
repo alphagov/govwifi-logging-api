@@ -22,4 +22,4 @@ stop:
 	docker-compose kill
 	docker-compose rm -f
 
-.PHONY: test
+.PHONY: test serve stop lint
