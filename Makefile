@@ -6,16 +6,13 @@ endif
 
 DOCKER_BUILD_CMD = docker-compose build $(BUNDLE_FLAGS)
 
-build:
-	$(MAKE) stop
+build: stop
 	$(DOCKER_BUILD_CMD)
 
-serve:
-	$(MAKE) build
+serve: build
 	docker-compose up -d
 
-lint:
-	$(MAKE) build
+lint: build
 	docker-compose run --rm app bundle exec govuk-lint-ruby
 
 test:
