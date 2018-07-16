@@ -16,7 +16,7 @@ lint: build
 	docker-compose run --rm app bundle exec govuk-lint-ruby
 
 test:
-	docker-compose run --rm app bundle exec rspec
+	docker-compose run --rm app rspec
 
 stop:
 	docker-compose kill
