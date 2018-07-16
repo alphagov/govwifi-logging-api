@@ -1,7 +1,7 @@
 FROM ruby:2.5-alpine
 ARG BUNDLE_INSTALL_CMD
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
 COPY Gemfile Gemfile.lock .ruby-version ./
 RUN apk --update --upgrade add build-base mysql-dev && \
@@ -10,6 +10,6 @@ RUN apk --update --upgrade add build-base mysql-dev && \
   find / -type f -iname \*.apk-new -delete && \
   rm -rf /var/cache/apk/*
 
-COPY . .
+ADD . /app
 
 CMD ["bundle", "exec", "rackup", "-o", "0.0.0.0", "-p", "8080"]

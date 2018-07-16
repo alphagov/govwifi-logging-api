@@ -10,14 +10,13 @@ build: stop
 	$(DOCKER_BUILD_CMD)
 
 serve: build
-	docker-compose up -d
+	docker-compose up
 
 lint: build
 	docker-compose run --rm app bundle exec govuk-lint-ruby
 
-test: serve
-	./mysql/bin/wait_for_mysql
-	docker-compose run --rm app bundle exec rspec
+test: build
+	docker-compose run --rm app bundle exec guard
 
 stop:
 	docker-compose kill
