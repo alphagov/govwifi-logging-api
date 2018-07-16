@@ -12,7 +12,7 @@ services:
   app:
     build: .
     volumes:
-      - ./:/app
+      - ./:/usr/src/app
     environment:
       DB_NAME: govwifi_test
       DB_PASS: root
