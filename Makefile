@@ -16,10 +16,7 @@ lint: build
 	docker-compose run --rm app bundle exec govuk-lint-ruby
 
 test:
-	$(MAKE) serve
-	./mysql/bin/wait_for_mysql
 	docker-compose run --rm app rspec
-	$(MAKE) stop
 
 stop:
 	docker-compose kill
