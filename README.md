@@ -1,1 +1,2 @@
-# GovWifi Post Authentication API
+# GovWifi Logging API
+
