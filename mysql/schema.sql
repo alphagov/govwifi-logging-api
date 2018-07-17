@@ -28,25 +28,23 @@ SET character_set_client = utf8;
  1 AS `lastlogon`*/;
 SET character_set_client = @saved_cs_client;
 
+DROP TABLE IF EXISTS `sessions`;
 
-DROP TABLE IF EXISTS `session`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `session` (
+CREATE TABLE `sessions` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `start` timestamp NULL DEFAULT NULL,
   `stop` timestamp NULL DEFAULT NULL,
   `siteIP` char(15) DEFAULT NULL,
   `username` char(6) DEFAULT NULL,
-  `InMB` int(10) unsigned DEFAULT NULL,
-  `OutMB` int(10) unsigned DEFAULT NULL,
   `mac` char(17) DEFAULT NULL,
   `ap` char(17) DEFAULT NULL,
   `building_identifier` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
   KEY `siteIP` (`siteIP`,`username`),
   KEY `sessions_username` (`username`),
   KEY `sessions_start_username` (`start`,`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+
 
 --
 -- Table structure for table `site`
