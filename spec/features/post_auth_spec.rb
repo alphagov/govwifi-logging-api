@@ -42,6 +42,10 @@ describe App do
               post_auth_request
               expect(user.last_login).to be_nil
             end
+
+            it 'does not create a session record' do
+              expect(Session.all.count).to eq(0)
+            end
           end
 
           context 'GovWifi user' do

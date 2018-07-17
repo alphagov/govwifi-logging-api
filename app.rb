@@ -10,17 +10,16 @@ class App < Sinatra::Base
   end
 
   get '/logging/post-auth/user/:username/mac/:mac/ap/:called_station_id/site/:site_ip_address/result/:authentication_result' do
-    mac = MacFormatter.new.execute(mac: params.fetch(:mac))
     if params.fetch(:authentication_result) == 'Access-Accept'
-      Session.create(
-        username: params.fetch(:username),
-        mac: mac,
-        ap: params.fetch(:called_station_id),
-        siteIP: params.fetch(:site_ip_address),
-        building_identifier: params.fetch(:called_station_id),
-      )
-
       if params.fetch(:username) != 'HEALTH'
+        mac = MacFormatter.new.execute(mac: params.fetch(:mac))
+        Session.create(
+          username: params.fetch(:username),
+          mac: mac,
+          ap: params.fetch(:called_station_id),
+          siteIP: params.fetch(:site_ip_address),
+          building_identifier: params.fetch(:called_station_id),
+        )
         user = User.find(username: params.fetch(:username))
         user.last_login = Time.now.strftime('%y-%m-%d %H:%M:%S')
         user.save
