@@ -48,12 +48,12 @@ describe App do
           end
 
           it 'does not create a session record' do
-            expect(Session.all.count).to eq(0)
+            expect(Session.count).to eq(0)
           end
         end
 
         context 'GovWifi user' do
-          it 'does updates the last login' do
+          it 'updates the last login' do
             post_auth_request
             expect(user.last_login).to_not be_nil
           end
@@ -62,7 +62,7 @@ describe App do
 
       context 'MAC Formatter' do
         let(:mac) { '50a67f849cd1' }
-        it 'calls the MAC Formatter' do
+        it 'saves the MAC formatted' do
           expect(Session.last.mac).to eq('50-A6-7F-84-9C-D1')
         end
       end
@@ -103,6 +103,5 @@ describe App do
         end
       end
     end
-
   end
 end
