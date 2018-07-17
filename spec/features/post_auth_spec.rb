@@ -11,7 +11,6 @@ describe App do
     let(:site_ip_address) { '93.11.238.187' }
     let(:post_auth_request) { get "/logging/post-auth/user/#{username}/mac/#{mac}/ap/#{called_station_id}/site/#{site_ip_address}/result/#{authentication_result}" }
     let(:user) { User.find(username: username) }
-    let(:authentication_result) { 'Access-Accept' }
 
     before do
       User.create(username: username)
@@ -19,6 +18,8 @@ describe App do
     end
 
     context 'Access-Accept' do
+      let(:authentication_result) { 'Access-Accept' }
+
       context 'GovWifi user' do
         it 'creates a single session record' do
           expect(Session.count).to eq(1)
@@ -78,10 +79,10 @@ describe App do
         post_auth_request
         expect(user.last_login).to be_nil
       end
-    end
 
-    it 'returns a 204 OK' do
-      expect(last_response.status).to eq(204)
+      it 'returns a 204 OK' do
+        expect(last_response.status).to eq(204)
+      end
     end
 
     context 'Invalid authentication result' do
@@ -102,5 +103,6 @@ describe App do
         end
       end
     end
+
   end
 end
