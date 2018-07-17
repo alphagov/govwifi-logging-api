@@ -6,7 +6,7 @@ describe App do
 
   describe 'POST post-auth' do
     let(:username) { 'vykzdx' }
-    let(:mac) { 'da-59-19-8b-39-2d' }
+    let(:mac) { 'DA-59-19-8B-39-2D' }
     let(:called_station_id) { '01-39-38-25-2a-80' }
     let(:site_ip_address) { '93.11.238.187' }
     let(:post_auth_request) { get "/logging/post-auth/user/#{username}/mac/#{mac}/ap/#{called_station_id}/site/#{site_ip_address}/result/#{authentication_result}" }
@@ -52,11 +52,18 @@ describe App do
           end
         end
       end
+
+      context 'MAC Formatter' do
+        let(:mac) { '50a67f849cd1' }
+        it 'calls the MAC Formatter' do
+          post_auth_request
+          expect(Session.last.mac).to eq('50-A6-7F-84-9C-D1')
+        end
+      end
     end
 
     context 'Access-Reject' do
       let(:authentication_result) { 'Access-Reject' }
-
 
       it 'does not record last_login for the user' do
         post_auth_request
@@ -65,7 +72,6 @@ describe App do
     end
 
     it 'returns a 204 OK' do
-      post_auth_request
       expect(last_response.status).to eq(204)
     end
 
@@ -73,7 +79,6 @@ describe App do
       let(:authentication_result) { 'unknown' }
 
       it 'returns a 404 for anything other than Access-Accept or Access-Reject' do
-        post_auth_request
         expect(last_response.status).to eq(404)
       end
     end
@@ -82,7 +87,6 @@ describe App do
       let(:authentication_result) { '' }
 
       it 'returns a 404 for anything other than Access-Accept or Access-Reject' do
-        post_auth_request
         expect(last_response.status).to eq(404)
       end
     end
