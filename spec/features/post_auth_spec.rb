@@ -65,6 +65,10 @@ describe App do
     context 'Access-Reject' do
       let(:authentication_result) { 'Access-Reject' }
 
+      it 'does not record a session' do
+        expect(Session.count).to eq(0)
+      end
+
       it 'does not record last_login for the user' do
         post_auth_request
         expect(user.last_login).to be_nil
@@ -75,19 +79,22 @@ describe App do
       expect(last_response.status).to eq(204)
     end
 
-    context 'Unknown authentication result' do
-      let(:authentication_result) { 'unknown' }
+    context 'Invalid authentication result' do
+      context 'unknown string authentication result' do
+        let(:authentication_result) { 'unknown' }
 
-      it 'returns a 404 for anything other than Access-Accept or Access-Reject' do
-        expect(last_response.status).to eq(404)
+        it 'returns a 404 for anything other than Access-Accept or Access-Reject' do
+          expect(Session.count).to eq(0)
+          expect(last_response.status).to eq(404)
+        end
       end
-    end
 
-    context 'Blank authentication result' do
-      let(:authentication_result) { '' }
+      context 'Blank authentication result' do
+        let(:authentication_result) { '' }
 
-      it 'returns a 404 for anything other than Access-Accept or Access-Reject' do
-        expect(last_response.status).to eq(404)
+        it 'returns a 404 for anything other than Access-Accept or Access-Reject' do
+          expect(last_response.status).to eq(404)
+        end
       end
     end
   end
