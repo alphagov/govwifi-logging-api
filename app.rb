@@ -24,6 +24,7 @@ class App < Sinatra::Base
         user.last_login = Time.now.strftime('%y-%m-%d %H:%M:%S')
         user.save
       end
+
       status 204
     elsif params.fetch(:authentication_result) == 'Access-Reject'
       status 204

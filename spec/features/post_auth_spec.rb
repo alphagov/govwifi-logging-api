@@ -34,25 +34,27 @@ describe App do
           expect(session.building_identifier).to eq(called_station_id)
         end
 
-        context 'user last login' do
-          context 'HEALTH user' do
-            let(:username) { 'HEALTH' }
+        context 'HEALTH user' do
+          let(:username) { 'HEALTH' }
 
-            it 'does not update the last login' do
-              post_auth_request
-              expect(user.last_login).to be_nil
-            end
-
-            it 'does not create a session record' do
-              expect(Session.all.count).to eq(0)
-            end
+          it 'does not update the last login' do
+            post_auth_request
+            expect(user.last_login).to be_nil
           end
 
-          context 'GovWifi user' do
-            it 'does updates the last login' do
-              post_auth_request
-              expect(user.last_login).to_not be_nil
-            end
+          it 'returns a 204 status code' do
+            expect(last_response.status).to eq(204)
+          end
+
+          it 'does not create a session record' do
+            expect(Session.all.count).to eq(0)
+          end
+        end
+
+        context 'GovWifi user' do
+          it 'does updates the last login' do
+            post_auth_request
+            expect(user.last_login).to_not be_nil
           end
         end
       end
@@ -60,7 +62,6 @@ describe App do
       context 'MAC Formatter' do
         let(:mac) { '50a67f849cd1' }
         it 'calls the MAC Formatter' do
-          post_auth_request
           expect(Session.last.mac).to eq('50-A6-7F-84-9C-D1')
         end
       end
