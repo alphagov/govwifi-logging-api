@@ -1,15 +1,25 @@
 describe App do
-  describe 'Post Authentication' do
-    let(:username) { 'bob' }
-    let(:calling_station_id) { 'Z4-19-C2-18-2B-27' }
-    let(:called_station_id) { 'C3-23-A2-38-9C-38' }
-    let(:client_ip_address) { '127.0.0.1' }
-    let(:authentication_result) { 'Access-Accept' }
+  describe 'POST post-auth' do
+    context 'Access-Accept' do
+      context 'HEALTH user' do
+        it 'does not records the authentication request'
+      end
 
-    it 'Logs to the sessions table' do
-      get "/logging/post-auth/user/#{username}/mac/#{calling_station_id}/ap/#{called_station_id}/site/#{client_ip_address}/result/#{authentication_result}"
+      context 'GovWifi user' do
+        it 'records the authentication request'
+        it 'updates the users last login'
+      end
 
-      expect(last_response).to be_ok
+      it 'returns a no-content header'
+    end
+
+    context 'Access-Reject' do
+      it 'returns a 204 OK' do
+      end
+    end
+
+    context 'Unknown' do
+    it 'deals with an unknown result'
     end
   end
 end
