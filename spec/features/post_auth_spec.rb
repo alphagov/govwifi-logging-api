@@ -102,6 +102,21 @@ describe App do
           expect(last_response.status).to eq(404)
         end
       end
+
+      context 'Given parameters are missing from the GET request' do
+        let(:authentication_result) { 'Access-Accept' }
+        let(:username) { '' }
+        let(:called_station_id) { '' }
+        let(:site_ip_address) { '' }
+
+        it 'returns a 204 status code' do
+          expect(last_response.status).to eq(204)
+        end
+
+        it 'creates a session record' do
+          expect(Session.all.count).to eq(1)
+        end
+      end
     end
   end
 end
