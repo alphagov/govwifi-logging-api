@@ -15,6 +15,8 @@ module Logging
 
   private
 
+    VALID_MAC_LENGTH = 17
+
     def handle_access_accept(params)
       username = params.fetch(:username)
       return if username == 'HEALTH'
@@ -27,9 +29,9 @@ module Logging
       Session.create(
         username: params.fetch(:username),
         mac: formatted_mac(params.fetch(:mac)),
-        ap: params.fetch(:called_station_id),
+        ap: ap(params.fetch(:called_station_id)),
         siteIP: params.fetch(:site_ip_address),
-        building_identifier: params.fetch(:called_station_id),
+        building_identifier: building_identifier(params.fetch(:called_station_id))
       )
     end
 
@@ -43,6 +45,19 @@ module Logging
 
     def formatted_mac(unformatted_mac)
       MacFormatter.new.execute(mac: unformatted_mac)
+    end
+
+    def valid_mac?(mac)
+      mac.to_s.length == VALID_MAC_LENGTH
+    end
+
+    def building_identifier(called_station_id)
+      called_station_id if !valid_mac?(called_station_id)
+    end
+
+    def ap(mac)
+      return mac if valid_mac?(formatted_mac(mac))
+      ''
     end
   end
 end
