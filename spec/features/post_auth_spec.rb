@@ -43,6 +43,14 @@ describe App do
           it 'does not save it as the building identifier' do
             expect(session.building_identifier).to be_nil
           end
+
+          context 'Given the Called Station ID needs to be formatted' do
+            let(:called_station_id) { 'aa-bb-cc-25-2a-80' }
+
+            it 'formats the Called Station ID' do
+              expect(session.ap).to eq('AA-BB-CC-25-2A-80')
+            end
+          end
         end
 
         context 'Given the "Called Station ID" is a building identifier' do
