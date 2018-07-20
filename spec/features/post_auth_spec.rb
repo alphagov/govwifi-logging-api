@@ -51,6 +51,15 @@ describe App do
               expect(session.ap).to eq('AA-BB-CC-25-2A-80')
             end
           end
+
+          context 'Given a Called Station ID has extra trailing characters' do
+            let(:called_station_id) { 'C4-13-E2-22-DC-55%3ASTAGING-GovWifi' }
+
+            it 'Formats it and considers it a valid access point' do
+              expect(session.ap).to eq('C4-13-E2-22-DC-55')
+              expect(session.building_identifier).to be_nil
+            end
+          end
         end
 
         context 'Given the "Called Station ID" is a building identifier' do
