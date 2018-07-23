@@ -27,7 +27,7 @@ module Logging
 
     def create_session(params)
       Session.create(
-        start: Time.now.strftime('%Y-%m-%d %H:%M:%S'),
+        start: Time.now,
         username: params.fetch(:username),
         mac: formatted_mac(params.fetch(:mac)),
         ap: ap(params.fetch(:called_station_id)),
@@ -40,7 +40,7 @@ module Logging
       user = User.find(username: username)
       return unless user
 
-      user.last_login = Time.now.strftime('%Y-%m-%d %H:%M:%S')
+      user.last_login = Time.now
       user.save
     end
 
