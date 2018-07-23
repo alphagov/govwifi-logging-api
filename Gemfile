@@ -3,9 +3,9 @@ ruby File.read('.ruby-version').chomp
 
 gem 'mysql2'
 gem 'puma'
+gem 'sentry-raven'
 gem 'sequel', '~> 5.3'
 gem 'sinatra'
-gem 'sentry-raven'
 gem 'sinatra-contrib'
 
 group :test do
