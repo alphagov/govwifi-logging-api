@@ -26,6 +26,15 @@ describe App do
           expect(Session.count).to eq(1)
         end
 
+        it 'updates the user last login' do
+          post_auth_request
+          expect(user.last_login).to_not be_nil
+        end
+
+        it 'records the start time of the session' do
+          expect(session.start).to_not be_nil
+        end
+
         it 'records the session details' do
           expect(session.username).to eq(username)
           expect(session.mac).to eq(mac)
@@ -100,13 +109,6 @@ describe App do
 
           it 'does not create a session record' do
             expect(Session.count).to eq(0)
-          end
-        end
-
-        context 'GovWifi user' do
-          it 'updates the last login' do
-            post_auth_request
-            expect(user.last_login).to_not be_nil
           end
         end
       end
