@@ -10,6 +10,8 @@ GEM
     backports (3.11.3)
     concurrent-ruby (1.0.5)
     diff-lcs (1.3)
+    faraday (0.15.2)
+      multipart-post (>= 1.2, < 3)
     ffi (1.9.25)
     govuk-lint (3.8.0)
       rubocop (~> 0.52.0)
@@ -19,6 +21,7 @@ GEM
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
     multi_json (1.13.1)
+    multipart-post (2.0.0)
     mustermann (1.0.2)
     mysql2 (0.5.2)
     parallel (1.12.1)
@@ -67,6 +70,8 @@ GEM
     scss_lint (0.57.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5.5)
+    sentry-raven (2.7.4)
+      faraday (>= 0.7.6, < 1.0)
     sequel (5.10.0)
     sinatra (2.0.3)
       mustermann (~> 1.0)
@@ -96,6 +101,7 @@ DEPENDENCIES
   puma
   rack-test
   rspec
+  sentry-raven
   sequel (~> 5.3)
   sinatra
   sinatra-contrib
