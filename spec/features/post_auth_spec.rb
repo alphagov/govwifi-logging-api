@@ -5,7 +5,7 @@ describe App do
   end
 
   describe 'POST post-auth' do
-    let(:username) { 'vykzdx' }
+    let(:username) { 'VYKZDX' }
     let(:mac) { 'DA-59-19-8B-39-2D' }
     let(:called_station_id) { '01-39-38-25-2A-80' }
     let(:site_ip_address) { '93.11.238.187' }
@@ -29,6 +29,14 @@ describe App do
         it 'updates the user last login' do
           post_auth_request
           expect(user.last_login).to_not be_nil
+        end
+
+        context 'given a lowercase username' do
+          let(:username) { 'abcdef' }
+
+          it 'ensures that the username is saved in uppercase' do
+            expect(session.username).to eq('ABCDEF')
+          end
         end
 
         it 'records the start time of the session' do

@@ -28,7 +28,7 @@ module Logging
     def create_session(params)
       Session.create(
         start: Time.now,
-        username: params.fetch(:username),
+        username: username(params.fetch(:username)),
         mac: formatted_mac(params.fetch(:mac)),
         ap: ap(params.fetch(:called_station_id)),
         siteIP: params.fetch(:site_ip_address),
@@ -54,6 +54,10 @@ module Logging
 
     def building_identifier(called_station_id)
       called_station_id if !valid_mac?(formatted_mac(called_station_id))
+    end
+
+    def username(unformatted_username)
+      unformatted_username.to_s.upcase
     end
 
     def ap(unformatted_mac)
