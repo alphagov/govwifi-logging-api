@@ -3,6 +3,8 @@ ruby File.read('.ruby-version').chomp
 
 gem 'mysql2'
 gem 'puma'
+gem 'rake', '~> 12.3'
+gem 'require_all'
 gem 'sentry-raven'
 gem 'sequel', '~> 5.3'
 gem 'sinatra'

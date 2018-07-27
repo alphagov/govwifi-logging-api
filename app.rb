@@ -1,16 +1,6 @@
 require 'sequel'
 require 'sinatra/base'
 require './lib/loader'
-require './lib/mac_formatter.rb'
-require './lib/session.rb'
-require './lib/user.rb'
-require './lib/logging/post_auth.rb'
-require './lib/performance_platform/gateway/account_usage.rb'
-require './lib/performance_platform/repository/session.rb'
-require './lib/performance_platform/use_case/send_performance_report'
-require './lib/performance_platform/presenter/account_usage'
-require './lib/common/base64'
-require './lib/performance_platform/gateway/performance_report'
 
 class App < Sinatra::Base
   configure :production, :staging, :development do
