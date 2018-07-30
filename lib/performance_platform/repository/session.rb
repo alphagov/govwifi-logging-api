@@ -15,15 +15,15 @@ class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
       GROUP BY date(start)").first
     end
 
-    def unique_users_stats
-      DB.fetch("
-      SELECT sum(users)/count(*) DIV 1 as `count`
-      FROM (
-        SELECT date(start) AS day, count(distinct(username)) AS users
+    def unique_users_stats(period:)
+      sql = "SELECT count(distinct(username)) as `count`
         FROM sessions
-        WHERE start BETWEEN date_sub('#{Date.today}', INTERVAL 7 DAY) AND '#{Date.today}'
-        AND dayofweek(start) NOT IN (1,7) GROUP BY day
-      ) foo;").first
+        WHERE start
+          BETWEEN date_sub('#{Date.today}', INTERVAL 1 #{period.to_s.upcase})
+          AND '#{Date.today}'
+        AND dayofweek(start) NOT IN (1,7)"
+
+      DB.fetch(sql).first
     end
   end
 end
