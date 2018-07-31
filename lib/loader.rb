@@ -19,5 +19,4 @@ module PerformancePlatform
   module Presenter; end
 end
 
-
 require_all 'lib'
