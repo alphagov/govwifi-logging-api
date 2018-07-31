@@ -1,6 +1,7 @@
 require 'base64'
 require 'sequel'
 require 'require_all'
+require 'net/http'
 
 DB = Sequel.connect(
   adapter: 'mysql2',
