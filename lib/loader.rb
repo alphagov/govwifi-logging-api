@@ -1,3 +1,4 @@
+require 'base64'
 require 'sequel'
 require 'require_all'
 
@@ -18,6 +19,5 @@ module PerformancePlatform
   module UseCase; end
   module Presenter; end
 end
-
 
 require_all 'lib'
