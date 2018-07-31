@@ -1,3 +1,4 @@
+require 'base64'
 require 'sequel'
 require 'require_all'
 
