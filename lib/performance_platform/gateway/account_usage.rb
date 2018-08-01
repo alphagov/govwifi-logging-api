@@ -8,7 +8,7 @@ class PerformancePlatform::Gateway::AccountUsage
       roaming: result[:per_site] - result[:total],
       one_time: result[:total] - (result[:per_site] - result[:total]),
       metric_name: 'account-usage',
-      period: 'day'
+      period: 'week'
     }
   end
 
