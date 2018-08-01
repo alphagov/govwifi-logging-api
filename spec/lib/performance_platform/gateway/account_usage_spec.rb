@@ -17,7 +17,7 @@ describe PerformancePlatform::Gateway::AccountUsage do
         roaming: 0,
         one_time: 0,
         metric_name: 'account-usage',
-        period: 'day',
+        period: 'week',
       )
     end
   end
@@ -51,6 +51,12 @@ describe PerformancePlatform::Gateway::AccountUsage do
       session_repository.insert(
         siteIP: '127.0.0.9',
         username: 'alice',
+        start: Date.today - 1
+      )
+
+      session_repository.insert(
+        siteIP: '127.0.0.9',
+        username: 'george',
         start: Date.today - 2
       )
 
@@ -77,12 +83,12 @@ describe PerformancePlatform::Gateway::AccountUsage do
 
     it 'returns stats for sessions' do
       expect(subject.fetch_stats).to eq(
-        total: 2,
-        transactions: 3,
+        total: 3,
+        transactions: 4,
         roaming: 1,
-        one_time: 1,
+        one_time: 2,
         metric_name: 'account-usage',
-        period: 'day',
+        period: 'week',
       )
     end
   end

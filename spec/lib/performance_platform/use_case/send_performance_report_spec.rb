@@ -48,7 +48,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
         roaming: 1,
         one_time: 1,
         metric_name: 'account-usage',
-        period: 'day'
+        period: 'week'
       }
     }
 
@@ -57,31 +57,34 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
         metric_name: 'account-usage',
         payload: [
           {
-            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpZGF5YWNjb3VudC11c2FnZXRvdGFs',
+            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpd2Vla2FjY291bnQtdXNhZ2V0b3RhbA==',
             _timestamp: '2018-07-16T00:00:00+00:00',
             dataType: 'account-usage',
-            period: 'day',
+            period: 'week',
             type: 'total',
             count: 2
-          }, {
-            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpZGF5YWNjb3VudC11c2FnZXRyYW5zYWN0aW9ucw==',
+          },
+          {
+            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpd2Vla2FjY291bnQtdXNhZ2V0cmFuc2FjdGlvbnM=',
             _timestamp: '2018-07-16T00:00:00+00:00',
             dataType: 'account-usage',
-            period: 'day',
+            period: 'week',
             type: 'transactions',
             count: 3
-          }, {
-            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpZGF5YWNjb3VudC11c2FnZXJvYW1pbmc=',
+          },
+          {
+            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpd2Vla2FjY291bnQtdXNhZ2Vyb2FtaW5n',
             _timestamp: '2018-07-16T00:00:00+00:00',
             dataType: 'account-usage',
-            period: 'day',
+            period: 'week',
             type: 'roaming',
             count: 1
-          }, {
-            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpZGF5YWNjb3VudC11c2FnZW9uZS10aW1l',
+          },
+          {
+            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpd2Vla2FjY291bnQtdXNhZ2VvbmUtdGltZQ==',
             _timestamp: '2018-07-16T00:00:00+00:00',
             dataType: 'account-usage',
-            period: 'day',
+            period: 'week',
             type: 'one-time',
             count: 1
           }
