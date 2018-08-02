@@ -85,10 +85,10 @@ describe PerformancePlatform::Gateway::AccountUsage do
 
     it 'returns stats for sessions' do
       expect(subject.fetch_stats).to eq(
-        total: 3,
-        transactions: 4,
+        total: 2,
+        transactions: 3,
         roaming: 1,
-        one_time: 2,
+        one_time: 1,
         metric_name: 'account-usage',
         period: 'week',
       )
