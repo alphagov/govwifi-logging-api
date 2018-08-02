@@ -40,7 +40,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
     let(:dataset) { 'gov-wifi' }
     let(:bearer_token) { 'googoogoo' }
     let(:presenter) { PerformancePlatform::Presenter::AccountUsage.new }
-    let(:stats_gateway) { PerformancePlatform::Gateway::AccountUsage.new }
+    let(:stats_gateway) { PerformancePlatform::Gateway::AccountUsage.new(period: 'week') }
     let(:stats_gateway_response) {
       {
         total: 2,

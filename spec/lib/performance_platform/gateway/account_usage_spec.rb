@@ -9,6 +9,8 @@ describe PerformancePlatform::Gateway::AccountUsage do
     DB[:site].truncate
   end
 
+  subject { described_class.new(period: 'week') }
+
   context 'given no sessions' do
     it 'returns stats with zero sessions' do
       expect(subject.fetch_stats).to eq(

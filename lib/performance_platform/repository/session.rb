@@ -1,7 +1,7 @@
 class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
   # rubocop:disable Metrics/BlockLength
   dataset_module do
-    def stats
+    def account_usage_stats(period:)
       result = DB.fetch("SELECT
         count(distinct(username)) as total,
         count(distinct(concat_ws('-', sessions.username, site.address))) as per_site
@@ -12,7 +12,7 @@ class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
           ON (siteip.site_id = site.id)
         WHERE site.org_id IS NOT NULL
         AND start
-          BETWEEN date_sub('#{Date.today - 1}', INTERVAL 1 WEEK)
+          BETWEEN date_sub('#{Date.today - 1}', INTERVAL 1 #{period})
           AND '#{Date.today - 1}'
         GROUP BY date(start);").all
 
