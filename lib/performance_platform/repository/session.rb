@@ -23,16 +23,12 @@ class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
     end
 
     def unique_users_stats(period:)
-      sql = "
-      SELECT start AS day, count(distinct(username)) AS users FROM sessions
-      WHERE start BETWEEN date_sub('#{Date.today}', INTERVAL 1 #{period.to_s.upcase})
-      AND '#{Date.today}'
-      AND dayofweek(start) NOT IN (1,7)
-      GROUP BY day"
+      sql = "SELECT sum(users)/count(*) DIV 1 as `count`
+      FROM (SELECT date(start) AS day, count(distinct(username)) AS users
+      FROM sessions WHERE start BETWEEN date_sub('#{Date.today}', INTERVAL 1 #{period})
+      AND '#{Date.today}' AND dayofweek(start) NOT IN (1,7) GROUP BY day) foo;"
 
-      result = DB.fetch(sql).all.sum { |r| r[:users].to_i }
-
-      { count: result }
+      DB.fetch(sql).first
     end
   end
   # rubocop:enable Metrics/BlockLength
