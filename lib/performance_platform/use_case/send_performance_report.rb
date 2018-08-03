@@ -1,13 +1,13 @@
 require 'logger'
 
 class PerformancePlatform::UseCase::SendPerformanceReport
-  def initialize(stats_gateway:, performance_gateway:)
+  def initialize(stats_gateway:, performance_gateway:, logger: Logger.new(STDOUT))
     @stats_gateway = stats_gateway
     @performance_gateway = performance_gateway
+    @logger = logger
   end
 
   def execute(presenter:)
-    logger = Logger.new(STDOUT)
     stats = stats_gateway.fetch_stats
     performance_data = presenter.present(stats: stats)
 
@@ -17,5 +17,5 @@ class PerformancePlatform::UseCase::SendPerformanceReport
 
 private
 
-  attr_reader :stats_gateway, :performance_gateway
+  attr_reader :stats_gateway, :performance_gateway, :logger
 end
