@@ -11,7 +11,7 @@ class PerformancePlatform::Presenter::UniqueUsers
           _timestamp: timestamp,
           dataType: stats[:metric_name],
           period: stats[:period],
-          count: stats[:count]
+          count_field_name => stats[:count]
         }
       ]
     }
@@ -32,6 +32,10 @@ private
         stats[:metric_name]
       ]
     )
+  end
+
+  def count_field_name
+    stats[:period] == 'month' ? 'month_count' : 'count'
   end
 
   attr_reader :stats, :timestamp

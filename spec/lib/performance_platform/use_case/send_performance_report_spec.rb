@@ -153,7 +153,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
               _timestamp: '2018-07-16T00:00:00+00:00',
               dataType: 'unique-users',
               period: 'month',
-              count: 12345
+              month_count: 12345
             }
           ]
         }
