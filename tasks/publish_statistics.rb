@@ -1,6 +1,10 @@
 require 'logger'
 logger = Logger.new(STDOUT)
 
+task :synchronize_ip_locations do
+  PerformancePlatform::UseCase::SynchronizeIpLocations.new.execute
+end
+
 task :publish_daily_statistics do
   logger.info('Publishing daily statistics')
   performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
