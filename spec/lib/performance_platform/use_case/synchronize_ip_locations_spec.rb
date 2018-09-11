@@ -6,6 +6,10 @@ describe PerformancePlatform::UseCase::SynchronizeIpLocations do
     )
   end
 
+  after do
+    DB[:ip_locations].truncate
+  end
+
   let(:source_gateway) { double(fetch: nil) }
   let(:destination_gateway) { double(save: nil) }
 

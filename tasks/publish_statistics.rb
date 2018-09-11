@@ -2,7 +2,12 @@ require 'logger'
 logger = Logger.new(STDOUT)
 
 task :synchronize_ip_locations do
-  PerformancePlatform::UseCase::SynchronizeIpLocations.new.execute
+  source_gateway = PerformancePlatform::Gateway::S3IpLocations.new
+  destination_gateway = PerformancePlatform::Gateway::SequelIPLocations.new
+  PerformancePlatform::UseCase::SynchronizeIpLocations.new(
+    source_gateway: source_gateway,
+    destination_gateway: destination_gateway
+  ).execute
 end
 
 task :publish_daily_statistics do
