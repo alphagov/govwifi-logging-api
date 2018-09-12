@@ -1,6 +1,9 @@
 FROM ruby:2.5-alpine
 ARG BUNDLE_INSTALL_CMD
 
+ENV S3_PUBLISHED_LOCATIONS_IPS_BUCKET 'stub-bucket'
+ENV S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY 'stub-key'
+
 WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile.lock .ruby-version ./

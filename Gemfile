@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 ruby File.read('.ruby-version').chomp
 
+gem 'aws-sdk-s3', '~> 1'
 gem 'mysql2'
 gem 'puma'
 gem 'rake', '~> 12.3'

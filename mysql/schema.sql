@@ -45,6 +45,11 @@ CREATE TABLE `sessions` (
   KEY `sessions_start_username` (`start`,`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+CREATE TABLE `ip_locations` (
+  `ip` varchar(30) DEFAULT NULL,
+  `location_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Table structure for table `site`
