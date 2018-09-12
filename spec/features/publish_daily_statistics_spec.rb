@@ -1,7 +1,18 @@
 describe 'synchronizing IPs and locations' do
   let(:ip_locations) { DB[:ip_locations] }
 
-  before { ip_locations.truncate }
+  before do
+    ENV['S3_PUBLISHED_LOCATIONS_IPS_BUCKET'] = 'stub-bucket'
+    ENV['S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY'] = 'stub-key'
+
+    stub_request(:get, "http://169.254.169.254/latest/meta-data/iam/security-credentials/")
+      .to_return(body: '')
+
+    stub_request(:get, 'https://stub-bucket.s3.eu-west-2.amazonaws.com/stub-key') \
+      .to_return(body: object_content.to_json)
+
+    ip_locations.truncate
+  end
 
   subject do
     source_gateway = PerformancePlatform::Gateway::S3IpLocations.new
@@ -12,17 +23,21 @@ describe 'synchronizing IPs and locations' do
     )
   end
 
-  it 'saves empty IPs and locations' do
-    subject.execute
-    expect(ip_locations.count).to be_zero
-  end
+  context 'no IPs/locations are in source' do
+    let(:object_content) { [] }
 
-  context 'with existing IPs and locations in the database' do
-    before { ip_locations.insert(ip: 1, location_id: 1) }
-
-    it 'overwrites them' do
+    it 'saves empty IPs and locations' do
       subject.execute
       expect(ip_locations.count).to be_zero
+    end
+
+    context 'with existing IPs and locations in the database' do
+      before { ip_locations.insert(ip: 1, location_id: 1) }
+
+      it 'overwrites them' do
+        subject.execute
+        expect(ip_locations.count).to be_zero
+      end
     end
   end
 
@@ -40,24 +55,6 @@ describe 'synchronizing IPs and locations' do
           location_id: 3
         }
       ]
-    end
-
-    let(:bucket) { 'StubBucket' }
-    let(:key) { 'StubKey' }
-
-    before do
-      ENV['AWS_CONTAINER_CREDENTIALS_RELATIVE_URI'] = '/stubUri'
-
-      stub_request(:get, 'http://169.254.170.2/stubUri').to_return(body: {
-        'AccessKeyId': 'ACCESS_KEY_ID',
-        'Expiration': (Time.now + 60).iso8601,
-        'RoleArn': 'TASK_ROLE_ARN',
-        'SecretAccessKey': 'SECRET_ACCESS_KEY',
-        'Token': 'SECURITY_TOKEN_STRING'
-      }.to_json)
-
-      stub_request(:get, 'https://s3.eu-west-1.amazonaws.com/#{bucket}/#{key}') \
-        .to_return(body: object_content.to_json)
     end
 
     it 'saves three IPs and locations' do
