@@ -2,9 +2,11 @@ class PerformancePlatform::Gateway::SequelIPLocations
   def save(ip_locations)
     truncate_ip_locations
 
-    ip_locations.each do |loc|
-      DB[:ip_locations].insert(ip: loc[:ip], location_id: loc[:location_ip])
+    data = ip_locations.map do |ip_location|
+      [ ip_location["ip"], ip_location["location_id"] ]
     end
+
+    DB[:ip_locations].import([:ip, :location_id], data)
   end
 
 private
