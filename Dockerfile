@@ -3,8 +3,6 @@ ARG BUNDLE_INSTALL_CMD
 
 ENV S3_PUBLISHED_LOCATIONS_IPS_BUCKET 'stub-bucket'
 ENV S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY 'stub-key'
-ENV ACCESS_KEY_ID 'stub-access-key'
-ENV SECRET_ACCESS_KEY 'stub-secret-access-key'
 
 WORKDIR /usr/src/app
 

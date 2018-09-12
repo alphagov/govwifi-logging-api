@@ -5,11 +5,11 @@ describe 'synchronizing IPs and locations' do
     ENV['S3_PUBLISHED_LOCATIONS_IPS_BUCKET'] = 'stub-bucket'
     ENV['S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY'] = 'stub-key'
 
-    stub_request(:get, "http://169.254.169.254/latest/meta-data/iam/security-credentials/")
-      .to_return(body: '')
-
-    stub_request(:get, 'https://stub-bucket.s3.eu-west-2.amazonaws.com/stub-key') \
-      .to_return(body: object_content.to_json)
+    Aws.config = {
+      stub_responses: {
+        get_object: { body: object_content.to_json }
+      }
+    }
 
     ip_locations.truncate
   end

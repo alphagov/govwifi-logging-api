@@ -2,27 +2,18 @@ require 'aws-sdk-s3'
 
 class PerformancePlatform::Gateway::S3IpLocations
   def initialize
-    @s3 = Aws::S3::Client.new(config)
+    @s3 = Aws::S3::Client.new(region: 'eu-west-2')
   end
 
   def fetch
     bucket = ENV.fetch('S3_PUBLISHED_LOCATIONS_IPS_BUCKET')
     key = ENV.fetch('S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY')
 
-    resp = s3.get_object(bucket: bucket, key: key)
-    JSON.parse(resp.body.read)
+    response = s3.get_object(bucket: bucket, key: key)
+    JSON.parse(response.body.read)
   end
 
 private
-
-  def config
-    {
-      region: 'eu-west-2',
-      access_key_id: ENV.fetch('ACCESS_KEY_ID'),
-      secret_access_key: ENV.fetch('SECRET_ACCESS_KEY'),
-      stub_responses: ENV.fetch('RACK_ENV') == 'development'
-    }
-  end
 
   attr_reader :s3
 end
