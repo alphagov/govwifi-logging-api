@@ -10,20 +10,19 @@ class PerformancePlatform::Gateway::S3IpLocations
     key = ENV.fetch('S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY')
 
     resp = s3.get_object(bucket: bucket, key: key)
-    resp.body.read
+    JSON.parse(resp.body.read)
   end
 
 private
 
-    DEFAULT_REGION = 'eu-west-2'.freeze
-
-    def config
-      {
-        region: DEFAULT_REGION,
-        access_key_id: 'ACCESS_KEY_ID',
-        secret_access_key: 'SECRET_ACCESS_KEY'
-      }
-    end
+  def config
+    {
+      region: 'eu-west-2',
+      access_key_id: ENV.fetch('ACCESS_KEY_ID'),
+      secret_access_key: ENV.fetch('SECRET_ACCESS_KEY'),
+      stub_responses: ENV.fetch('RACK_ENV') == 'development'
+    }
+  end
 
   attr_reader :s3
 end
