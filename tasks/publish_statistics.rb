@@ -10,7 +10,7 @@ task :synchronize_ip_locations do
   ).execute
 end
 
-task :publish_daily_statistics do
+task publish_daily_statistics: [:synchronize_ip_locations] do
   logger.info('Publishing daily statistics')
   performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
   account_usage_gateway = PerformancePlatform::Gateway::AccountUsage.new(period: 'day')
