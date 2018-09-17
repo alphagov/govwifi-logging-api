@@ -1,7 +1,6 @@
 describe PerformancePlatform::Gateway::AccountUsage do
   let(:sessions) { DB[:sessions] }
-  let(:locations) { DB[:site] }
-  let(:location_ip_links) { DB[:siteip] }
+  let(:location_ip_links) { DB[:ip_locations] }
 
   let(:ip_A1) { '104.24.112.118' }
   let(:ip_A2) { '104.24.112.120' }
@@ -14,16 +13,12 @@ describe PerformancePlatform::Gateway::AccountUsage do
 
   before do
     sessions.truncate
-    locations.truncate
     location_ip_links.truncate
 
-    location_a = locations.insert(address: 'House One', org_id: 1)
-    location_b = locations.insert(address: 'House Two', org_id: 1)
-
-    location_ip_links.insert(ip: ip_A1, site_id: location_a)
-    location_ip_links.insert(ip: ip_A2, site_id: location_a)
-    location_ip_links.insert(ip: ip_B1, site_id: location_b)
-    location_ip_links.insert(ip: ip_B2, site_id: location_b)
+    location_ip_links.insert(ip: ip_A1, location_id: 1)
+    location_ip_links.insert(ip: ip_A2, location_id: 1)
+    location_ip_links.insert(ip: ip_B1, location_id: 2)
+    location_ip_links.insert(ip: ip_B2, location_id: 2)
   end
 
   describe 'one user' do
