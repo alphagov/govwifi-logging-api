@@ -63,6 +63,7 @@ module Logging
     def ap(unformatted_mac)
       mac = formatted_mac(unformatted_mac)
       return mac if valid_mac?(mac)
+
       ''
     end
   end
