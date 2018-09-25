@@ -1,6 +1,7 @@
 class PerformancePlatform::Gateway::UniqueUsers
-  def initialize(period:)
+  def initialize(period:, date: Date.today.to_s)
     @period = period.to_s
+    @date = Date.parse(date)
   end
 
   def fetch_stats
@@ -18,8 +19,8 @@ private
   end
 
   def result
-    repository.unique_users_stats(period: period) || Hash.new(0)
+    repository.unique_users_stats(period: period, date: date) || Hash.new(0)
   end
 
-  attr_reader :period
+  attr_reader :period, :date
 end

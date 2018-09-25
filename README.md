@@ -22,6 +22,24 @@ This is useful for debugging and populating last_login of the user.
 - Account Usage
 - Unique Users
 
+### Send statistics manually
+
+You can trigger statistics to be sent manually by running the command below locally.
+Ensure that your ~/.aws/credentials is set up correctly.
+Populate the date argument to the Rake task with the date that you want to send the statistics for.
+
+#### Account Usage
+
+```shell
+aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_daily_statistics['2018-09-24']\"] }] }" --region eu-west-2
+```
+
+#### Unique Users
+
+```shell
+aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_weekly_statistics['2018-09-24']\"] }] }" --region eu-west-2
+```
+
 ### Sinatra routes
 
 * `GET /healthcheck` - AWS ELB target group health checking

@@ -219,4 +219,33 @@ describe PerformancePlatform::Gateway::AccountUsage do
       )
     end
   end
+
+  context 'Date override' do
+    subject { described_class.new(period: 'day', date: '2018-07-10') }
+
+    before do
+      sessions.insert(
+        siteIP: 'Email',
+        username: 'xyz123',
+        start: '2018-07-09'
+      )
+
+      sessions.insert(
+        siteIP: 'Email',
+        username: 'abc987',
+        start: '2018-08-09'
+      )
+    end
+
+    it 'counts both of them to cumulative number of sponsored sign ups' do
+      expect(subject.fetch_stats).to eq(
+        total: 1,
+        transactions: 1,
+        roaming: 0,
+        one_time: 1,
+        metric_name: 'account-usage',
+        period: 'day',
+      )
+    end
+  end
 end

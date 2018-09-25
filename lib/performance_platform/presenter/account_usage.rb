@@ -1,7 +1,8 @@
 class PerformancePlatform::Presenter::AccountUsage
-  def present(stats:)
+  def present(stats:, date: Date.today.to_s)
     @stats = stats
     @timestamp = generate_timestamp
+    @date = Date.parse(date)
 
     {
       metric_name: stats[:metric_name],
@@ -17,7 +18,7 @@ class PerformancePlatform::Presenter::AccountUsage
 private
 
   def generate_timestamp
-    "#{Date.today - 1}T00:00:00+00:00"
+    "#{date - 1}T00:00:00+00:00"
   end
 
   def as_hash(count, type)
@@ -43,5 +44,5 @@ private
     )
   end
 
-  attr_reader :stats, :timestamp
+  attr_reader :stats, :timestamp, :date
 end
