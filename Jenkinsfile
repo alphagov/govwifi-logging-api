@@ -63,6 +63,9 @@ pipeline {
     success {
       setBuildStatus("Build successful", "SUCCESS");
     }
+    cleanup {
+      sh 'make stop'
+    }
   }
 }
 
