@@ -1,10 +1,11 @@
 class PerformancePlatform::Gateway::AccountUsage
-  def initialize(period:)
+  def initialize(period:, date: Date.today.to_s)
     @period = period
+    @date = Date.parse(date)
   end
 
   def fetch_stats
-    result = repository.account_usage_stats(period: period) || Hash.new(0)
+    result = repository.account_usage_stats(date) || Hash.new(0)
 
     {
       total: result[:total].to_i,
@@ -22,5 +23,5 @@ private
     PerformancePlatform::Repository::Session
   end
 
-  attr_reader :period
+  attr_reader :period, :date
 end

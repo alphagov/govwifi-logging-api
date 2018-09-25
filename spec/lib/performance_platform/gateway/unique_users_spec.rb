@@ -129,5 +129,29 @@ describe PerformancePlatform::Gateway::UniqueUsers do
         )
       end
     end
+
+    context 'Date override' do
+      subject { described_class.new(period: 'week', date: '2018-07-10') }
+
+      before do
+        session_repository.insert(
+          username: 'xyz123',
+          start: '2018-07-09'
+        )
+
+        session_repository.insert(
+          username: 'abc987',
+          start: '2018-08-09'
+        )
+      end
+
+      it 'uses the date argument' do
+        expect(subject.fetch_stats).to eq(
+          count: 1,
+          metric_name: 'unique-users',
+          period: 'week',
+        )
+      end
+    end
   end
 end

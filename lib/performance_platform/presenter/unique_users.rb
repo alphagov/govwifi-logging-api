@@ -1,7 +1,8 @@
 class PerformancePlatform::Presenter::UniqueUsers
-  def present(stats:)
+  def present(stats:, date: Date.today.to_s)
     @stats = stats
     @timestamp = generate_timestamp
+    @date = date
 
     {
       metric_name: stats[:metric_name],
@@ -20,7 +21,7 @@ class PerformancePlatform::Presenter::UniqueUsers
 private
 
   def generate_timestamp
-    "#{Date.today - 1}T00:00:00+00:00"
+    "#{date - 1}T00:00:00+00:00"
   end
 
   def encode_id
@@ -38,5 +39,5 @@ private
     stats[:period] == 'month' ? 'month_count' : 'count'
   end
 
-  attr_reader :stats, :timestamp
+  attr_reader :stats, :timestamp, :date
 end
