@@ -1,8 +1,11 @@
 class PerformancePlatform::Presenter::AccountUsage
-  def present(stats:, date: Date.today.to_s)
+  def initialize(date: Date.today.to_s)
+    @date = Date.parse(date)
+  end
+
+  def present(stats:)
     @stats = stats
     @timestamp = generate_timestamp
-    @date = Date.parse(date)
 
     {
       metric_name: stats[:metric_name],
