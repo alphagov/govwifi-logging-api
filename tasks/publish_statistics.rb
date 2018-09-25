@@ -14,8 +14,8 @@ task :publish_daily_statistics, [:date] => [:synchronize_ip_locations] do |_, ar
   args.with_defaults(date: Date.today.to_s)
   logger.info("Publishing daily statistics with #{args}")
   performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
-  account_usage_gateway = PerformancePlatform::Gateway::AccountUsage.new(period: 'day', date: date)
-  account_usage_presenter = PerformancePlatform::Presenter::AccountUsage.new(date: date)
+  account_usage_gateway = PerformancePlatform::Gateway::AccountUsage.new(period: 'day', date: args[:date])
+  account_usage_presenter = PerformancePlatform::Presenter::AccountUsage.new(date: args[:date])
 
   PerformancePlatform::UseCase::SendPerformanceReport.new(
     stats_gateway: account_usage_gateway,
@@ -26,8 +26,8 @@ end
 task :publish_weekly_statistics, [:date] do |_, args|
   logger.info("Publishing weekly statistics with #{args}")
   performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
-  unique_users_gateway = PerformancePlatform::Gateway::UniqueUsers.new(period: 'week', date: date)
-  unique_users_presenter = PerformancePlatform::Presenter::UniqueUsers.new(date: date)
+  unique_users_gateway = PerformancePlatform::Gateway::UniqueUsers.new(period: 'week', date: args[:date])
+  unique_users_presenter = PerformancePlatform::Presenter::UniqueUsers.new(date: args[:date])
 
   PerformancePlatform::UseCase::SendPerformanceReport.new(
     stats_gateway: unique_users_gateway,
@@ -38,8 +38,8 @@ end
 task :publish_monthly_statistics, [:date] do |_, args|
   logger.info("Publishing monthly statistics with #{args}")
   performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
-  unique_users_gateway = PerformancePlatform::Gateway::UniqueUsers.new(period: 'month', date: date)
-  unique_users_presenter = PerformancePlatform::Presenter::UniqueUsers.new(date: date)
+  unique_users_gateway = PerformancePlatform::Gateway::UniqueUsers.new(period: 'month', date: args[:date])
+  unique_users_presenter = PerformancePlatform::Presenter::UniqueUsers.new(date: args[:date])
 
   PerformancePlatform::UseCase::SendPerformanceReport.new(
     stats_gateway: unique_users_gateway,
