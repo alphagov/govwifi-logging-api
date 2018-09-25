@@ -13,6 +13,14 @@ DB = Sequel.connect(
   read_timeout: 9999
 )
 
+if %w[production staging].include?(ENV['RACK_ENV'])
+  require 'raven'
+
+  Raven.configure do |config|
+    config.dsn = ENV['SENTRY_DSN']
+  end
+end
+
 module Common;
 end
 
