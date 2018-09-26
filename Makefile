@@ -6,26 +6,39 @@ endif
 
 DOCKER_BUILD_CMD = docker-compose build $(BUNDLE_FLAGS)
 
-build:
-	$(MAKE) stop
+BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --jobs 20 --retry 5'
+DOCKER_COMPOSE = docker-compose -f docker-compose.yml
+
+ifdef DEPLOYMENT
+	BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --without test'
+endif
+
+ifndef JENKINS_URL
+  DOCKER_COMPOSE += -f docker-compose.development.yml
+endif
+
+build: stop
 	$(DOCKER_BUILD_CMD)
 
-serve:
-	$(MAKE) build
-	docker-compose up -d
-
-lint:
-	$(MAKE) build
-	docker-compose run --rm app bundle exec govuk-lint-ruby
-
-test:
-	$(MAKE) serve
+serve: build
+	$(DOCKER_COMPOSE) up -d db
 	./mysql/bin/wait_for_mysql
-	docker-compose run --rm app rspec
+	$(DOCKER_COMPOSE) up -d app
+
+lint: build
+	$(DOCKER_COMPOSE) run --rm app bundle exec govuk-lint-ruby
+
+test: serve
+	./mysql/bin/wait_for_mysql
+	$(DOCKER_COMPOSE) run --rm app rspec
 	$(MAKE) stop
 
 stop:
-	docker-compose kill
-	docker-compose rm -f
+	$(DOCKER_COMPOSE) down
+	$(DOCKER_COMPOSE) kill
+	$(DOCKER_COMPOSE) rm -f
 
-.PHONY: test serve stop lint
+shell: serve
+	docker exec -it `docker-compose ps -q app | awk 'END{print}'` ash
+
+.PHONY: build test serve stop lint shell
