@@ -1,28 +1,25 @@
 module Logging
   class PostAuth
     def execute(params:)
-      authentication_result = params.fetch(:authentication_result)
-
-      if authentication_result == 'Access-Accept'
-        handle_access_accept(params)
-        return true
-      elsif authentication_result == 'Access-Reject'
-        return true
-      end
-
-      false
+      valid_request?(params) ? handle_access_request(params) : false
     end
 
   private
 
     VALID_MAC_LENGTH = 17
 
-    def handle_access_accept(params)
-      username = params.fetch(:username)
-      return if username == 'HEALTH'
+    def valid_request?(params)
+      valid_auth_results = ['Access-Accept', 'Access-Reject']
+      auth_result = params.fetch(:authentication_result)
+      valid_auth_results.include?(auth_result)
+    end
 
-      create_session(params)
+    def handle_access_request(params)
+      username = params.fetch(:username)
+      return true if username == 'HEALTH'
+
       update_user_last_login(username)
+      create_session(params)
     end
 
     def create_session(params)

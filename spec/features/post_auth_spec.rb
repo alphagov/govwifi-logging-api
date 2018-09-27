@@ -18,9 +18,7 @@ describe App do
       post_auth_request
     end
 
-    context 'Access-Accept' do
-      let(:authentication_result) { 'Access-Accept' }
-
+    shared_examples 'it saves the right logging information' do
       context 'GovWifi user' do
         it 'creates a single session record' do
           expect(Session.count).to eq(1)
@@ -129,21 +127,16 @@ describe App do
       end
     end
 
+    context 'Access-Accept' do
+      let(:authentication_result) { 'Access-Accept' }
+
+      it_behaves_like 'it saves the right logging information'
+    end
+
     context 'Access-Reject' do
       let(:authentication_result) { 'Access-Reject' }
 
-      it 'does not record a session' do
-        expect(Session.count).to eq(0)
-      end
-
-      it 'does not record last_login for the user' do
-        post_auth_request
-        expect(user.last_login).to be_nil
-      end
-
-      it 'returns a 204 OK' do
-        expect(last_response.status).to eq(204)
-      end
+      it_behaves_like 'it saves the right logging information'
     end
 
     context 'Invalid authentication result' do
