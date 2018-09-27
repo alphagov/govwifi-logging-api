@@ -24,11 +24,6 @@ describe App do
           expect(Session.count).to eq(1)
         end
 
-        it 'updates the user last login' do
-          post_auth_request
-          expect(user.last_login).to_not be_nil
-        end
-
         context 'given a lowercase username' do
           let(:username) { 'abcdef' }
 
@@ -131,12 +126,23 @@ describe App do
       let(:authentication_result) { 'Access-Accept' }
 
       it_behaves_like 'it saves the right logging information'
+
+      it 'updates the user last login' do
+        post_auth_request
+        expect(user.last_login).to_not be_nil
+      end
+
     end
 
     context 'Access-Reject' do
       let(:authentication_result) { 'Access-Reject' }
 
       it_behaves_like 'it saves the right logging information'
+
+      it 'updates the user last login' do
+        post_auth_request
+        expect(user.last_login).to be_nil
+      end
     end
 
     context 'Invalid authentication result' do
