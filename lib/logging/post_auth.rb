@@ -1,47 +1,48 @@
 module Logging
   class PostAuth
     def execute(params:)
-      authentication_result = params.fetch(:authentication_result)
+      @params = params
 
-      if authentication_result == 'Access-Accept'
-        handle_access_accept(params)
-        return true
-      elsif authentication_result == 'Access-Reject'
-        return true
-      end
+      return false unless access_accept? || access_reject?
+      return true if username == 'HEALTH'
 
-      false
+      update_user_last_login unless access_reject?
+      create_session
     end
 
   private
 
     VALID_MAC_LENGTH = 17
 
-    def handle_access_accept(params)
-      username = params.fetch(:username)
-      return if username == 'HEALTH'
-
-      create_session(params)
-      update_user_last_login(username)
-    end
-
-    def create_session(params)
+    def create_session
       Session.create(
         start: Time.now,
-        username: username(params.fetch(:username)),
-        mac: formatted_mac(params.fetch(:mac)),
-        ap: ap(params.fetch(:called_station_id)),
-        siteIP: params.fetch(:site_ip_address),
-        building_identifier: building_identifier(params.fetch(:called_station_id))
+        username: username.to_s.upcase,
+        mac: formatted_mac(@params.fetch(:mac)),
+        ap: ap(@params.fetch(:called_station_id)),
+        siteIP: @params.fetch(:site_ip_address),
+        building_identifier: building_identifier(@params.fetch(:called_station_id))
       )
     end
 
-    def update_user_last_login(username)
+    def update_user_last_login
       user = User.find(username: username)
       return unless user
 
       user.last_login = Time.now
       user.save
+    end
+
+    def access_reject?
+      @params.fetch(:authentication_result) == 'Access-Reject'
+    end
+
+    def access_accept?
+      @params.fetch(:authentication_result) == 'Access-Accept'
+    end
+
+    def username
+      @params.fetch(:username)
     end
 
     def formatted_mac(unformatted_mac)
@@ -54,10 +55,6 @@ module Logging
 
     def building_identifier(called_station_id)
       called_station_id if !valid_mac?(formatted_mac(called_station_id))
-    end
-
-    def username(unformatted_username)
-      unformatted_username.to_s.upcase
     end
 
     def ap(unformatted_mac)
