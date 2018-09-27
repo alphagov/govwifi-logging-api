@@ -131,7 +131,6 @@ describe App do
         post_auth_request
         expect(user.last_login).to_not be_nil
       end
-
     end
 
     context 'Access-Reject' do
