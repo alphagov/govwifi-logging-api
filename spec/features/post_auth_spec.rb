@@ -144,7 +144,7 @@ describe App do
 
       it_behaves_like 'it saves the right logging information'
 
-      it 'updates the user last login' do
+      it 'does not update the user last login' do
         post_auth_request
         expect(user.last_login).to be_nil
       end
