@@ -17,14 +17,9 @@ class App < Sinatra::Base
 
   get '/authentication/events/search/:username' do
     username = params[:username]
+    sessions = Session.where(username: username).reverse_order(:start).limit(100)
 
-    if Session.all.length == 0
-      json []
-    else
-      sessions = Session.where(username: username).all
-
-      json sessions.map { |s| { username: s[:username] } }
-    end
+    json sessions.map(&:to_hash)
   end
 
   get '/logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result' do
