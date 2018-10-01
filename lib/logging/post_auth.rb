@@ -21,7 +21,8 @@ module Logging
         mac: formatted_mac(@params.fetch(:mac)),
         ap: ap(@params.fetch(:called_station_id)),
         siteIP: @params.fetch(:site_ip_address),
-        building_identifier: building_identifier(@params.fetch(:called_station_id))
+        building_identifier: building_identifier(@params.fetch(:called_station_id)),
+        success: access_accept?
       )
     end
 
