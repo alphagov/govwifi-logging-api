@@ -35,14 +35,14 @@ describe App do
         expect(JSON.parse(last_response.body)).to eq(
           [
             {
-              "ap"=>"",
-              "building_identifier"=>"",
-              "id"=>1,
-              "mac"=>"",
-              "siteIP"=>"",
-              "start"=>"2018-10-01 18:18:09 +0000",
-              "stop"=>nil,
-              "username"=>"VYKZDK"
+              "ap" => "",
+              "building_identifier" => "",
+              "id" => 1,
+              "mac" => "",
+              "siteIP" => "",
+              "start" => "2018-10-01 18:18:09 +0000",
+              "stop" => nil,
+              "username" => "VYKZDK"
             }
           ]
         )
@@ -73,8 +73,9 @@ describe App do
         get '/authentication/events/search/ZZZZZZ'
 
         expect(last_response.status).to eq(200)
-        expect(JSON.parse(last_response.body).length).to eq(1)
-        expect(JSON.parse(last_response.body).first['username']).to eq('ZZZZZZ')
+        json_response = JSON.parse(last_response.body)
+        expect(json_response.length).to eq(1)
+        expect(json_response.first['username']).to eq('ZZZZZZ')
       end
     end
 
@@ -107,8 +108,9 @@ describe App do
         get '/authentication/events/search/VYKZDK'
 
         expect(last_response.status).to eq(200)
-        expect(JSON.parse(last_response.body).length).to eq(100)
-        unique_dates = JSON.parse(last_response.body).map{|session| session['start']}.uniq
+        json_response = JSON.parse(last_response.body)
+        expect(json_response.length).to eq(100)
+        unique_dates = json_response.map { |session| session['start'] }.uniq
         expect(unique_dates.length).to eq(1)
         expect(unique_dates.first).to eq('2018-01-01 00:00:01 +0000')
       end
