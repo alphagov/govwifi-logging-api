@@ -1,4 +1,3 @@
-require "pry"
 describe App do
   before do
     DB[:sessions].truncate
