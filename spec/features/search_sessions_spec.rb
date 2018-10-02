@@ -111,8 +111,7 @@ describe App do
         json_response = JSON.parse(last_response.body)
         expect(json_response.length).to eq(100)
         unique_dates = json_response.map { |session| session['start'] }.uniq
-        expect(unique_dates.length).to eq(1)
-        expect(unique_dates.first).to eq('2018-01-01 00:00:01 +0000')
+        expect(unique_dates).to eq(['2018-01-01 00:00:01 +0000'])
       end
     end
   end
