@@ -24,6 +24,7 @@ describe App do
           mac: '',
           ap: '',
           siteIP: '',
+          success: true,
           building_identifier: ''
         )
       end
@@ -42,6 +43,7 @@ describe App do
               "siteIP" => "",
               "start" => "2018-10-01 18:18:09 +0000",
               "stop" => nil,
+              "success" => true,
               "username" => "VYKZDK"
             }
           ]
@@ -57,6 +59,7 @@ describe App do
           mac: '',
           ap: '',
           siteIP: '',
+          success: true,
           building_identifier: ''
         )
         Session.create(
@@ -65,6 +68,7 @@ describe App do
           mac: '',
           ap: '',
           siteIP: '',
+          success: true,
           building_identifier: ''
         )
       end
@@ -88,6 +92,7 @@ describe App do
             mac: '',
             ap: '',
             siteIP: '',
+            success: true,
             building_identifier: ''
           )
         end
@@ -99,6 +104,7 @@ describe App do
             mac: '',
             ap: '',
             siteIP: '',
+            success: true,
             building_identifier: ''
           )
         end
