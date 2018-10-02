@@ -39,6 +39,7 @@ CREATE TABLE `sessions` (
   `mac` char(17) DEFAULT NULL,
   `ap` char(17) DEFAULT NULL,
   `building_identifier` varchar(20) DEFAULT NULL,
+  `success` BOOLEAN DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `siteIP` (`siteIP`,`username`),
   KEY `sessions_username` (`username`),
@@ -130,4 +131,3 @@ CREATE TABLE `siteip` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2018-04-18 11:33:13sess
-

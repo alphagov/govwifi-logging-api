@@ -22,12 +22,20 @@ describe PerformancePlatform::Gateway::AccountUsage do
   end
 
   describe 'one user' do
-    context 'with one session' do
+    context 'with one successful session and one rejected session' do
       before do
         sessions.insert(
           siteIP: ip_A1,
           username: 'alice',
-          start: Date.today - 1
+          start: Date.today - 1,
+          success: 1
+        )
+
+        sessions.insert(
+          siteIP: ip_A1,
+          username: 'alice',
+          start: Date.today - 1,
+          success: 0
         )
       end
 
@@ -187,6 +195,35 @@ describe PerformancePlatform::Gateway::AccountUsage do
   end
 
   context 'zero sessions' do
+    it 'generates the correct (empty) stats' do
+      expect(subject.fetch_stats).to eq(
+        total: 0,
+        transactions: 0,
+        roaming: 0,
+        one_time: 0,
+        metric_name: 'account-usage',
+        period: 'week',
+      )
+    end
+  end
+
+  context 'with only access reject sessions' do
+    before do
+      sessions.insert(
+        siteIP: ip_A1,
+        username: 'alice',
+        start: Date.today - 1,
+        success: 0
+      )
+
+      sessions.insert(
+        siteIP: ip_A1,
+        username: 'bob',
+        start: Date.today - 1,
+        success: 0
+      )
+    end
+
     it 'generates the correct (empty) stats' do
       expect(subject.fetch_stats).to eq(
         total: 0,

@@ -131,6 +131,11 @@ describe App do
         post_auth_request
         expect(user.last_login).to_not be_nil
       end
+
+      it 'sets success to true' do
+        post_auth_request
+        expect(Session.last.success).to eq(true)
+      end
     end
 
     context 'Access-Reject' do
@@ -138,9 +143,14 @@ describe App do
 
       it_behaves_like 'it saves the right logging information'
 
-      it 'updates the user last login' do
+      it 'does not update the user last login' do
         post_auth_request
         expect(user.last_login).to be_nil
+      end
+
+      it 'sets success to false' do
+        post_auth_request
+        expect(Session.last.success).to eq(false)
       end
     end
 
