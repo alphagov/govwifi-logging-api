@@ -39,7 +39,6 @@ CREATE TABLE `sessions` (
   `mac` char(17) DEFAULT NULL,
   `ap` char(17) DEFAULT NULL,
   `building_identifier` varchar(20) DEFAULT NULL,
-  `success` BOOLEAN DEFAULT 1,
   PRIMARY KEY (`id`),
   KEY `siteIP` (`siteIP`,`username`),
   KEY `sessions_username` (`username`),

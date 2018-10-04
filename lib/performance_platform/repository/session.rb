@@ -13,9 +13,8 @@ class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
             (ip_locations.ip = sessions.siteIP)
         WHERE
           date(sessions.start) = '#{date - 1}'
-          AND sessions.success = 1
         GROUP BY
-            date(start)").first
+          date(start)").first
     end
 
     def unique_users_stats(period:, date:)

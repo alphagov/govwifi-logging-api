@@ -3,11 +3,14 @@ module Logging
     def execute(params:)
       @params = params
 
-      return false unless access_accept? || access_reject?
       return true if username == 'HEALTH'
 
-      update_user_last_login unless access_reject?
-      create_session
+      return false unless access_accept? || access_reject?
+
+      if access_accept?
+        update_user_last_login
+        create_session
+      end
     end
 
   private
@@ -21,8 +24,7 @@ module Logging
         mac: formatted_mac(@params.fetch(:mac)),
         ap: ap(@params.fetch(:called_station_id)),
         siteIP: @params.fetch(:site_ip_address),
-        building_identifier: building_identifier(@params.fetch(:called_station_id)),
-        success: access_accept?
+        building_identifier: building_identifier(@params.fetch(:called_station_id))
       )
     end
 
