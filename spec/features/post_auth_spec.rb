@@ -18,99 +18,104 @@ describe App do
       post_auth_request
     end
 
-    shared_examples 'it saves the right logging information' do
-      context 'GovWifi user' do
-        it 'creates a single session record' do
-          expect(Session.count).to eq(1)
+    context 'Access-Accept' do
+      let(:authentication_result) { 'Access-Accept' }
+
+      it 'updates the user last login' do
+        post_auth_request
+        expect(user.last_login).to_not be_nil
+      end
+
+      it 'creates a single session record' do
+        expect(Session.count).to eq(1)
+      end
+
+      context 'given a lowercase username' do
+        let(:username) { 'abcdef' }
+
+        it 'ensures that the username is saved in uppercase' do
+          expect(session.username).to eq('ABCDEF')
         end
+      end
 
-        context 'given a lowercase username' do
-          let(:username) { 'abcdef' }
+      it 'records the start time of the session' do
+        expect(session.start).to_not be_nil
+      end
 
-          it 'ensures that the username is saved in uppercase' do
-            expect(session.username).to eq('ABCDEF')
-          end
-        end
+      it 'records the session details' do
+        expect(session.username).to eq(username)
+        expect(session.mac).to eq(mac)
+        expect(session.ap).to eq(called_station_id)
+        expect(session.siteIP).to eq(site_ip_address)
+      end
 
-        it 'records the start time of the session' do
-          expect(session.start).to_not be_nil
-        end
+      context 'Given the "Called Station ID" is an MAC address' do
+        let(:called_station_id) { '01-39-38-25-2A-80' }
 
-        it 'records the session details' do
-          expect(session.username).to eq(username)
-          expect(session.mac).to eq(mac)
+        it 'saves it as the access point' do
           expect(session.ap).to eq(called_station_id)
-          expect(session.siteIP).to eq(site_ip_address)
         end
 
-        context 'Given the "Called Station ID" is an MAC address' do
-          let(:called_station_id) { '01-39-38-25-2A-80' }
+        it 'does not save it as the building identifier' do
+          expect(session.building_identifier).to be_nil
+        end
 
-          it 'saves it as the access point' do
-            expect(session.ap).to eq(called_station_id)
-          end
+        context 'Given the Called Station ID needs to be formatted' do
+          let(:called_station_id) { 'aa-bb-cc-25-2a-80' }
 
-          it 'does not save it as the building identifier' do
-            expect(session.building_identifier).to be_nil
-          end
-
-          context 'Given the Called Station ID needs to be formatted' do
-            let(:called_station_id) { 'aa-bb-cc-25-2a-80' }
-
-            it 'formats the Called Station ID' do
-              expect(session.ap).to eq('AA-BB-CC-25-2A-80')
-            end
-          end
-
-          context 'Given a Called Station ID has extra trailing characters' do
-            let(:called_station_id) { 'C4-13-E2-22-DC-55%3ASTAGING-GovWifi' }
-
-            it 'Formats it and considers it a valid access point' do
-              expect(session.ap).to eq('C4-13-E2-22-DC-55')
-              expect(session.building_identifier).to be_nil
-            end
+          it 'formats the Called Station ID' do
+            expect(session.ap).to eq('AA-BB-CC-25-2A-80')
           end
         end
 
-        context 'Given the "Called Station ID" is a building identifier' do
-          let(:called_station_id) { 'Building-Identifier' }
+        context 'Given a Called Station ID has extra trailing characters' do
+          let(:called_station_id) { 'C4-13-E2-22-DC-55%3ASTAGING-GovWifi' }
 
-          it 'saves it as a building identifier' do
-            expect(session.building_identifier).to eq(called_station_id)
-          end
-
-          it 'does not save it as an access point' do
-            expect(session.ap).to eq('')
-          end
-        end
-
-        context 'Given a blank "Called Station ID"' do
-          let(:called_station_id) { '' }
-
-          it 'does not save the ap' do
-            expect(session.ap).to eq('')
-          end
-
-          it 'does not save the building_identifier' do
+          it 'Formats it and considers it a valid access point' do
+            expect(session.ap).to eq('C4-13-E2-22-DC-55')
             expect(session.building_identifier).to be_nil
           end
         end
+      end
 
-        context 'HEALTH user' do
-          let(:username) { 'HEALTH' }
+      context 'Given the "Called Station ID" is a building identifier' do
+        let(:called_station_id) { 'Building-Identifier' }
 
-          it 'does not update the last login' do
-            post_auth_request
-            expect(user.last_login).to be_nil
-          end
+        it 'saves it as a building identifier' do
+          expect(session.building_identifier).to eq(called_station_id)
+        end
 
-          it 'returns a 204 status code' do
-            expect(last_response.status).to eq(204)
-          end
+        it 'does not save it as an access point' do
+          expect(session.ap).to eq('')
+        end
+      end
 
-          it 'does not create a session record' do
-            expect(Session.count).to eq(0)
-          end
+      context 'Given a blank "Called Station ID"' do
+        let(:called_station_id) { '' }
+
+        it 'does not save the ap' do
+          expect(session.ap).to eq('')
+        end
+
+        it 'does not save the building_identifier' do
+          expect(session.building_identifier).to be_nil
+        end
+      end
+
+      context 'HEALTH user' do
+        let(:username) { 'HEALTH' }
+
+        it 'does not update the last login' do
+          post_auth_request
+          expect(user.last_login).to be_nil
+        end
+
+        it 'returns a 204 status code' do
+          expect(last_response.status).to eq(204)
+        end
+
+        it 'does not create a session record' do
+          expect(Session.count).to eq(0)
         end
       end
 
@@ -122,35 +127,16 @@ describe App do
       end
     end
 
-    context 'Access-Accept' do
-      let(:authentication_result) { 'Access-Accept' }
-
-      it_behaves_like 'it saves the right logging information'
-
-      it 'updates the user last login' do
-        post_auth_request
-        expect(user.last_login).to_not be_nil
-      end
-
-      it 'sets success to true' do
-        post_auth_request
-        expect(Session.last.success).to eq(true)
-      end
-    end
-
     context 'Access-Reject' do
       let(:authentication_result) { 'Access-Reject' }
-
-      it_behaves_like 'it saves the right logging information'
 
       it 'does not update the user last login' do
         post_auth_request
         expect(user.last_login).to be_nil
       end
 
-      it 'sets success to false' do
-        post_auth_request
-        expect(Session.last.success).to eq(false)
+      it 'does not save an archived session' do
+        expect(Session.count).to eq(0)
       end
     end
 
