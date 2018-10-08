@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'date'
+
 describe App do
   before do
     DB[:sessions].truncate
@@ -83,11 +85,14 @@ describe App do
       end
     end
 
-    context 'given more than one hundred sessions for a user' do
+    context 'given sessions that are older than two weeks' do
+      let(:start_of_today) { Date.today.to_time }
+      let(:start_of_2018) { Date.new(2018).to_time }
+
       before do
         100.times do
           Session.create(
-            start: "2018-01-01 00:00:01 +0000",
+            start: start_of_today,
             username: 'VYKZDK',
             mac: '',
             ap: '',
@@ -99,7 +104,7 @@ describe App do
 
         2.times do
           Session.create(
-            start: "2000-01-01 00:00:01 +0000",
+            start: start_of_2018,
             username: 'VYKZDK',
             mac: '',
             ap: '',
@@ -108,16 +113,23 @@ describe App do
             building_identifier: ''
           )
         end
+
+        get '/authentication/events/search/VYKZDK'
       end
 
-      it 'returns only the most recent 100 events' do
-        get '/authentication/events/search/VYKZDK'
-
-        expect(last_response.status).to eq(200)
+      it 'returns only 100 events' do
         json_response = JSON.parse(last_response.body)
         expect(json_response.length).to eq(100)
-        unique_dates = json_response.map { |session| session['start'] }.uniq
-        expect(unique_dates).to eq(['2018-01-01 00:00:01 +0000'])
+      end
+
+      it 'does not return the events more than two weeks old' do
+        json_response = JSON.parse(last_response.body)
+        parsed_dates = json_response.map do |session|
+          Time.parse(session['start']).to_i
+        end
+        unique_dates = parsed_dates.uniq
+
+        expect(unique_dates).to eq([start_of_today.to_i])
       end
     end
   end

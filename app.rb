@@ -17,7 +17,8 @@ class App < Sinatra::Base
 
   get '/authentication/events/search/:username' do
     username = params[:username]
-    sessions = Session.where(username: username).reverse_order(:start).limit(100)
+    two_weeks_ago = Time.now - 2 * 7 * 24 * 60 * 60
+    sessions = Session.where(username: username).where { start > two_weeks_ago }
 
     json sessions.map(&:to_hash)
   end
