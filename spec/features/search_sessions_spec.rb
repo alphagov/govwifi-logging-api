@@ -8,10 +8,10 @@ describe App do
     DB[:userdetails].truncate
   end
 
-  describe 'GET /authentication/events/search' do
+  describe 'GET /logging/authentication/events/search' do
     context 'given no sessions for any user' do
       it 'can retrieve no events' do
-        get '/authentication/events/search/aaaaaa'
+        get '/logging/authentication/events/search/aaaaaa'
 
         expect(last_response.status).to eq(200)
         expect(JSON.parse(last_response.body)).to eq([])
@@ -32,7 +32,7 @@ describe App do
       end
 
       it 'can retrieve the users event' do
-        get '/authentication/events/search/VYKZDK'
+        get '/logging/authentication/events/search/VYKZDK'
 
         expect(last_response.status).to eq(200)
         expect(JSON.parse(last_response.body)).to eq(
@@ -76,7 +76,7 @@ describe App do
       end
 
       it 'can retrieve the correct users event' do
-        get '/authentication/events/search/ZZZZZZ'
+        get '/logging/authentication/events/search/ZZZZZZ'
 
         expect(last_response.status).to eq(200)
         json_response = JSON.parse(last_response.body)
@@ -114,7 +114,7 @@ describe App do
           )
         end
 
-        get '/authentication/events/search/VYKZDK'
+        get '/logging/authentication/events/search/VYKZDK'
       end
 
       it 'returns only 100 events' do

@@ -15,7 +15,7 @@ class App < Sinatra::Base
     'Healthy'
   end
 
-  get '/authentication/events/search/:username' do
+  get '/logging/authentication/events/search/:username' do
     username = params[:username]
     two_weeks_ago = Time.now - 2 * 7 * 24 * 60 * 60
     sessions = Session.where(username: username).where { start > two_weeks_ago }
