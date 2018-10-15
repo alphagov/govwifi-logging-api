@@ -15,14 +15,6 @@ class App < Sinatra::Base
     'Healthy'
   end
 
-  get '/logging/authentication/events/search/:username' do
-    username = params[:username]
-    two_weeks_ago = Time.now - 2 * 7 * 24 * 60 * 60
-    sessions = Session.where(username: username).where { start > two_weeks_ago }
-
-    json sessions.map(&:to_hash)
-  end
-
   get '/logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result' do
     post_auth_success = Logging::PostAuth.new.execute(params: params)
 
