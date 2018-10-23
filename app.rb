@@ -11,6 +11,10 @@ class App < Sinatra::Base
     enable :json
   end
 
+  configure :production, :staging do
+    set :dump_errors, false
+  end
+
   get '/healthcheck' do
     'Healthy'
   end
