@@ -6,13 +6,19 @@ require 'sinatra/json'
 require './lib/loader'
 
 class App < Sinatra::Base
-  configure :production, :staging, :development do
+  configure do
     enable :logging
     enable :json
+
+    set :logging, Logger::DEBUG
   end
 
   configure :production, :staging do
     set :dump_errors, false
+  end
+
+  configure :production do
+    set :logging, Logger::INFO
   end
 
   get '/healthcheck' do
