@@ -35,7 +35,7 @@ CREATE TABLE `sessions` (
   `start` timestamp NULL DEFAULT NULL,
   `stop` timestamp NULL DEFAULT NULL,
   `siteIP` char(15) DEFAULT NULL,
-  `username` char(6) DEFAULT NULL,
+  `username` char(64) DEFAULT NULL,
   `mac` char(17) DEFAULT NULL,
   `ap` char(17) DEFAULT NULL,
   `building_identifier` varchar(20) DEFAULT NULL,
