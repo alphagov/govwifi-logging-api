@@ -34,4 +34,14 @@ class App < Sinatra::Base
       status 404
     end
   end
+
+  get '/logging/post-auth/cert-name/?:cert_name?/cert-issuer/?:cert_issuer?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result' do
+    post_auth_success = Logging::PostAuth.new.execute(params: params)
+
+    if post_auth_success
+      status 204
+    else
+      status 404
+    end
+  end
 end
