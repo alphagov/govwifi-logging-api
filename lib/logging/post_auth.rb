@@ -5,6 +5,7 @@ module Logging
 
       return false unless access_accept? || access_reject?
       return handle_username_request if @params.key?(:username)
+
       create_cert_session
     end
 
@@ -17,9 +18,12 @@ module Logging
     end
 
     def create_cert_session
-      Session.create(session_params.merge(
-        cert_name: @params.fetch(:cert_name),cert_issuer: @params.fetch(:cert_issuer)
-      ))
+      Session.create(
+        session_params.merge(
+          cert_name: @params.fetch(:cert_name),
+          cert_issuer: @params.fetch(:cert_issuer)
+        )
+      )
     end
 
     def session_params
@@ -74,6 +78,7 @@ module Logging
 
     def handle_username_request
       return true if username == 'HEALTH'
+
       update_user_last_login unless access_reject?
       create_user_session
     end
