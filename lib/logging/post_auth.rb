@@ -4,7 +4,7 @@ module Logging
       @params = params
 
       return false unless access_accept? || access_reject?
-      return handle_username_request if @params.key?(:username)
+      return handle_username_request unless @params[:cert_name]
 
       create_cert_session
     end
