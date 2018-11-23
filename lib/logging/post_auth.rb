@@ -4,26 +4,36 @@ module Logging
       @params = params
 
       return false unless access_accept? || access_reject?
-      return true if username == 'HEALTH'
+      return handle_username_request unless @params[:cert_name]
 
-      update_user_last_login unless access_reject?
-      create_session
+      create_cert_session
     end
 
   private
 
     VALID_MAC_LENGTH = 17
 
-    def create_session
+    def create_user_session
+      Session.create(session_params.merge(username: username.to_s.upcase))
+    end
+
+    def create_cert_session
       Session.create(
+        session_params.merge(
+          cert_name: @params.fetch(:cert_name)
+        )
+      )
+    end
+
+    def session_params
+      {
         start: Time.now,
-        username: username.to_s.upcase,
         mac: formatted_mac(@params.fetch(:mac)),
         ap: ap(@params.fetch(:called_station_id)),
         siteIP: @params.fetch(:site_ip_address),
         building_identifier: building_identifier(@params.fetch(:called_station_id)),
         success: access_accept?
-      )
+      }
     end
 
     def update_user_last_login
@@ -63,6 +73,13 @@ module Logging
       return mac if valid_mac?(mac)
 
       ''
+    end
+
+    def handle_username_request
+      return true if username == 'HEALTH'
+
+      update_user_last_login unless access_reject?
+      create_user_session
     end
   end
 end
