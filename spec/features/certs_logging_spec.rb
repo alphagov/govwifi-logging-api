@@ -6,8 +6,8 @@ describe App do
 
   describe 'certificate post-auth logging' do
     shared_examples 'logging' do
-      let(:post_auth_request) { get "/logging/post-auth/user/#{username}/cert-name/#{cert_name}/mac//ap//site//result/#{authentication_result}" }
-      let(:cert_name) { URI.encode('Example Certificate Common Name') }
+      let(:post_auth_request) { get "/logging/post-auth/user/#{username}/cert-name/#{encoded_cert_name}/mac//ap//site//result/#{authentication_result}" }
+      let(:encoded_cert_name) { 'Example%20Certificate%20Common%20Name' }
       let(:authentication_result) { 'Access-Accept' }
 
       before { post_auth_request }
