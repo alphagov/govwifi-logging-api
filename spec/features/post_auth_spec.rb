@@ -9,7 +9,8 @@ describe App do
     let(:mac) { 'DA-59-19-8B-39-2D' }
     let(:called_station_id) { '01-39-38-25-2A-80' }
     let(:site_ip_address) { '93.11.238.187' }
-    let(:post_auth_request) { get "/logging/post-auth/user/#{username}/mac/#{mac}/ap/#{called_station_id}/site/#{site_ip_address}/result/#{authentication_result}" }
+    let(:cert_name) { '' }
+    let(:post_auth_request) { get "/logging/post-auth/user/#{username}/cert-name/#{cert_name}/mac/#{mac}/ap/#{called_station_id}/site/#{site_ip_address}/result/#{authentication_result}" }
     let(:user) { User.find(username: username) }
     let(:session) { Session.first }
 
@@ -22,6 +23,14 @@ describe App do
       context 'GovWifi user' do
         it 'creates a single session record' do
           expect(Session.count).to eq(1)
+        end
+
+        context 'given a certificate authentication' do
+          let(:cert_name) { 'some_cert_name' }
+
+          it 'records the cert name' do
+            expect(session.cert_name).to eq(cert_name)
+          end
         end
 
         context 'given a lowercase username' do
