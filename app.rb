@@ -25,16 +25,6 @@ class App < Sinatra::Base
     'Healthy'
   end
 
-  get '/logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result' do
-    post_auth_success = Logging::PostAuth.new.execute(params: params)
-
-    if post_auth_success
-      status 204
-    else
-      status 404
-    end
-  end
-
   get '/logging/post-auth/user/?:username?/cert-name/?:cert_name?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result' do
     post_auth_success = Logging::PostAuth.new.execute(params: params)
 
