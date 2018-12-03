@@ -31,4 +31,9 @@ module PerformancePlatform
   module Presenter; end
 end
 
+module Gdpr
+  module Gateway; end
+  module UseCase; end
+end
+
 require_all 'lib'
