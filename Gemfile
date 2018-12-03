@@ -7,7 +7,7 @@ gem 'puma'
 gem 'rake', '~> 12.3'
 gem 'require_all'
 gem 'sentry-raven'
-gem 'sequel', '~> 5.14'
+gem 'sequel', '~> 5.15'
 gem 'sinatra'
 gem 'sinatra-contrib'
 
