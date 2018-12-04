@@ -12,7 +12,7 @@ end
 
 task :publish_daily_statistics, [:date] => [:synchronize_ip_locations] do |_, args|
   args.with_defaults(date: Date.today.to_s)
-  logger.info("Publishing daily statistics with #{args}")
+  logger.info("Publishing daily statistics with #{args[:date]}")
   performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
   account_usage_gateway = PerformancePlatform::Gateway::AccountUsage.new(period: 'day', date: args[:date])
   account_usage_presenter = PerformancePlatform::Presenter::AccountUsage.new(date: args[:date])
@@ -24,7 +24,8 @@ task :publish_daily_statistics, [:date] => [:synchronize_ip_locations] do |_, ar
 end
 
 task :publish_weekly_statistics, [:date] do |_, args|
-  logger.info("Publishing weekly statistics with #{args}")
+  args.with_defaults(date: Date.today.to_s)
+  logger.info("Publishing weekly statistics with #{args[:date]}")
   performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
   unique_users_gateway = PerformancePlatform::Gateway::UniqueUsers.new(period: 'week', date: args[:date])
   unique_users_presenter = PerformancePlatform::Presenter::UniqueUsers.new(date: args[:date])
@@ -36,7 +37,8 @@ task :publish_weekly_statistics, [:date] do |_, args|
 end
 
 task :publish_monthly_statistics, [:date] do |_, args|
-  logger.info("Publishing monthly statistics with #{args}")
+  args.with_defaults(date: Date.today.to_s)
+  logger.info("Publishing monthly statistics with #{args[:date]}")
   performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
   unique_users_gateway = PerformancePlatform::Gateway::UniqueUsers.new(period: 'month', date: args[:date])
   unique_users_presenter = PerformancePlatform::Presenter::UniqueUsers.new(date: args[:date])
