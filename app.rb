@@ -7,10 +7,9 @@ require './lib/loader'
 
 class App < Sinatra::Base
   configure do
-    enable :logging
     enable :json
 
-    set :logging, Logger::DEBUG
+    set :log_level, Logger::DEBUG
   end
 
   configure :production, :staging do
@@ -18,7 +17,7 @@ class App < Sinatra::Base
   end
 
   configure :production do
-    set :logging, Logger::INFO
+    set :log_level, Logger::INFO
   end
 
   get '/healthcheck' do

@@ -98,6 +98,9 @@ GEM
     scss_lint (0.57.0)
       rake (>= 0.9, < 13)
       sass (~> 3.5.5)
+    sensible_logging (0.2.0)
+      activesupport (~> 5.2)
+      rack (~> 2.0)
     sentry-raven (2.7.4)
       faraday (>= 0.7.6, < 1.0)
     sequel (5.14.0)
@@ -142,6 +145,7 @@ DEPENDENCIES
   rake (~> 12.3)
   require_all
   rspec
+  sensible_logging (~> 0.2.0)
   sentry-raven
   sequel (~> 5.14)
   simplecov
@@ -154,4 +158,4 @@ RUBY VERSION
    ruby 2.5.1p57
 
 BUNDLED WITH
-   1.16.5
+   1.16.6
