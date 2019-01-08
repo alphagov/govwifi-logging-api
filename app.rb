@@ -9,13 +9,12 @@ require './lib/loader'
 class App < Sinatra::Base
   register Sinatra::SensibleLogging
 
+  sensible_logging(
+    logger: Logger.new(STDOUT)
+  )
+
   configure do
     enable :json
-
-    sensible_logging(
-      logger: Logger.new(STDOUT)
-    )
-
     set :log_level, Logger::DEBUG
   end
 
