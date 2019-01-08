@@ -10,7 +10,7 @@ gem 'sentry-raven'
 gem 'sequel', '~> 5.14'
 gem 'sinatra'
 gem 'sinatra-contrib'
-gem 'sensible_logging', '~> 0.2.0'
+gem 'sensible_logging', '~> 0.3.0'
 
 group :test do
   gem 'govuk-lint'
