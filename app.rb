@@ -7,7 +7,7 @@ require 'sinatra/json'
 require './lib/loader'
 
 class App < Sinatra::Base
-  register SensibleLogging
+  register Sinatra::SensibleLogging
 
   configure do
     enable :json
