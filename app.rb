@@ -1,16 +1,21 @@
 # frozen_string_literal: true
 
 require 'sequel'
+require 'sensible_logging'
 require 'sinatra/base'
 require 'sinatra/json'
 require './lib/loader'
 
 class App < Sinatra::Base
-  configure do
-    enable :logging
-    enable :json
+  register Sinatra::SensibleLogging
 
-    set :logging, Logger::DEBUG
+  sensible_logging(
+    logger: Logger.new(STDOUT)
+  )
+
+  configure do
+    enable :json
+    set :log_level, Logger::DEBUG
   end
 
   configure :production, :staging do
@@ -18,7 +23,7 @@ class App < Sinatra::Base
   end
 
   configure :production do
-    set :logging, Logger::INFO
+    set :log_level, Logger::INFO
   end
 
   get '/healthcheck' do
