@@ -108,7 +108,6 @@ def deploy_staging() {
 
 def deploy_production() {
   if(deployCancelled()) {
-    setBuildStatus("Build successful", "SUCCESS");
     return
   }
   deploy('production')
