@@ -2,11 +2,11 @@ describe Gdpr::Gateway::Session do
   let(:session) { DB[:sessions] }
   before { session.delete }
 
-  context 'Given some sessions are older than 3 months' do
+  context 'Given some sessions are older than 32 days' do
     before do
       session.insert(start: Date.today, username: 'bob')
       session.insert(start: Date.today, username: 'sally')
-      session.insert(start: Date.today - 120, username: 'george')
+      session.insert(start: Date.today - 33, username: 'george')
     end
 
     it 'deletes the old sessions' do
@@ -29,8 +29,8 @@ describe Gdpr::Gateway::Session do
 
   context 'Given all sessions are old' do
     before do
-      session.insert(start: Date.today - 120, username: 'Adam')
-      session.insert(start: Date.today - 120, username: 'Betty')
+      session.insert(start: Date.today - 33, username: 'Adam')
+      session.insert(start: Date.today - 33, username: 'Betty')
     end
 
     it 'deletes the sessions' do
