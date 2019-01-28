@@ -164,23 +164,6 @@ describe App do
     end
 
     context 'Invalid authentication result' do
-      context 'unknown string authentication result' do
-        let(:authentication_result) { 'unknown' }
-
-        it 'returns a 404 for anything other than Access-Accept or Access-Reject' do
-          expect(Session.count).to eq(0)
-          expect(last_response.status).to eq(404)
-        end
-      end
-
-      context 'Blank authentication result' do
-        let(:authentication_result) { '' }
-
-        it 'returns a 404 for anything other than Access-Accept or Access-Reject' do
-          expect(last_response.status).to eq(404)
-        end
-      end
-
       context 'Given parameters are missing from the GET request' do
         let(:authentication_result) { 'Access-Accept' }
         let(:username) { '' }
@@ -193,6 +176,13 @@ describe App do
 
         it 'creates a session record' do
           expect(Session.all.count).to eq(1)
+        end
+      end
+
+      context 'Non existent route' do
+        let(:post_auth_request) { get '/some-path/that/does/not/exist' }
+        it 'returns a 204 regardless of defined routes' do
+          expect(last_response.status).to eq(204)
         end
       end
     end
