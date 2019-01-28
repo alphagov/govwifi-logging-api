@@ -3,7 +3,6 @@ module Logging
     def execute(params:)
       @params = params
 
-      return false unless access_accept? || access_reject?
       return handle_username_request unless @params[:cert_name]
 
       create_cert_session
