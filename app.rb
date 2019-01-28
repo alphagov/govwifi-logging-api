@@ -37,7 +37,7 @@ class App < Sinatra::Base
   end
 
   get '/*' do
-    logger.info("Unhandled logging request: #{request}")
+    logger.info("Unhandled logging request: #{request.path}")
     status 204
   end
 end
