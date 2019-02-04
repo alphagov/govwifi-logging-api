@@ -15,19 +15,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
---
--- Temporary table structure for view `accountage`
---
-
-DROP TABLE IF EXISTS `accountage`;
-/*!50001 DROP VIEW IF EXISTS `accountage`*/;
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
-/*!50001 CREATE VIEW `accountage` AS SELECT
- 1 AS `username`,
- 1 AS `lastlogon`*/;
-SET character_set_client = @saved_cs_client;
-
 DROP TABLE IF EXISTS `sessions`;
 
 CREATE TABLE `sessions` (
@@ -52,38 +39,6 @@ CREATE TABLE `ip_locations` (
   `location_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-
---
--- Table structure for table `site`
---
-
-DROP TABLE IF EXISTS `site`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `site` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `radkey` varchar(48) DEFAULT NULL,
-  `kioskkey` char(5) DEFAULT NULL,
-  `datacontroller` varchar(100) DEFAULT NULL,
-  `address` varchar(200) DEFAULT NULL,
-  `postcode` varchar(10) DEFAULT NULL,
-  `activation_regex` varchar(100) DEFAULT NULL,
-  `activation_days` int(11) DEFAULT NULL,
-  `org_id` int(11) DEFAULT NULL,
-  `site_manager_id` int(11) DEFAULT NULL,
-  `dailycode` char(5) DEFAULT NULL,
-  `dailycodedate` smallint(6) DEFAULT NULL,
-  `hidden` tinyint(1) NOT NULL DEFAULT '0',
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=436 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `userdetails`
---
-
 DROP TABLE IF EXISTS `userdetails`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -103,23 +58,6 @@ CREATE TABLE `userdetails` (
   KEY `userdetails_created_at` (`created_at`),
   KEY `userdetails_contact` (`contact`),
   KEY `userdetails_last_login` (`last_login`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `siteip`
---
-
-DROP TABLE IF EXISTS `siteip`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `siteip` (
-  `ip` char(15) NOT NULL,
-  `site_id` int(11) DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`ip`),
-  KEY `siteip_site_id` (`site_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
