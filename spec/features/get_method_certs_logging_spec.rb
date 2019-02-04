@@ -4,7 +4,7 @@ describe App do
     DB[:userdetails].truncate
   end
 
-  describe 'certificate post-auth logging' do
+  describe 'certificate post-auth logging with GET' do
     shared_examples 'logging' do
       let(:post_auth_request) { get "/logging/post-auth/user/#{username}/cert-name/#{encoded_cert_name}/mac//ap//site//result/#{authentication_result}" }
       let(:encoded_cert_name) { 'Example%20Certificate%20Common%20Name' }

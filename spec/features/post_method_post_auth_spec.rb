@@ -10,7 +10,17 @@ describe App do
     let(:called_station_id) { '01-39-38-25-2A-80' }
     let(:site_ip_address) { '93.11.238.187' }
     let(:cert_name) { '' }
-    let(:post_auth_request) { get "/logging/post-auth/user/#{username}/cert-name/#{cert_name}/mac/#{mac}/ap/#{called_station_id}/site/#{site_ip_address}/result/#{authentication_result}" }
+    let(:request_body) {
+      {
+        username: username,
+        cert_name: cert_name,
+        mac: mac,
+        called_station_id: called_station_id,
+        site_ip_address: site_ip_address,
+        authentication_result: authentication_result
+      }.to_json
+    }
+    let(:post_auth_request) { post "/logging/post-auth", request_body }
     let(:user) { User.find(username: username) }
     let(:session) { Session.first }
 
@@ -101,7 +111,7 @@ describe App do
           end
 
           it 'does not save the building_identifier' do
-            expect(session.building_identifier).to be_nil
+            expect(session.building_identifier).to be_empty
           end
         end
 
