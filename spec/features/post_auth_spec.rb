@@ -188,13 +188,6 @@ describe App do
           expect(Session.all.count).to eq(1)
         end
       end
-
-      context 'Non existent route' do
-        let(:post_auth_request) { get '/some-path/that/does/not/exist' }
-        it 'returns a 204 regardless of defined routes' do
-          expect(last_response.status).to eq(204)
-        end
-      end
     end
   end
 end

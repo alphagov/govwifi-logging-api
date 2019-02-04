@@ -31,20 +31,9 @@ class App < Sinatra::Base
     'Healthy'
   end
 
-  get '/logging/post-auth/user/?:username?/cert-name/?:cert_name?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result' do
-    Logging::PostAuth.new.execute(params: params)
-
-    status 204
-  end
-
   post '/logging/post-auth' do
     Logging::PostAuth.new.execute(params: JSON.parse(request.body.read))
 
-    status 204
-  end
-
-  get '/*' do
-    logger.info("Unhandled logging request: #{request.path}")
     status 204
   end
 end
