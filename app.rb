@@ -10,8 +10,7 @@ class App < Sinatra::Base
   register Sinatra::SensibleLogging
 
   sensible_logging(
-    logger: Logger.new(STDOUT),
-    log_tags: [->(request) { [request.body.read] }]
+    logger: Logger.new(STDOUT)
   )
 
   configure do
