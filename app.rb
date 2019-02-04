@@ -36,6 +36,12 @@ class App < Sinatra::Base
     status 204
   end
 
+  post '/logging/post-auth' do
+    Logging::PostAuth.new.execute(params: JSON.parse(request.body.read))
+
+    status 204
+  end
+
   get '/*' do
     logger.info("Unhandled logging request: #{request.path}")
     status 204
