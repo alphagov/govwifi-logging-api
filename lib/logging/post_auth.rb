@@ -35,6 +35,14 @@ module Logging
       }
     end
 
+    def update_user_last_login
+      user = User.find(username: username)
+      return unless user
+
+      user.last_login = Time.now
+      user.save
+    end
+
     def access_reject?
       @params.fetch(:authentication_result) == 'Access-Reject'
     end
@@ -69,6 +77,7 @@ module Logging
     def handle_username_request
       return true if username == 'HEALTH'
 
+      update_user_last_login unless access_reject?
       create_user_session
     end
   end

@@ -108,6 +108,11 @@ describe App do
         context 'HEALTH user' do
           let(:username) { 'HEALTH' }
 
+          it 'does not update the last login' do
+            post_auth_request
+            expect(user.last_login).to be_nil
+          end
+
           it 'returns a 204 status code' do
             expect(last_response.status).to eq(204)
           end
@@ -131,6 +136,11 @@ describe App do
 
       it_behaves_like 'it saves the right logging information'
 
+      it 'updates the user last login' do
+        post_auth_request
+        expect(user.last_login).to_not be_nil
+      end
+
       it 'sets success to true' do
         post_auth_request
         expect(Session.last.success).to eq(true)
@@ -141,6 +151,11 @@ describe App do
       let(:authentication_result) { 'Access-Reject' }
 
       it_behaves_like 'it saves the right logging information'
+
+      it 'does not update the user last login' do
+        post_auth_request
+        expect(user.last_login).to be_nil
+      end
 
       it 'sets success to false' do
         post_auth_request
