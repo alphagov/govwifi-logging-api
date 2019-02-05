@@ -1,7 +1,7 @@
 describe App do
   before do
     DB[:sessions].truncate
-    DB[:userdetails].truncate
+    USER_DB[:userdetails].truncate
   end
 
   describe 'POST post-auth' do
