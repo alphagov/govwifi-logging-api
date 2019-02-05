@@ -13,6 +13,15 @@ DB = Sequel.connect(
   read_timeout: 9999
 )
 
+USER_DB = Sequel.connect(
+  adapter: 'mysql2',
+  host: ENV.fetch('USER_DB_HOSTNAME'),
+  database: ENV.fetch('USER_DB_NAME'),
+  user: ENV.fetch('USER_DB_USER'),
+  password: ENV.fetch('USER_DB_PASS'),
+  read_timeout: 9999
+)
+
 if %w[production staging].include?(ENV['RACK_ENV'])
   require 'raven'
 
