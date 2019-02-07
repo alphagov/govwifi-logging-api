@@ -3,6 +3,21 @@
 The GovWifi frontend uses this API to record each session with successful authentications.
 N.B. The private GovWifi [build repository][build-repo] contains instructions on how to build GovWifi end-to-end - the sites, services and infrastructure.
 
+## Table of Contents
+
+- [Overview](#overview)
+  - [Sinatra routes](#sinatra-routes)
+  - [Statistics sent over to the performance platform](#statistics-sent-over-to-the-performance-platform)
+    - [Send statistics manually](#send-statistics-manually)
+      - [Account Usage](#account-usage)
+      - [Unique Users](#unique-users)
+- [Developing](#developing)
+  - [Running the tests](#running-the-tests)
+  - [Using the linter](#using-the-linter)
+  - [Serving the app locally](#serving-the-app-locally)
+  - [Deploying changes](#deploying-changes)
+- [Licence](#licence)
+
 ## Overview
 
 Also known as `post-auth` in FreeRadius terms, this logs to the sessions table when a user has authenticated successfully.
@@ -20,7 +35,13 @@ It stores the following details along with this:
 
 This is useful for debugging and populating last_login of the user.
 
-### Statistics sent over to the performance platform
+### Sinatra routes
+
+* `GET /healthcheck` - AWS ELB target group health checking
+* `GET /logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result` - Persist a
+  session record with these details
+
+## Statistics sent over to the performance platform
 
 - Account Usage
 - Unique Users
@@ -42,12 +63,6 @@ aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-w
 ```shell
 aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_weekly_statistics['2018-09-24']\"] }] }" --region eu-west-2
 ```
-
-### Sinatra routes
-
-* `GET /healthcheck` - AWS ELB target group health checking
-* `GET /logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result` - Persist a
-  session record with these details
 
 ## Developing
 
