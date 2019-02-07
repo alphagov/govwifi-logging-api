@@ -1,6 +1,8 @@
 # GovWifi Logging API
 
-Session logging for successful authentications
+The frontend uses this API to record each session with successful authentications.
+
+The private GovWifi [build repository][build-repo] contains instructions on how to build GovWifi end-to-end - the sites, services and infrastructure.
 
 ## Overview
 
@@ -8,7 +10,7 @@ Also known as post-auth in Freeradius terms, this logs to the sessions table whe
 
 This application is also responsible for sending statistics to the Performance Platform.
 
-### It stores the following details along with this:
+It stores the following details along with this:
 
 - username
 - MAC
@@ -50,10 +52,13 @@ aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-w
 
 ### Running the tests
 
-You can run the tests and linter with the following commands:
-
 ```shell
 make test
+```
+
+### Using the linter
+
+```shell
 make lint
 ```
 
@@ -65,6 +70,16 @@ make serve
 
 ### Deploying changes
 
-Once you have merged your changes into master branch.  Deploying is made up of
-two steps.  Pushing a built image to the docker registry from Jenkins, and
-restarting the running tasks so it picks up the latest image.
+Once you have merged your changes into master branch, deploying them is made up of
+two steps:
+
+* Pushing a built image to the docker registry from Jenkins.
+
+* Restarting the running tasks so it picks up the latest image.
+
+## Licence
+
+This codebase is released under [the MIT License][mit].
+
+[mit]: LICENCE
+[build-repo]:https://github.com/alphagov/govwifi-build
