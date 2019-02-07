@@ -37,8 +37,8 @@ This is useful for debugging and populating last_login of the user.
 
 ### Sinatra routes
 
-* `GET /healthcheck` - AWS ELB target group health checking
-* `GET /logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result` - Persist a
+- `GET /healthcheck` - AWS ELB target group health checking
+- `GET /logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result` - Persist a
   session record with these details
 
 ## Statistics sent over to the performance platform
@@ -86,12 +86,8 @@ make serve
 
 ### Deploying changes
 
-Once you have merged your changes into master branch, deploying them is made up of
-two steps:
-
-* Pushing a built image to the docker registry from Jenkins.
-
-* Restarting the running tasks so it picks up the latest image.
+Merging to `master` will automatically deploy this API to staging.
+To deploy to production, choose _Deploy to production_ in the jenkins pipeline when prompted.
 
 ## Licence
 
