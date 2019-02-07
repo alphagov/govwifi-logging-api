@@ -1,12 +1,13 @@
 # GovWifi Logging API
 
-The frontend uses this API to record each session with successful authentications.
-
-The private GovWifi [build repository][build-repo] contains instructions on how to build GovWifi end-to-end - the sites, services and infrastructure.
+The GovWifi frontend uses this API to record each session with successful authentications.
+N.B. The private GovWifi [build repository][build-repo] contains instructions on how to build GovWifi end-to-end - the sites, services and infrastructure.
 
 ## Overview
 
-Also known as post-auth in Freeradius terms, this logs to the sessions table when a user has authenticated successfuly.
+Also known as `post-auth` in FreeRadius terms, this logs to the sessions table when a user has authenticated successfully.
+
+During the RADIUS `post-auth` action, a POST request is sent to this API containing session data. This API receives this request and saves it to a database.
 
 This application is also responsible for sending statistics to the Performance Platform.
 
