@@ -1,6 +1,7 @@
 # GovWifi Logging API
 
 The GovWifi frontend uses this API to record each authentication request. It is stored in a database and this data is used for reporting and debugging.
+
 N.B. The private GovWifi [build repository][build-repo] contains instructions on how to build GovWifi end-to-end - the sites, services and infrastructure.
 
 ## Table of Contents
@@ -12,9 +13,6 @@ N.B. The private GovWifi [build repository][build-repo] contains instructions on
       - [Account Usage](#account-usage)
       - [Unique Users](#unique-users)
 - [Developing](#developing)
-  - [Running the tests](#running-the-tests)
-  - [Using the linter](#using-the-linter)
-  - [Serving the app locally](#serving-the-app-locally)
   - [Deploying changes](#deploying-changes)
 - [Licence](#licence)
 
@@ -66,23 +64,11 @@ aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-w
 
 ## Developing
 
-### Running the tests
+The [Makefile](Makefile) contains commonly used commands for working with this app:
 
-```shell
-make test
-```
-
-### Using the linter
-
-```shell
-make lint
-```
-
-### Serving the app locally
-
-```shell
-make serve
-```
+* `make test` runs all the automated tests.
+* `make serve` starts the API server on localhost.
+* `make lint` runs the gov-uk linter.
 
 ### Deploying changes
 
