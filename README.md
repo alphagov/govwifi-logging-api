@@ -1,6 +1,6 @@
 # GovWifi Logging API
 
-The GovWifi frontend uses this API to record each session with successful authentications.
+The GovWifi frontend uses this API to record each authentication request. It is stored in a database and this data is used for reporting and debugging.
 N.B. The private GovWifi [build repository][build-repo] contains instructions on how to build GovWifi end-to-end - the sites, services and infrastructure.
 
 ## Table of Contents
@@ -20,7 +20,7 @@ N.B. The private GovWifi [build repository][build-repo] contains instructions on
 
 ## Overview
 
-Also known as `post-auth` in FreeRadius terms, this logs to the sessions table when a user has authenticated successfully.
+Also known as `post-auth` in FreeRadius terms, this logs to the sessions table when a user has authenticated successfully or unsuccessfully.
 
 During the RADIUS `post-auth` action, a POST request is sent to this API containing session data. This API receives this request and saves it to a database.
 
@@ -37,8 +37,8 @@ This is useful for debugging and populating last_login of the user.
 
 ### Sinatra routes
 
-- `GET /healthcheck` - AWS ELB target group health checking
-- `GET /logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result` - Persist a
+- `POST /healthcheck` - AWS ELB target group health checking
+- `POST /logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result` - Persist a
   session record with these details
 
 ## Statistics sent over to the performance platform
