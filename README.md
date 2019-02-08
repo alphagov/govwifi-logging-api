@@ -1,14 +1,30 @@
 # GovWifi Logging API
 
-Session logging for successful authentications
+The GovWifi frontend uses this API to record each authentication request. It is stored in a database and this data is used for reporting and debugging.
+
+N.B. The private GovWifi [build repository][build-repo] contains instructions on how to build GovWifi end-to-end - the sites, services and infrastructure.
+
+## Table of Contents
+
+- [Overview](#overview)
+  - [Sinatra routes](#sinatra-routes)
+  - [Statistics sent over to the performance platform](#statistics-sent-over-to-the-performance-platform)
+    - [Send statistics manually](#send-statistics-manually)
+      - [Account Usage](#account-usage)
+      - [Unique Users](#unique-users)
+- [Developing](#developing)
+  - [Deploying changes](#deploying-changes)
+- [Licence](#licence)
 
 ## Overview
 
-Also known as post-auth in Freeradius terms, this logs to the sessions table when a user has authenticated successfuly.
+Also known as `post-auth` in FreeRadius terms, this logs to the sessions table when a user has authenticated successfully or unsuccessfully.
+
+During the RADIUS `post-auth` action, a POST request is sent to this API containing session data. This API receives this request and saves it to a database.
 
 This application is also responsible for sending statistics to the Performance Platform.
 
-### It stores the following details along with this:
+It stores the following details along with this:
 
 - username
 - MAC
@@ -17,7 +33,21 @@ This application is also responsible for sending statistics to the Performance P
 
 This is useful for debugging and populating last_login of the user.
 
-### Statistics sent over to the performance platform
+### Sinatra routes
+
+- `GET /healthcheck` - AWS ELB target group health checking
+- `POST /logging/post-auth` - Persist a session record with these details:
+
+```shell
+params:
+  :username
+  :mac
+  :called_station_id
+  :site_ip_address
+  :authentication_result
+```
+
+## Statistics sent over to the performance platform
 
 - Account Usage
 - Unique Users
@@ -40,31 +70,22 @@ aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-w
 aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_weekly_statistics['2018-09-24']\"] }] }" --region eu-west-2
 ```
 
-### Sinatra routes
-
-* `GET /healthcheck` - AWS ELB target group health checking
-* `GET /logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result` - Persist a
-  session record with these details
-
 ## Developing
 
-### Running the tests
+The [Makefile](Makefile) contains commonly used commands for working with this app:
 
-You can run the tests and linter with the following commands:
-
-```shell
-make test
-make lint
-```
-
-### Serving the app locally
-
-```shell
-make serve
-```
+* `make test` runs all the automated tests.
+* `make serve` starts the API server on localhost.
+* `make lint` runs the gov-uk linter.
 
 ### Deploying changes
 
-Once you have merged your changes into master branch.  Deploying is made up of
-two steps.  Pushing a built image to the docker registry from Jenkins, and
-restarting the running tasks so it picks up the latest image.
+Merging to `master` will automatically deploy this API to staging.
+To deploy to production, choose _Deploy to production_ in the jenkins pipeline when prompted.
+
+## Licence
+
+This codebase is released under [the MIT License][mit].
+
+[mit]: LICENCE
+[build-repo]:https://github.com/alphagov/govwifi-build
