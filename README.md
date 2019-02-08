@@ -35,9 +35,17 @@ This is useful for debugging and populating last_login of the user.
 
 ### Sinatra routes
 
-- `POST /healthcheck` - AWS ELB target group health checking
-- `POST /logging/post-auth/user/?:username?/mac/?:mac?/ap/?:called_station_id?/site/?:site_ip_address?/result/:authentication_result` - Persist a
-  session record with these details
+- `GET /healthcheck` - AWS ELB target group health checking
+- `POST /logging/post-auth` - Persist a session record with these details:
+
+```shell
+params:
+  :username
+  :mac
+  :called_station_id
+  :site_ip_address
+  :authentication_result
+```
 
 ## Statistics sent over to the performance platform
 
