@@ -77,7 +77,7 @@ module Logging
     def handle_username_request
       return true if username == 'HEALTH'
 
-      # update_user_last_login unless access_reject?
+      update_user_last_login unless access_reject?
       create_user_session
     end
   end
