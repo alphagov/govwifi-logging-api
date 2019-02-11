@@ -10,7 +10,13 @@ class App < Sinatra::Base
   register Sinatra::SensibleLogging
 
   sensible_logging(
-    logger: Logger.new(STDOUT)
+    logger: Logger.new(STDOUT),
+    log_tags: [->(req) {
+      req.body.rewind
+      [
+        req.body.read
+      ].tap { req.body.rewind }
+    }]
   )
 
   configure do
