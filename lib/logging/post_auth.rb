@@ -36,11 +36,7 @@ module Logging
     end
 
     def update_user_last_login
-      user = User.find(username: username)
-      return unless user
-
-      user.last_login = Time.now
-      user.save
+      User.where(username: username).update(last_login: Time.now)
     end
 
     def access_reject?
