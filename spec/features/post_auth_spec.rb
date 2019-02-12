@@ -21,15 +21,15 @@ describe App do
       }.to_json
     }
     let(:post_auth_request) { post "/logging/post-auth", request_body }
+    let!(:create_user) { User.create(username: username) }
     let(:user) { User.find(username: username) }
     let(:session) { Session.first }
 
     before do
-      User.create(username: username)
       post_auth_request
     end
 
-    shared_examples 'it saves the right logging information' do
+    shared_examples 'it saves the right logging information inner' do |has_user=true|
       context 'GovWifi user' do
         it 'creates a single session record' do
           expect(Session.count).to eq(1)
@@ -121,7 +121,7 @@ describe App do
           it 'does not update the last login' do
             post_auth_request
             expect(user.last_login).to be_nil
-          end
+          end unless !has_user
 
           it 'returns a 204 status code' do
             expect(last_response.status).to eq(204)
@@ -138,6 +138,17 @@ describe App do
         it 'saves the MAC formatted' do
           expect(Session.last.mac).to eq('50-A6-7F-84-9C-D1')
         end
+      end
+    end
+
+    shared_examples 'it saves the right logging information' do
+      context 'With a user in the database' do
+        it_behaves_like 'it saves the right logging information inner'
+      end
+
+      context 'Without a user in the database' do
+        let!(:create_user) { nil }
+        it_behaves_like 'it saves the right logging information inner', has_user=false
       end
     end
 
