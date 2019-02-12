@@ -7,6 +7,7 @@ require 'sinatra/json'
 require './lib/loader'
 
 class App < Sinatra::Base
+  use Raven::Rack if defined? Raven
   register Sinatra::SensibleLogging
 
   sensible_logging(
