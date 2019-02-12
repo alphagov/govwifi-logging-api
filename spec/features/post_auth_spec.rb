@@ -21,11 +21,11 @@ describe App do
       }.to_json
     }
     let(:post_auth_request) { post "/logging/post-auth", request_body }
+    let!(:create_user) { User.create(username: username) }
     let(:user) { User.find(username: username) }
     let(:session) { Session.first }
 
     before do
-      User.create(username: username)
       post_auth_request
     end
 
@@ -155,6 +155,19 @@ describe App do
         post_auth_request
         expect(Session.last.success).to eq(true)
       end
+
+      context 'Without a user in the database' do
+        let!(:create_user) { nil }
+
+        it 'has not updated a non-existent user' do
+          expect(user).to be_nil
+        end
+
+        it 'sets success to true' do
+          expect(Session.last.success).to eq(true)
+        end
+      end
+
     end
 
     context 'Access-Reject' do
