@@ -167,7 +167,6 @@ describe App do
           expect(Session.last.success).to eq(true)
         end
       end
-
     end
 
     context 'Access-Reject' do
