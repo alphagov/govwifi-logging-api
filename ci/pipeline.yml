@@ -1,0 +1,31 @@
+---
+resources:
+- name: govwifi-logging-api
+  type: git
+  source:
+    uri: https://github.com/alphagov/govwifi-logging-api.git
+    branch: concourse-spike
+
+jobs:
+  - name: job-run-tests
+    plan:
+      - get: govwifi-logging-api
+      - task: run-specs
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: ruby
+              tag: 2.5.1-alpine
+          inputs:
+            - name: govwifi-logging-api
+          run:
+            path: sh
+            dir: govwifi-logging-api
+            args:
+              - -exc
+              - |
+                ./ci/setup.sh
+                && bundle
+                && bundle exec rspec
