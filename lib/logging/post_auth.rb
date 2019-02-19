@@ -21,7 +21,7 @@ module Logging
     end
 
     def malformed_username
-      print 'username that was used is larger than 6 characters and has errored silently'
+      puts 'username that was used is larger than 6 characters and has errored silently'
     end
 
     def create_cert_session
