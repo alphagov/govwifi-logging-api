@@ -191,7 +191,7 @@ describe App do
   context 'given a username longer than 6 characters' do
     it 'stops the error from blowing up' do
       username = "very_long_username"
-      expect { get "/logging/post-auth/user/#{username}/cert-name//mac//ap//site//result/success"}.to_not raise_error
+      expect { get "/logging/post-auth/user/#{username}/cert-name//mac//ap//site//result/success" }.to_not raise_error
     end
   end
 end
