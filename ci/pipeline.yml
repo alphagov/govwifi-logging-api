@@ -11,11 +11,11 @@ jobs:
     plan:
       - get: govwifi-logging-api
       - task: lint
-        file: ci/tasks/lint.yml
+        file: govwifi-logging-api/ci/tasks/lint.yml
         privileged: true
   - name: test
     plan:
       - get: govwifi-logging-api
       - task: test
-        file: ci/tasks/test.yml
+        file: govwifi-logging-api/ci/tasks/test.yml
         privileged: true
