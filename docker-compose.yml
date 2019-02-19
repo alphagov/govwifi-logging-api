@@ -6,16 +6,16 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: govwifi_test
-    ports:
-      - "13306:3306"
+    expose:
+      - "3306"
 
   user_db:
     build: ./mysql_user
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: govwifi_user_test
-    ports:
-      - "13307:3306"
+    expose:
+      - "3306"
 
   app:
     build: .
@@ -28,5 +28,5 @@ services:
       USER_DB_PASS: root
       USER_DB_USER: root
       USER_DB_HOSTNAME: user_db
-    ports:
-      - "8080:8080"
+    expose:
+      - "8080"
