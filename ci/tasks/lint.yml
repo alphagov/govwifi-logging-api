@@ -1,0 +1,28 @@
+---
+platform: linux
+
+image_resource:
+  type: docker-image
+  source:
+    repository: amidos/dcind
+
+inputs:
+  - name: govwifi-logging-api
+
+run:
+  dir: govwifi-logging-api
+  path: sh
+  args:
+    - -exc
+    - |
+      # systemdependencies
+      apk update && apk add bash make
+
+      # hoist dockerd
+      source /docker-lib.sh
+      start_docker
+
+      # run linter
+      make lint
+
+      # cleanup
