@@ -187,4 +187,11 @@ describe App do
       end
     end
   end
+
+  context 'given a username longer than 6 characters' do
+    it 'stops the error from blowing up' do
+      username = "very_long_username"
+      get "/logging/post-auth/user/#{username}/cert-name//mac//ap//site//result/success"
+    end
+  end
 end

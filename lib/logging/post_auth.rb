@@ -13,7 +13,15 @@ module Logging
     VALID_MAC_LENGTH = 17
 
     def create_user_session
-      Session.create(session_params.merge(username: username.to_s.upcase))
+      if username.to_s.length > 6
+        malformed_username
+      else
+        Session.create(session_params.merge(username: username.to_s.upcase))
+      end
+    end
+
+    def malformed_username
+      print 'username that was used is larger than 6 characters and has errored silently'
     end
 
     def create_cert_session
