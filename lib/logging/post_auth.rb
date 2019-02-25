@@ -10,8 +10,6 @@ module Logging
 
   private
 
-    VALID_MAC_LENGTH = 17
-
     def create_user_session
       if invalid_username?(username)
         handle_invalid_username
@@ -40,7 +38,7 @@ module Logging
       {
         start: Time.now,
         mac: @params.fetch('mac'),
-        ap: ap(@params.fetch('called_station_id')),
+        ap: @params.fetch('called_station_id'),
         siteIP: @params.fetch('site_ip_address'),
         building_identifier: @params.fetch('called_station_id'),
         success: access_accept?
@@ -61,14 +59,6 @@ module Logging
 
     def username
       @params.fetch('username')
-    end
-
-    def ap(mac)
-      valid_mac?(mac) ? mac : ''
-    end
-
-    def valid_mac?(mac)
-      mac.to_s.length == VALID_MAC_LENGTH
     end
 
     def handle_username_request
