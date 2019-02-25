@@ -62,7 +62,7 @@ describe App do
           expect(session.siteIP).to eq(site_ip_address)
         end
 
-        context 'Given the "Called Station ID" is an MAC address' do
+        context 'Given the "Called Station ID" is a MAC address' do
           let(:called_station_id) { '01-39-38-25-2A-80' }
 
           it 'saves it as the access point' do
@@ -71,23 +71,6 @@ describe App do
 
           it 'does not save it as the building identifier' do
             expect(session.building_identifier).to be_nil
-          end
-
-          context 'Given the Called Station ID needs to be formatted' do
-            let(:called_station_id) { 'aa-bb-cc-25-2a-80' }
-
-            it 'formats the Called Station ID' do
-              expect(session.ap).to eq('AA-BB-CC-25-2A-80')
-            end
-          end
-
-          context 'Given a Called Station ID has extra trailing characters' do
-            let(:called_station_id) { 'C4-13-E2-22-DC-55%3ASTAGING-GovWifi' }
-
-            it 'Formats it and considers it a valid access point' do
-              expect(session.ap).to eq('C4-13-E2-22-DC-55')
-              expect(session.building_identifier).to be_nil
-            end
           end
         end
 
@@ -130,13 +113,6 @@ describe App do
           it 'does not create a session record' do
             expect(Session.count).to eq(0)
           end
-        end
-      end
-
-      context 'MAC Formatter' do
-        let(:mac) { '50a67f849cd1' }
-        it 'saves the MAC formatted' do
-          expect(Session.last.mac).to eq('50-A6-7F-84-9C-D1')
         end
       end
     end
