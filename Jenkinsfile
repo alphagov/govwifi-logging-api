@@ -31,6 +31,17 @@ pipeline {
       }
     }
 
+    stage('Acceptance Tests') {
+      agent none
+      when {
+        branch 'master'
+        beforeAgent true
+      }
+      steps {
+        build 'govwifi-acceptance-tests/master'
+      }
+    }
+
     stage('Publish stable tag') {
       agent any
       when{
