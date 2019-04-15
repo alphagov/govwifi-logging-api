@@ -1,12 +1,12 @@
 #!/bin/bash
 
-./govwifi-admin/ci/tasks/scripts/with-docker.sh
+./src/ci/tasks/scripts/with-docker.sh
 
 workspace_dir="${PWD}"
 prebuilt_dir="${workspace_dir}/${PREBUILT_TAG}"
 prebuilt_cached_dir="${workspace_dir}/${PREBUILT_CACHED_DIR}"
 
-cd govwifi-admin || exit
+cd src || exit
 
 make prebuild
 docker tag "$(docker-compose images -q app)" "${PREBUILT_TAG}"

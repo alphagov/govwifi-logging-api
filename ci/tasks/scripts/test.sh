@@ -1,9 +1,9 @@
 #!/bin/bash
 
-./govwifi-admin/ci/tasks/scripts/with-docker.sh
+./src/ci/tasks/scripts/with-docker.sh
 
 workspace_dir="${PWD}"
-cd govwifi-admin || exit
+cd src || exit
 
 make test
 
