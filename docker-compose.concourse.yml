@@ -9,4 +9,3 @@ services:
     build:
       cache_from:
         - app-prebuilt
-
