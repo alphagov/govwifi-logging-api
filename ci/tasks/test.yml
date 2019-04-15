@@ -5,7 +5,7 @@ inputs:
   - name: src
 
 params:
-  USE_CONCOURSE_COMPOSE: true
+  ON_CONCOURSE: true
 
 run:
   path: src/ci/tasks/scripts/test.sh
