@@ -3,7 +3,7 @@
 ./src/ci/tasks/scripts/with-docker.sh
 
 workspace_dir="${PWD}"
-prebuilt_dir="${workspace_dir}/${PREBUILT_TAG}"
+prebuilt_dir="${workspace_dir}/docker-cache/${PREBUILT_TAG}"
 prebuilt_cached_dir="${workspace_dir}/${PREBUILT_CACHED_DIR}"
 
 cd src || exit

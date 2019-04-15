@@ -8,9 +8,8 @@ start_docker
 function load_layers() {
 
   # don't do anything if we don't have cache
-  if [[ ! -d 'docker-cache' ]]; then
-    [[ -z "$(ls docker-cache)" ]] && return 0;
-  fi
+  [[ ! -d 'docker-cache' ]] && return 0;
+  [[ -z "$(ls docker-cache)" ]] && return 0;
 
   echo "loading docker layer cache"
   pids=
