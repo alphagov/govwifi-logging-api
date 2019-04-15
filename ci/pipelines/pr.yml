@@ -90,7 +90,7 @@ update-status-commands:
       skip_download: true
 
   update-status-params-base: &update-status-params-base
-    path: govwifi-admin
+    path: src
     context: 'pr'
 
   update-status-pending: &update-status-pending
