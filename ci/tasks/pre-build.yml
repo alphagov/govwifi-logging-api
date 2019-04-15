@@ -5,7 +5,8 @@ inputs:
   - name: src
 
 outputs:
-  - name: docker-cache/src-prebuilt
+  # aligns with PREBUILT_TAG
+  - name: docker-cache/app-prebuilt
 
 caches:
   - path: docker-cache/src-prebuilt-cached

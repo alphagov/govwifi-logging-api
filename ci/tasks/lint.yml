@@ -3,6 +3,9 @@ platform: linux
 
 inputs:
   - name: src
+  - name: docker-cache/ruby-image
+  - name: docker-cache/mysql-image
+  - name: docker-cache/app-prebuilt
 
 params:
   ON_CONCOURSE: true
