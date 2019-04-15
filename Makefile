@@ -4,7 +4,6 @@ ifdef DEPLOYMENT
 	BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --without test'
 endif
 
-DOCKER_BUILD_CMD = docker-compose build $(BUNDLE_FLAGS)
 
 BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --jobs 20 --retry 5'
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
@@ -23,8 +22,17 @@ ifndef JENKINS_URL
   endif
 endif
 
+DOCKER_BUILD_CMD = $(DOCKER_COMPOSE) build $(BUNDLE_FLAGS)
+
+
 build: stop
+ifndef ON_CONCOURSE
 	$(DOCKER_BUILD_CMD)
+endif
+
+prebuild:
+	$(DOCKER_BUILD_CMD)
+	$(DOCKER_COMPOSE) up --no-start
 
 serve: build
 	$(DOCKER_COMPOSE) up -d db
