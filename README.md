@@ -61,22 +61,22 @@ Populate the date argument to the Rake task with the date that you want to send 
 #### Account Usage
 
 ```shell
-aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_daily_statistics['2018-09-24']\"] }] }" --region eu-west-2
+aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_daily_statistics['2018-12-01']\"] }] }" --network-configuration "{ \"awsvpcConfiguration\": { \"assignPublicIp\": \"ENABLED\", \"subnets\": [\"subnet-XXXXXXX\", \"subnet-XXXXXX\"],\"securityGroups\": [\"sg-XXXXXX\"]}}" --region eu-west-2 --launch-type FARGATE
 ```
 
 #### Unique Users
 
 ```shell
-aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_weekly_statistics['2018-09-24']\"] }] }" --region eu-west-2
+aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_monthly_statistics['2018-12-01']\"] }] }" --network-configuration "{ \"awsvpcConfiguration\": { \"assignPublicIp\": \"ENABLED\", \"subnets\": [\"subnet-XXXXXXX\", \"subnet-XXXXXX\"],\"securityGroups\": [\"sg-XXXXXX\"]}}" --region eu-west-2 --launch-type FARGATE
 ```
 
 ## Developing
 
 The [Makefile](Makefile) contains commonly used commands for working with this app:
 
-* `make test` runs all the automated tests.
-* `make serve` starts the API server on localhost.
-* `make lint` runs the gov-uk linter.
+- `make test` runs all the automated tests.
+- `make serve` starts the API server on localhost.
+- `make lint` runs the gov-uk linter.
 
 ### Deploying changes
 
@@ -88,4 +88,4 @@ To deploy to production, choose _Deploy to production_ in the jenkins pipeline w
 This codebase is released under [the MIT License][mit].
 
 [mit]: LICENCE
-[build-repo]:https://github.com/alphagov/govwifi-build
+[build-repo]: https://github.com/alphagov/govwifi-build
