@@ -7,9 +7,10 @@ ENV S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY 'stub-key'
 WORKDIR /usr/src/app
 
 COPY Gemfile Gemfile.lock .ruby-version ./
-RUN apk --no-cache add build-base mysql-dev && \
+RUN apk --no-cache add --virtual .build-deps build-base && \
+  apk --no-cache add mysql-dev && \
   ${BUNDLE_INSTALL_CMD} && \
-  apk del build-base
+  apk del .build-deps
 
 COPY . .
 
