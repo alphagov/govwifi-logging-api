@@ -1,4 +1,4 @@
-class PerformancePlatform::Presenter::AccountUsage
+class PerformancePlatform::Presenter::ActiveUsers
   def initialize(date: Date.today.to_s)
     @date = Date.parse(date)
   end
@@ -12,8 +12,6 @@ class PerformancePlatform::Presenter::AccountUsage
       payload: [
         as_hash(stats[:total], 'total'),
         as_hash(stats[:transactions], 'transactions'),
-        as_hash(stats[:roaming], 'roaming'),
-        as_hash(stats[:one_time], 'one-time'),
       ]
     }
   end
