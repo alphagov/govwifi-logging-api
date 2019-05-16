@@ -8,8 +8,7 @@ class PerformancePlatform::Gateway::ActiveUsers
     result = repository.active_users_stats(period: period, date: date) || Hash.new(0)
 
     {
-      total: result[:total].to_i,
-      transactions: result[:total],
+      users: result[:total],
       metric_name: 'active-users',
       period: period
     }

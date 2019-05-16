@@ -28,8 +28,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
 
       it 'counts each user' do
         expect(result).to eq(
-          total: 2,
-          transactions: 2,
+          users: 2,
           metric_name: "active-users",
           period: "week"
         )
@@ -55,8 +54,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
 
       it 'counts each user only once' do
         expect(result).to eq(
-          total: 1,
-          transactions: 1,
+          users: 1,
           metric_name: "active-users",
           period: "week"
         )
@@ -82,8 +80,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
 
       it 'does not count the users outside the week' do
         expect(result).to eq(
-          total: 1,
-          transactions: 1,
+          users: 1,
           metric_name: "active-users",
           period: "week"
         )
@@ -109,8 +106,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
 
       it 'counts only the successful connections' do
         expect(result).to eq(
-          total: 1,
-          transactions: 1,
+          users: 1,
           metric_name: "active-users",
           period: "week"
         )
@@ -129,8 +125,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
 
       it 'only counts stats from the latest full day' do
         expect(result).to eq(
-          total: 0,
-          transactions: 0,
+          users: 0,
           metric_name: "active-users",
           period: "week"
         )
@@ -160,8 +155,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
 
       it 'counts each user' do
         expect(result).to eq(
-          total: 2,
-          transactions: 2,
+          users: 2,
           metric_name: "active-users",
           period: "month"
         )
@@ -187,8 +181,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
 
       it 'counts each user only once' do
         expect(result).to eq(
-          total: 1,
-          transactions: 1,
+          users: 1,
           metric_name: "active-users",
           period: "month"
         )
@@ -214,8 +207,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
 
       it 'does not count the users outside the month' do
         expect(result).to eq(
-          total: 0,
-          transactions: 0,
+          users: 0,
           metric_name: "active-users",
           period: "month"
         )
