@@ -44,8 +44,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
     let(:stats_gateway) { PerformancePlatform::Gateway::ActiveUsers.new(period: 'week') }
     let(:stats_gateway_response) {
       {
-        total: 3,
-        transactions: 3,
+        users: 3,
         metric_name: 'active-users',
         period: 'week'
       }
@@ -56,19 +55,11 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
         metric_name: 'active-users',
         payload: [
           {
-            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpd2Vla2FjdGl2ZS11c2Vyc3RvdGFs',
+            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpd2Vla2FjdGl2ZS11c2Vyc3VzZXJz',
             _timestamp: '2018-07-16T00:00:00+00:00',
             dataType: 'active-users',
             period: 'week',
-            type: 'total',
-            count: 3
-          },
-          {
-            _id: 'MjAxOC0wNy0xNlQwMDowMDowMCswMDowMGdvdi13aWZpd2Vla2FjdGl2ZS11c2Vyc3RyYW5zYWN0aW9ucw==',
-            _timestamp: '2018-07-16T00:00:00+00:00',
-            dataType: 'active-users',
-            period: 'week',
-            type: 'transactions',
+            type: 'users',
             count: 3
           }
         ]
