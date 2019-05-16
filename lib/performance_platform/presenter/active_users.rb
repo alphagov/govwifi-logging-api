@@ -11,7 +11,7 @@ class PerformancePlatform::Presenter::ActiveUsers
       metric_name: stats[:metric_name],
       payload: [
         as_hash(stats[:total], 'total'),
-        as_hash(stats[:transactions], 'transactions'),
+        as_hash(stats[:transactions], 'transactions')
       ]
     }
   end
