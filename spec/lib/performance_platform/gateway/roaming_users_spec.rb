@@ -25,8 +25,8 @@ describe PerformancePlatform::Gateway::RoamingUsers do
       expect(subject.fetch_stats.fetch(:period)).to eq('week')
     end
 
-    context 'given all users have visited more than 1 location' do
-      it 'counts all of them as roaming' do
+    context 'given a user has visited more than 1 location' do
+      it 'counts as roaming' do
         create_session(ip_1, 'alice', yesterday)
         create_session(ip_2, 'alice', yesterday)
 
@@ -91,7 +91,7 @@ describe PerformancePlatform::Gateway::RoamingUsers do
     end
   end
 
-  private
+private
 
   def create_session(ip, username, start, success = 1)
     sessions.insert(siteIP: ip, username: username, start: start, success: success)

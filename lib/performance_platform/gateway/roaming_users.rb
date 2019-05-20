@@ -27,7 +27,7 @@ private
   end
 
   def roaming_percentage
-    return 0 if active_users_results.fetch(:total) == 0
+    return 0 if active_users_results.fetch(:total).zero?
 
     roaming_users_results.fetch(:total_roaming).to_f / active_users_results.fetch(:total).to_f * 100
   end

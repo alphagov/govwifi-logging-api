@@ -1,4 +1,6 @@
 class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
+  # rubocop:disable Metrics/BlockLength
+
   dataset_module do
     def active_users_stats(period:, date:)
       DB.fetch("
@@ -38,4 +40,5 @@ class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
       DB.fetch(sql).first
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end
