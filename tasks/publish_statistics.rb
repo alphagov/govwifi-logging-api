@@ -21,6 +21,15 @@ task :publish_weekly_statistics, [:date] do |_, args|
     stats_gateway: active_users_gateway,
     performance_gateway: performance_gateway
   ).execute(presenter: active_users_presenter)
+
+  performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
+  roaming_users_gateway = PerformancePlatform::Gateway::RoamingUsers.new(period: 'week', date: args[:date])
+  roaming_users_presenter = PerformancePlatform::Presenter::RoamingUsers.new(date: args[:date])
+
+  PerformancePlatform::UseCase::SendPerformanceReport.new(
+    stats_gateway: roaming_users_gateway,
+    performance_gateway: performance_gateway
+  ).execute(presenter: roaming_users_presenter)
 end
 
 task :publish_monthly_statistics, [:date] do |_, args|
@@ -34,4 +43,13 @@ task :publish_monthly_statistics, [:date] do |_, args|
     stats_gateway: active_users_gateway,
     performance_gateway: performance_gateway
   ).execute(presenter: active_users_presenter)
+
+  performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
+  roaming_users_gateway = PerformancePlatform::Gateway::RoamingUsers.new(period: 'month', date: args[:date])
+  roaming_users_presenter = PerformancePlatform::Presenter::RoamingUsers.new(date: args[:date])
+
+  PerformancePlatform::UseCase::SendPerformanceReport.new(
+    stats_gateway: roaming_users_gateway,
+    performance_gateway: performance_gateway
+  ).execute(presenter: roaming_users_presenter)
 end
