@@ -8,6 +8,27 @@ class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
           AND sessions.success = 1").first
     end
 
+    def roaming_users_count(period:, date:)
+      sql = "SELECT COUNT(*) as total_roaming FROM (
+              SELECT
+                username, count(distinct(location_id)) as roam_count
+              FROM
+                sessions s
+              INNER JOIN
+                ip_locations il on s.siteIP = il.ip
+              WHERE
+                s.success = 1
+              AND
+                start BETWEEN date_sub('#{date}', INTERVAL 1 #{period}) AND '#{date}'
+              GROUP BY
+                username
+              HAVING
+                roam_count > 1)
+             as roaming_count"
+
+      DB.fetch(sql).first
+    end
+
     def unique_users_stats(period:, date:)
       sql = "SELECT sum(users)/count(*) DIV 1 as `count`
       FROM (SELECT date(start) AS day, count(distinct(username)) AS users
