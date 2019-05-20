@@ -58,13 +58,13 @@ You can trigger statistics to be sent manually by running the command below loca
 Ensure that your ~/.aws/credentials is set up correctly.
 Populate the date argument to the Rake task with the date that you want to send the statistics for.
 
-#### Account Usage
+#### Weekly Statistics
 
 ```shell
-aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_daily_statistics['2018-12-01']\"] }] }" --network-configuration "{ \"awsvpcConfiguration\": { \"assignPublicIp\": \"ENABLED\", \"subnets\": [\"subnet-XXXXXXX\", \"subnet-XXXXXX\"],\"securityGroups\": [\"sg-XXXXXX\"]}}" --region eu-west-2 --launch-type FARGATE
+aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_weekly_statistics['2018-12-01']\"] }] }" --network-configuration "{ \"awsvpcConfiguration\": { \"assignPublicIp\": \"ENABLED\", \"subnets\": [\"subnet-XXXXXXX\", \"subnet-XXXXXX\"],\"securityGroups\": [\"sg-XXXXXX\"]}}" --region eu-west-2 --launch-type FARGATE
 ```
 
-#### Unique Users
+#### Monthly Statistics
 
 ```shell
 aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_monthly_statistics['2018-12-01']\"] }] }" --network-configuration "{ \"awsvpcConfiguration\": { \"assignPublicIp\": \"ENABLED\", \"subnets\": [\"subnet-XXXXXXX\", \"subnet-XXXXXX\"],\"securityGroups\": [\"sg-XXXXXX\"]}}" --region eu-west-2 --launch-type FARGATE
