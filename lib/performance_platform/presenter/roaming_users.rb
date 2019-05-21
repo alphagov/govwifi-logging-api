@@ -10,30 +10,37 @@ class PerformancePlatform::Presenter::RoamingUsers
     {
       metric_name: stats[:metric_name],
       payload: [
-        {
-          _id: encode_id,
-          _timestamp: timestamp,
-          dataType: stats[:metric_name],
-          period: stats[:period],
-          percentage: stats[:percentage]
-        }
+        as_hash(stats[:active], 'active'),
+        as_hash(stats[:roaming], 'roaming')
       ]
     }
   end
 
 private
 
+  def as_hash(count, type)
+    {
+      _id: encode_id(type),
+      _timestamp: timestamp,
+      dataType: stats[:metric_name],
+      period: stats[:period],
+      type: type,
+      count: count
+    }
+  end
+
   def generate_timestamp
     "#{date - 1}T00:00:00+00:00"
   end
 
-  def encode_id
+  def encode_id(type)
     Common::Base64.encode_array(
       [
         timestamp,
         ENV.fetch('PERFORMANCE_DATASET'),
         stats[:period],
-        stats[:metric_name]
+        stats[:metric_name],
+        type
       ]
     )
   end

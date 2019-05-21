@@ -6,7 +6,8 @@ class PerformancePlatform::Gateway::RoamingUsers
 
   def fetch_stats
     {
-      percentage: roaming_percentage.round,
+      active: active_users_count,
+      roaming: roaming_users_count,
       metric_name: 'roaming-users',
       period: period
     }
@@ -18,18 +19,12 @@ private
     PerformancePlatform::Repository::Session
   end
 
-  def active_users_results
-    @active_users_results ||= repository.active_users_stats(period: period, date: date)
+  def active_users_count
+    repository.active_users_stats(period: period, date: date).fetch(:total)
   end
 
-  def roaming_users_results
-    repository.roaming_users_count(period: period, date: date)
-  end
-
-  def roaming_percentage
-    return 0 if active_users_results.fetch(:total).zero?
-
-    roaming_users_results.fetch(:total_roaming).to_f / active_users_results.fetch(:total).to_f * 100
+  def roaming_users_count
+    repository.roaming_users_count(period: period, date: date).fetch(:total_roaming)
   end
 
   attr_reader :period, :date
