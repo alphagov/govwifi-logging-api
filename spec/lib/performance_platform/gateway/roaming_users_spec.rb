@@ -30,7 +30,8 @@ describe PerformancePlatform::Gateway::RoamingUsers do
         create_session(ip_1, 'alice', yesterday)
         create_session(ip_2, 'alice', yesterday)
 
-        expect(subject.fetch_stats.fetch(:percentage)).to eq(100)
+        expect(subject.fetch_stats.fetch(:roaming)).to eq(1)
+        expect(subject.fetch_stats.fetch(:active)).to eq(1)
       end
     end
 
@@ -41,7 +42,7 @@ describe PerformancePlatform::Gateway::RoamingUsers do
         create_session(ip_1, 'sally', yesterday)
         create_session(ip_1, 'john', yesterday)
 
-        expect(subject.fetch_stats.fetch(:percentage)).to eq(33)
+        expect(subject.fetch_stats.fetch(:roaming)).to eq(1)
       end
 
       context 'given users have only visited one location' do
@@ -49,7 +50,7 @@ describe PerformancePlatform::Gateway::RoamingUsers do
           create_session(ip_1, 'alice', yesterday)
           create_session(ip_1, 'john', yesterday)
 
-          expect(subject.fetch_stats.fetch(:percentage)).to eq(0)
+          expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
         end
       end
     end
@@ -58,7 +59,7 @@ describe PerformancePlatform::Gateway::RoamingUsers do
       it 'does not count them as roaming' do
         create_session(ip_1, 'alice', yesterday, 0)
 
-        expect(subject.fetch_stats.fetch(:percentage)).to eq(0)
+        expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
     end
   end
@@ -71,7 +72,7 @@ describe PerformancePlatform::Gateway::RoamingUsers do
         create_session(ip_1, 'alice', Date.today - 8)
         create_session(ip_2, 'alice', Date.today - 8)
 
-        expect(subject.fetch_stats.fetch(:percentage)).to eq(0)
+        expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
     end
 
@@ -86,7 +87,7 @@ describe PerformancePlatform::Gateway::RoamingUsers do
         create_session(ip_1, 'alice', Date.today - 32)
         create_session(ip_2, 'alice', Date.today - 32)
 
-        expect(subject.fetch_stats.fetch(:percentage)).to eq(0)
+        expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
     end
   end
