@@ -80,6 +80,7 @@ module Logging
 
     def handle_username_request
       return true if username == 'HEALTH'
+
       create_user_session
     end
   end
