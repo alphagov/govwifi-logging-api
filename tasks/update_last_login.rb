@@ -3,11 +3,11 @@ require 'date'
 task :update_last_login, [:date] do |_, args|
   args.with_defaults(date: Date.today.to_s)
 
-  if args[:date] == 'yesterday'
-    date = Date.today.prev_day
-  else
-    date = args[:date].to_date
-  end
+  date = if args[:date] == 'yesterday'
+           Date.today.prev_day
+         else
+           args[:date].to_date
+         end
 
   LastLoginSync::UseCase::PopulateUserLastLogin.new(
     active_users_gateway: LastLoginSync::Gateway::Activity.new,

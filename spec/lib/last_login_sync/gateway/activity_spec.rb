@@ -17,7 +17,7 @@ describe LastLoginSync::Gateway::Activity, focus: true do
   end
 
   context 'With session data' do
-    let(:today_usernames) { ['bob'] }
+    let(:today_usernames) { %w[bob] }
     let(:yesterday_usernames) { %w[alice] }
 
     before do
