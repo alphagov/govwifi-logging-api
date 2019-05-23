@@ -1,8 +1,8 @@
 class Gdpr::Gateway::SetLastLogin
   def set(date:, usernames:)
-    usernames.each_slice(100) do |_username_slice|
+    usernames.each_slice(100) do |usernames_slice|
       User
-        .where([[:username, usernames]])
+        .where([[:username, usernames_slice]])
         .update(last_login: date)
     end
   end
