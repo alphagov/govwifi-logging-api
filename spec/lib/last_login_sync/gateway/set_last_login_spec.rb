@@ -1,6 +1,6 @@
 require 'date'
 
-describe LastLoginSync::Gateway::SetLastLogin, focus: true do
+describe LastLoginSync::Gateway::SetLastLogin do
   let(:subject) { described_class.new }
   let(:username) { 'borris' }
   let(:today) { Date.today }

@@ -1,6 +1,6 @@
 require 'date'
 
-describe LastLoginSync::UseCase::PopulateUserLastLogin, focus: true do
+describe LastLoginSync::UseCase::PopulateUserLastLogin do
   let(:subject) do
     described_class.new(
       active_users_gateway: LastLoginSync::Gateway::Activity.new,

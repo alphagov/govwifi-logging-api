@@ -1,6 +1,6 @@
 require 'date'
 
-describe LastLoginSync::Gateway::Activity, focus: true do
+describe LastLoginSync::Gateway::Activity do
   let(:subject) { described_class.new }
   let(:today) { Date.today }
   let(:session) { DB[:sessions] }
