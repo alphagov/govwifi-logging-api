@@ -1,6 +1,6 @@
 require 'date'
 
-describe LastLoginSync::Gateway::Activity do
+describe Gdpr::Gateway::Session do
   let(:subject) { described_class.new }
   let(:today) { Date.today }
   let(:session) { DB[:sessions] }
@@ -12,7 +12,7 @@ describe LastLoginSync::Gateway::Activity do
 
   context 'Without any session data' do
     it 'finds no usernames' do
-      expect(subject.since(date: today)).to eq([])
+      expect(subject.active_users(date: today)).to eq([])
     end
   end
 
@@ -28,16 +28,16 @@ describe LastLoginSync::Gateway::Activity do
     end
 
     it 'finds a username' do
-      expect(subject.since(date: today)).to match_array(today_usernames)
+      expect(subject.active_users(date: today)).to match_array(today_usernames)
     end
 
     it 'does not find yesterdays username' do
-      expect(subject.since(date: today)).not_to match_array(yesterday_usernames)
+      expect(subject.active_users(date: today)).not_to match_array(yesterday_usernames)
     end
 
     context 'when looking for another date' do
       it 'finds usernames only from that date' do
-        expect(subject.since(date: today.prev_day)).to match_array(yesterday_usernames)
+        expect(subject.active_users(date: today.prev_day)).to match_array(yesterday_usernames)
       end
     end
   end

@@ -1,10 +1,10 @@
 require 'date'
 
-describe LastLoginSync::UseCase::PopulateUserLastLogin do
+describe Gdpr::UseCase::PopulateUserLastLogin do
   let(:subject) do
     described_class.new(
-      active_users_gateway: LastLoginSync::Gateway::Activity.new,
-      last_login_gateway: LastLoginSync::Gateway::SetLastLogin.new
+      session_gateway: Gdpr::Gateway::Session.new,
+      last_login_gateway: Gdpr::Gateway::SetLastLogin.new
     )
   end
 
