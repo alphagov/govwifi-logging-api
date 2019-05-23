@@ -47,4 +47,9 @@ module Gdpr
   module UseCase; end
 end
 
+module LastLoginSync
+  module Gateway; end
+  module UseCase; end
+end
+
 require_all 'lib'
