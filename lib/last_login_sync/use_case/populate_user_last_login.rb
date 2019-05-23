@@ -6,8 +6,7 @@ class LastLoginSync::UseCase::PopulateUserLastLogin
     @last_login_gateway = last_login_gateway
   end
 
-  def execute(date: nil)
-    date = date || Date.today
+  def execute(date: Date.today)
     usernames = active_users.since(date: date)
     last_login_gateway.set(date: date, usernames: usernames)
   end
