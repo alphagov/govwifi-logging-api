@@ -1,9 +1,7 @@
 class LastLoginSync::Gateway::Activity
   def since(date:)
-    sessions = Session.select(:username)
-      .where { start < date.next_day }
-      .where { start >= date }
-      .distinct(:username)
-    sessions.map(&:username)
+    Session.select(:username).distinct
+      .where(Sequel.lit('DATE(start) = ?', date))
+      .map(:username)
   end
 end
