@@ -32,15 +32,6 @@ describe LastLoginSync::Gateway::SetLastLogin, focus: true do
           expect(userdetails.first(username: username)[:last_login].to_date).to eq(today)
         end
       end
-
-      context 'when last_login currently is in the future' do
-        let(:current_last_login) { tomorrow }
-
-        it 'does not update last_login' do
-          subject.set(date: today, usernames: [username])
-          expect(userdetails.first(username: username)[:last_login].to_date).to eq(tomorrow)
-        end
-      end
     end
   end
 

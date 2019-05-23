@@ -74,9 +74,9 @@ describe LastLoginSync::UseCase::PopulateUserLastLogin, focus: true do
       let(:current_last_login) { today }
       let(:session_date) { yesterday }
 
-      it 'does not change the last login' do
+      it 'does overrides the last login' do
         subject.execute(date: yesterday)
-        expect(user[:last_login].to_date).to eq(today)
+        expect(user[:last_login].to_date).to eq(yesterday)
       end
     end
   end
