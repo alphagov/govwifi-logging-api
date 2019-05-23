@@ -12,7 +12,7 @@ class LastLoginSync::UseCase::PopulateUserLastLogin
     last_login_gateway.set(date: date, usernames: usernames)
   end
 
-  private
+private
 
   attr_reader :active_users, :last_login_gateway
 end
