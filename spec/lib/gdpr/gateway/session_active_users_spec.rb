@@ -3,11 +3,11 @@ require 'date'
 describe Gdpr::Gateway::Session do
   let(:subject) { described_class.new }
   let(:today) { Date.today }
+  let(:yesterday) { today.prev_day }
   let(:session) { DB[:sessions] }
 
   before do
-    DB[:sessions].truncate
-    #USER_DB[:userdetails].truncate
+    session.truncate
   end
 
   context 'Without any session data' do
@@ -17,27 +17,31 @@ describe Gdpr::Gateway::Session do
   end
 
   context 'With session data' do
-    let(:today_usernames) { %w[bob] }
-    let(:yesterday_usernames) { %w[alice] }
+    let(:username_today) { 'bob' }
+    let(:username_yesterday) { 'alice' }
 
     before do
-      session.insert(start: Date.today, username: 'bob')
-      session.insert(start: Date.today, username: 'bob')
-      session.insert(start: Date.today.prev_day, username: 'alice')
-      session.insert(start: Date.today.prev_day, username: 'alice')
+      2.times { session.insert(start: today, username: username_today) }
+      2.times { session.insert(start: yesterday, username: username_yesterday) }
     end
 
-    it 'finds a username' do
-      expect(subject.active_users(date: today)).to match_array(today_usernames)
+    context 'when searching through todays sessions' do
+      it 'finds todays username' do
+        expect(subject.active_users(date: today)).to include(username_today)
+      end
+
+      it 'does not find yesterdays username' do
+        expect(subject.active_users(date: today)).not_to include(username_yesterday)
+      end
     end
 
-    it 'does not find yesterdays username' do
-      expect(subject.active_users(date: today)).not_to match_array(yesterday_usernames)
-    end
+    context 'when searching through yesterdays sessions' do
+      it 'finds yesterdays username' do
+        expect(subject.active_users(date: yesterday)).to include(username_yesterday)
+      end
 
-    context 'when looking for another date' do
-      it 'finds usernames only from that date' do
-        expect(subject.active_users(date: today.prev_day)).to match_array(yesterday_usernames)
+      it 'does not find todays username' do
+        expect(subject.active_users(date: yesterday)).not_to include(username_today)
       end
     end
   end
