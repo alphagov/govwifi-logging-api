@@ -35,7 +35,7 @@ describe Gdpr::Gateway::SetLastLogin do
     end
   end
 
-  context 'without any usernames' do
+  context 'without any sessions' do
     it 'does not fail' do
       expect { subject.set(date: today, usernames: [username]) }.not_to raise_error
     end
