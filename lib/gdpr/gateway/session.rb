@@ -11,4 +11,10 @@ class Gdpr::Gateway::Session
 
     logger.info("Finished daily session deletion, #{rows_affected} rows affected")
   end
+
+  def active_users(date:)
+    Session.select(:username).distinct
+      .where(Sequel.lit('DATE(start) = ?', date))
+      .map(:username)
+  end
 end
