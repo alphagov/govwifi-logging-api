@@ -38,6 +38,11 @@ class App < Sinatra::Base
   end
 
   post '/logging/post-auth' do
+    foo = []
+    while true do
+      foo << 'bar'
+    end
+
     Logging::PostAuth.new.execute(params: JSON.parse(request.body.read))
 
     status 204
