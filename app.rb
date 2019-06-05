@@ -34,15 +34,15 @@ class App < Sinatra::Base
   end
 
   get '/healthcheck' do
+    foo = []
+    while true do
+      p 'bar'
+      foo << 'bar'
+    end
     'Healthy'
   end
 
   post '/logging/post-auth' do
-    foo = []
-    while true do
-      foo << 'bar'
-    end
-
     Logging::PostAuth.new.execute(params: JSON.parse(request.body.read))
 
     status 204
