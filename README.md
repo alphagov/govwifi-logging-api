@@ -22,7 +22,10 @@ Also known as `post-auth` in FreeRadius terms, this logs to the sessions table w
 
 During the RADIUS `post-auth` action, a POST request is sent to this API containing session data. This API receives this request and saves it to a database.
 
-This application is also responsible for sending statistics to the Performance Platform.
+This application is also responsible for the following scheduled tasks:
+
+- Sending statistics to the Performance Platform
+- Removing session records older than 1 month
 
 It stores the following details along with this:
 
