@@ -4,7 +4,7 @@ ruby File.read('.ruby-version').chomp
 gem 'aws-sdk-s3', '~> 1'
 gem 'mysql2'
 gem 'puma'
-gem 'rake', '~> 12.3'
+gem 'rake', '~> 13.0'
 gem 'require_all'
 gem 'sensible_logging', '~> 0.4.1'
 gem 'sentry-raven'
