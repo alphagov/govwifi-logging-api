@@ -6,15 +6,17 @@ class Gdpr::Gateway::Session
 
     logger.info('Starting daily session deletion')
 
-    rows = Session.where(Sequel.lit('start < DATE_SUB(DATE(NOW()), INTERVAL 32 DAY')).count
+    total = 0
+    loop do
+      deleted_rows = DB[:sessions].with_sql_delete('DELETE FROM sessions WHERE start < DATE_SUB(DATE(NOW()), INTERVAL 32 DAY) LIMIT 500')
+      total += deleted_rows
 
-    i = 0
-    while i < rows
-      Session.where(Sequel.lit('start < DATE_SUB(DATE(NOW()), INTERVAL 32 DAY')).limit(100, i).delete
-      i += 100
+      if deleted_rows == 0
+        break
+      end
     end
 
-    logger.info("Finished daily session deletion, #{rows} rows affected")
+    logger.info("Finished daily session deletion, #{total} rows affected")
   end
 
   def active_users(date:)
