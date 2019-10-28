@@ -1,15 +1,23 @@
 require 'logger'
 
 class Gdpr::Gateway::Session
+  SESSION_BATCH_SIZE = 500
   def delete_sessions
     logger = Logger.new(STDOUT)
 
     logger.info('Starting daily session deletion')
 
-    dataset = DB['DELETE FROM sessions WHERE start < DATE_SUB(DATE(NOW()), INTERVAL 32 DAY)']
-    rows_affected = dataset.delete
+    total = 0
+    loop do
+      deleted_rows = DB[:sessions].with_sql_delete("DELETE FROM sessions WHERE start < DATE_SUB(DATE(NOW()), INTERVAL 32 DAY) LIMIT #{SESSION_BATCH_SIZE}")
+      total += deleted_rows
 
-    logger.info("Finished daily session deletion, #{rows_affected} rows affected")
+      if deleted_rows.zero?
+        break
+      end
+    end
+
+    logger.info("Finished daily session deletion, #{total} rows affected")
   end
 
   def active_users(date:)
