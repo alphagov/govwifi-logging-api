@@ -10,46 +10,34 @@ task :synchronize_ip_locations do
   ).execute
 end
 
-task :publish_weekly_statistics, [:date] do |_, args|
-  args.with_defaults(date: Date.today.to_s)
-  logger.info("Publishing weekly statistics with #{args[:date]}")
-  performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
-  active_users_gateway = PerformancePlatform::Gateway::ActiveUsers.new(period: 'week', date: args[:date])
-  active_users_presenter = PerformancePlatform::Presenter::ActiveUsers.new(date: args[:date])
+PERIODS = {
+  daily: 'day',
+  weekly: 'week',
+  monthly: 'month'
+}.freeze
 
-  PerformancePlatform::UseCase::SendPerformanceReport.new(
-    stats_gateway: active_users_gateway,
-    performance_gateway: performance_gateway
-  ).execute(presenter: active_users_presenter)
+PERIODS.each do |adverbial, period|
+  name = "publish_#{adverbial}_statistics".to_sym
 
-  performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
-  roaming_users_gateway = PerformancePlatform::Gateway::RoamingUsers.new(period: 'week', date: args[:date])
-  roaming_users_presenter = PerformancePlatform::Presenter::RoamingUsers.new(date: args[:date])
+  task name, [:date] do |_, args|
+    args.with_defaults(date: Date.today.to_s)
+    logger.info("Publishing #{adverbial} statistics with #{args[:date]}")
+    performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
+    active_users_gateway = PerformancePlatform::Gateway::ActiveUsers.new(period: period, date: args[:date])
+    active_users_presenter = PerformancePlatform::Presenter::ActiveUsers.new(date: args[:date])
 
-  PerformancePlatform::UseCase::SendPerformanceReport.new(
-    stats_gateway: roaming_users_gateway,
-    performance_gateway: performance_gateway
-  ).execute(presenter: roaming_users_presenter)
-end
+    PerformancePlatform::UseCase::SendPerformanceReport.new(
+      stats_gateway: active_users_gateway,
+      performance_gateway: performance_gateway
+    ).execute(presenter: active_users_presenter)
 
-task :publish_monthly_statistics, [:date] do |_, args|
-  args.with_defaults(date: Date.today.to_s)
-  logger.info("Publishing monthly statistics with #{args[:date]}")
-  performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
-  active_users_gateway = PerformancePlatform::Gateway::ActiveUsers.new(period: 'month', date: args[:date])
-  active_users_presenter = PerformancePlatform::Presenter::ActiveUsers.new(date: args[:date])
+    performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
+    roaming_users_gateway = PerformancePlatform::Gateway::RoamingUsers.new(period: period, date: args[:date])
+    roaming_users_presenter = PerformancePlatform::Presenter::RoamingUsers.new(date: args[:date])
 
-  PerformancePlatform::UseCase::SendPerformanceReport.new(
-    stats_gateway: active_users_gateway,
-    performance_gateway: performance_gateway
-  ).execute(presenter: active_users_presenter)
-
-  performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
-  roaming_users_gateway = PerformancePlatform::Gateway::RoamingUsers.new(period: 'month', date: args[:date])
-  roaming_users_presenter = PerformancePlatform::Presenter::RoamingUsers.new(date: args[:date])
-
-  PerformancePlatform::UseCase::SendPerformanceReport.new(
-    stats_gateway: roaming_users_gateway,
-    performance_gateway: performance_gateway
-  ).execute(presenter: roaming_users_presenter)
+    PerformancePlatform::UseCase::SendPerformanceReport.new(
+      stats_gateway: roaming_users_gateway,
+      performance_gateway: performance_gateway
+    ).execute(presenter: roaming_users_presenter)
+  end
 end
