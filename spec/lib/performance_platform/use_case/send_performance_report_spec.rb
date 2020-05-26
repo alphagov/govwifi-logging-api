@@ -61,7 +61,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
             period: "week",
             type: "users",
             count: 3,
-          }
+          },
         ],
       }
     }
@@ -97,7 +97,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
               dataType: "unique-users",
               period: "week",
               count: 5,
-            }
+            },
           ],
         }
       }
@@ -127,7 +127,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
               dataType: "unique-users",
               period: "month",
               month_count: 12345,
-            }
+            },
           ],
         }
       }

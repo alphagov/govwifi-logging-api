@@ -15,7 +15,7 @@ class App < Sinatra::Base
     log_tags: [->(req) {
       req.body.rewind
       [
-        req.body.read
+        req.body.read,
       ].tap { req.body.rewind }
     }],
   )

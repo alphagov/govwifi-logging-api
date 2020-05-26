@@ -16,7 +16,7 @@ class PerformancePlatform::Presenter::UniqueUsers
           dataType: stats[:metric_name],
           period: stats[:period],
           count_field_name => stats[:count],
-        }
+        },
       ],
     }
   end
@@ -33,7 +33,7 @@ private
         timestamp,
         ENV.fetch("PERFORMANCE_DATASET"),
         stats[:period],
-        stats[:metric_name]
+        stats[:metric_name],
       ],
     )
   end

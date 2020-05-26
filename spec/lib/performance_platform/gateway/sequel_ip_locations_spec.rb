@@ -25,7 +25,7 @@ describe PerformancePlatform::Gateway::SequelIPLocations do
 {
           ip: "186.3.4.6",
           location_id: 3,
-        }
+        },
       ]
     end
 
