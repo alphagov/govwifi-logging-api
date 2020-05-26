@@ -32,7 +32,7 @@ describe PerformancePlatform::Presenter::RoamingUsers do
           dataType: "some-metric-name",
           period: "week",
           type: "roaming",
-        }
+        },
       ],
     }
 

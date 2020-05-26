@@ -11,7 +11,7 @@ class PerformancePlatform::Presenter::RoamingUsers
       metric_name: stats[:metric_name],
       payload: [
         as_hash(stats[:active], "active"),
-        as_hash(stats[:roaming], "roaming")
+        as_hash(stats[:roaming], "roaming"),
       ],
     }
   end
@@ -40,7 +40,7 @@ private
         ENV.fetch("PERFORMANCE_DATASET"),
         stats[:period],
         stats[:metric_name],
-        type
+        type,
       ],
     )
   end
