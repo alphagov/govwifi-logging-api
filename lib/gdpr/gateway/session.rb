@@ -1,11 +1,11 @@
-require 'logger'
+require "logger"
 
 class Gdpr::Gateway::Session
   SESSION_BATCH_SIZE = 500
   def delete_sessions
     logger = Logger.new(STDOUT)
 
-    logger.info('Starting daily session deletion')
+    logger.info("Starting daily session deletion")
 
     total = 0
     loop do
@@ -22,7 +22,7 @@ class Gdpr::Gateway::Session
 
   def active_users(date:)
     Session.select(:username).distinct
-      .where(Sequel.lit('DATE(start) = ?', date))
+      .where(Sequel.lit("DATE(start) = ?", date))
       .map(:username)
   end
 end

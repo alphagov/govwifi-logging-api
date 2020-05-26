@@ -1,4 +1,4 @@
-require 'logger'
+require "logger"
 logger = Logger.new(STDOUT)
 
 task :synchronize_ip_locations do
@@ -11,9 +11,9 @@ task :synchronize_ip_locations do
 end
 
 PERIODS = {
-  daily: 'day',
-  weekly: 'week',
-  monthly: 'month'
+  daily: "day",
+  weekly: "week",
+  monthly: "month"
 }.freeze
 
 PERIODS.each do |adverbial, period|

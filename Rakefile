@@ -1,5 +1,5 @@
-require './lib/loader'
+require "./lib/loader"
 
-require './tasks/publish_statistics'
-require './tasks/session_deletion'
-require './tasks/update_last_login'
+require "./tasks/publish_statistics"
+require "./tasks/session_deletion"
+require "./tasks/update_last_login"
