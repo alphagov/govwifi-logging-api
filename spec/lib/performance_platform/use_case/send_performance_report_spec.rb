@@ -42,15 +42,15 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
     let(:bearer_token) { "googoogoo" }
     let(:presenter) { PerformancePlatform::Presenter::ActiveUsers.new }
     let(:stats_gateway) { PerformancePlatform::Gateway::ActiveUsers.new(period: "week") }
-    let(:stats_gateway_response) {
+    let(:stats_gateway_response) do
       {
         users: 3,
         metric_name: "active-users",
         period: "week",
       }
-    }
+    end
 
-    let(:data) {
+    let(:data) do
       {
         metric_name: "active-users",
         payload: [
@@ -64,7 +64,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
           },
         ],
       }
-    }
+    end
 
     it "fetches stats and sends them to Performance service" do
       expect(subject.execute(presenter: presenter)["status"]).to eq("ok")
@@ -79,15 +79,15 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
 
     context "weekly" do
       let(:stats_gateway) { PerformancePlatform::Gateway::UniqueUsers.new(period: "week") }
-      let(:stats_gateway_response) {
+      let(:stats_gateway_response) do
         {
           metric_name: "unique-users",
           period: "week",
           count: 5,
         }
-      }
+      end
 
-      let(:data) {
+      let(:data) do
         {
           metric_name: "umnique-users",
           payload: [
@@ -100,7 +100,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
             },
           ],
         }
-      }
+      end
 
       it "fetches stats and sends them to Performance service" do
         expect(subject.execute(presenter: presenter)["status"]).to eq("ok")
@@ -109,15 +109,15 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
 
     context "monthly" do
       let(:stats_gateway) { PerformancePlatform::Gateway::UniqueUsers.new(period: "month") }
-      let(:stats_gateway_response) {
+      let(:stats_gateway_response) do
         {
           metric_name: "unique-users",
           period: "month",
           count: 12345,
         }
-      }
+      end
 
-      let(:data) {
+      let(:data) do
         {
           metric_name: "umnique-users",
           payload: [
@@ -130,7 +130,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
             },
           ],
         }
-      }
+      end
 
       it "fetches stats and sends them to Performance service" do
         expect(subject.execute(presenter: presenter)["status"]).to eq("ok")

@@ -6,7 +6,7 @@ describe App do
 
   describe "certificate post-auth logging with POST" do
     shared_examples "logging" do
-      let(:request_body) {
+      let(:request_body) do
         {
           username: username,
           cert_name: cert_name,
@@ -15,7 +15,7 @@ describe App do
           site_ip_address: nil,
           authentication_result: authentication_result,
         }.to_json
-      }
+      end
       let(:post_auth_request) { post "/logging/post-auth", request_body }
       let(:cert_name) { "Example Certificate Common Name" }
       let(:authentication_result) { "Access-Accept" }
@@ -49,7 +49,7 @@ describe App do
     let(:mac) { "DA-59-19-8B-39-2D" }
     let(:authentication_result) { "Access-Accept" }
 
-    let(:request_body) {
+    let(:request_body) do
       {
         username: username,
         cert_name: nil,
@@ -58,7 +58,7 @@ describe App do
         site_ip_address: nil,
         authentication_result: authentication_result,
       }.to_json
-    }
+    end
     let(:post_auth_request) { post "/logging/post-auth", request_body }
 
     before do

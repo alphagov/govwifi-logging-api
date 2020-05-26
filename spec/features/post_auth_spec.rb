@@ -10,7 +10,7 @@ describe App do
     let(:called_station_id) { "01-39-38-25-2A-80" }
     let(:site_ip_address) { "93.11.238.187" }
     let(:cert_name) { "" }
-    let(:request_body) {
+    let(:request_body) do
       {
         username: username,
         cert_name: cert_name,
@@ -19,7 +19,7 @@ describe App do
         site_ip_address: site_ip_address,
         authentication_result: authentication_result,
       }.to_json
-    }
+    end
     let(:post_auth_request) { post "/logging/post-auth", request_body }
     let!(:create_user) { User.create(username: username) }
     let(:user) { User.find(username: username) }
