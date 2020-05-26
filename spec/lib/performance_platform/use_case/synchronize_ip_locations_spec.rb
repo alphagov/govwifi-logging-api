@@ -28,7 +28,7 @@ describe PerformancePlatform::UseCase::SynchronizeIpLocations do
       [
         {
           ip: "127.0.0.1",
-          location_id: 1
+          location_id: 1,
         }
       ]
     end

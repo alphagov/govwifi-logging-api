@@ -13,7 +13,7 @@ describe App do
           mac: nil,
           called_station_id: nil,
           site_ip_address: nil,
-          authentication_result: authentication_result
+          authentication_result: authentication_result,
         }.to_json
       }
       let(:post_auth_request) { post "/logging/post-auth", request_body }
@@ -56,7 +56,7 @@ describe App do
         mac: mac,
         called_station_id: nil,
         site_ip_address: nil,
-        authentication_result: authentication_result
+        authentication_result: authentication_result,
       }.to_json
     }
     let(:post_auth_request) { post "/logging/post-auth", request_body }

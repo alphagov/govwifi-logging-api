@@ -17,7 +17,7 @@ describe App do
         mac: mac,
         called_station_id: called_station_id,
         site_ip_address: site_ip_address,
-        authentication_result: authentication_result
+        authentication_result: authentication_result,
       }.to_json
     }
     let(:post_auth_request) { post "/logging/post-auth", request_body }

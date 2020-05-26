@@ -9,7 +9,7 @@ class PerformancePlatform::Gateway::RoamingUsers
       active: active_users_count,
       roaming: roaming_users_count,
       metric_name: "roaming-users",
-      period: period
+      period: period,
     }
   end
 

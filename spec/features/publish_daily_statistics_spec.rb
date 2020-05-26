@@ -7,8 +7,8 @@ describe "synchronizing IPs and locations" do
 
     Aws.config = {
       stub_responses: {
-        get_object: { body: object_content.to_json }
-      }
+        get_object: { body: object_content.to_json },
+      },
     }
 
     ip_locations.truncate
@@ -46,15 +46,15 @@ describe "synchronizing IPs and locations" do
       [
         {
           ip: "127.0.0.1",
-          location_id: 1
+          location_id: 1,
         }, 
 {
           ip: "186.3.1.1",
-          location_id: 2
+          location_id: 2,
         }, 
 {
           ip: "186.3.4.6",
-          location_id: 3
+          location_id: 3,
         }
       ]
     end
