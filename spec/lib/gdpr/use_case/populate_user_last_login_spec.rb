@@ -4,7 +4,7 @@ describe Gdpr::UseCase::PopulateUserLastLogin do
   let(:subject) do
     described_class.new(
       session_gateway: Gdpr::Gateway::Session.new,
-      last_login_gateway: Gdpr::Gateway::SetLastLogin.new
+      last_login_gateway: Gdpr::Gateway::SetLastLogin.new,
     )
   end
 

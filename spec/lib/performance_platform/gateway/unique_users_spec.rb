@@ -136,12 +136,12 @@ describe PerformancePlatform::Gateway::UniqueUsers do
       before do
         session_repository.insert(
           username: "xyz123",
-          start: "2018-07-09"
+          start: "2018-07-09",
         )
 
         session_repository.insert(
           username: "abc987",
-          start: "2018-08-09"
+          start: "2018-08-09",
         )
       end
 

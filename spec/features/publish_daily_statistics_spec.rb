@@ -19,7 +19,7 @@ describe "synchronizing IPs and locations" do
     destination_gateway = PerformancePlatform::Gateway::SequelIPLocations.new
     PerformancePlatform::UseCase::SynchronizeIpLocations.new(
       source_gateway: source_gateway,
-      destination_gateway: destination_gateway
+      destination_gateway: destination_gateway,
     )
   end
 

@@ -41,7 +41,7 @@ private
         stats[:period],
         stats[:metric_name],
         type
-      ]
+      ],
     )
   end
 

@@ -2,7 +2,7 @@ describe PerformancePlatform::UseCase::SynchronizeIpLocations do
   subject do
     described_class.new(
       source_gateway: source_gateway,
-      destination_gateway: destination_gateway
+      destination_gateway: destination_gateway,
     )
   end
 

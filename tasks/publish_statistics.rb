@@ -6,7 +6,7 @@ task :synchronize_ip_locations do
   destination_gateway = PerformancePlatform::Gateway::SequelIPLocations.new
   PerformancePlatform::UseCase::SynchronizeIpLocations.new(
     source_gateway: source_gateway,
-    destination_gateway: destination_gateway
+    destination_gateway: destination_gateway,
   ).execute
 end
 
@@ -28,7 +28,7 @@ PERIODS.each do |adverbial, period|
 
     PerformancePlatform::UseCase::SendPerformanceReport.new(
       stats_gateway: active_users_gateway,
-      performance_gateway: performance_gateway
+      performance_gateway: performance_gateway,
     ).execute(presenter: active_users_presenter)
 
     performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
@@ -37,7 +37,7 @@ PERIODS.each do |adverbial, period|
 
     PerformancePlatform::UseCase::SendPerformanceReport.new(
       stats_gateway: roaming_users_gateway,
-      performance_gateway: performance_gateway
+      performance_gateway: performance_gateway,
     ).execute(presenter: roaming_users_presenter)
   end
 end

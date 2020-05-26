@@ -15,14 +15,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 1,
-          success: 1
+          success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
           start: Date.today - 1,
-          success: 1
+          success: 1,
         )
       end
 
@@ -30,7 +30,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         expect(result).to eq(
           users: 2,
           metric_name: "active-users",
-          period: "week"
+          period: "week",
         )
       end
     end
@@ -41,14 +41,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 1,
-          success: 1
+          success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 2,
-          success: 1
+          success: 1,
         )
       end
 
@@ -56,7 +56,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         expect(result).to eq(
           users: 1,
           metric_name: "active-users",
-          period: "week"
+          period: "week",
         )
       end
     end
@@ -67,14 +67,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 1,
-          success: 1
+          success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
           start: Date.today - 10,
-          success: 1
+          success: 1,
         )
       end
 
@@ -82,7 +82,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         expect(result).to eq(
           users: 1,
           metric_name: "active-users",
-          period: "week"
+          period: "week",
         )
       end
     end
@@ -93,14 +93,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 1,
-          success: 1
+          success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
           start: Date.today - 1,
-          success: 0
+          success: 0,
         )
       end
 
@@ -108,7 +108,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         expect(result).to eq(
           users: 1,
           metric_name: "active-users",
-          period: "week"
+          period: "week",
         )
       end
     end
@@ -119,7 +119,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today,
-          success: 1
+          success: 1,
         )
       end
 
@@ -127,7 +127,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         expect(result).to eq(
           users: 0,
           metric_name: "active-users",
-          period: "week"
+          period: "week",
         )
       end
     end
@@ -142,14 +142,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 1,
-          success: 1
+          success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
           start: Date.today - 26,
-          success: 1
+          success: 1,
         )
       end
 
@@ -157,7 +157,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         expect(result).to eq(
           users: 2,
           metric_name: "active-users",
-          period: "month"
+          period: "month",
         )
       end
     end
@@ -168,14 +168,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 14,
-          success: 1
+          success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 20,
-          success: 1
+          success: 1,
         )
       end
 
@@ -183,7 +183,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         expect(result).to eq(
           users: 1,
           metric_name: "active-users",
-          period: "month"
+          period: "month",
         )
       end
     end
@@ -194,14 +194,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           siteIP: "12.12.12.12",
           username: "alice",
           start: Date.today - 33,
-          success: 1
+          success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
           start: Date.today - 36,
-          success: 1
+          success: 1,
         )
       end
 
@@ -209,7 +209,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         expect(result).to eq(
           users: 0,
           metric_name: "active-users",
-          period: "month"
+          period: "month",
         )
       end
     end

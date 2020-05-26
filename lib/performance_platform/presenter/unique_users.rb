@@ -34,7 +34,7 @@ private
         ENV.fetch("PERFORMANCE_DATASET"),
         stats[:period],
         stats[:metric_name]
-      ]
+      ],
     )
   end
 
