@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'sequel'
-require 'sensible_logging'
-require 'sinatra/base'
-require 'sinatra/json'
-require './lib/loader'
+require "sequel"
+require "sensible_logging"
+require "sinatra/base"
+require "sinatra/json"
+require "./lib/loader"
 
 class App < Sinatra::Base
   use Raven::Rack if defined? Raven
@@ -33,11 +33,11 @@ class App < Sinatra::Base
     set :log_level, Logger::INFO
   end
 
-  get '/healthcheck' do
-    'Healthy'
+  get "/healthcheck" do
+    "Healthy"
   end
 
-  post '/logging/post-auth' do
+  post "/logging/post-auth" do
     Logging::PostAuth.new.execute(params: JSON.parse(request.body.read))
 
     status 204

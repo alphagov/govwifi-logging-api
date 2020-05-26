@@ -15,19 +15,19 @@ describe PerformancePlatform::UseCase::SynchronizeIpLocations do
 
   before { subject.execute }
 
-  it 'fetches from the source gateway' do
+  it "fetches from the source gateway" do
     expect(source_gateway).to have_received(:fetch)
   end
 
-  it 'writes to the destination gateway' do
+  it "writes to the destination gateway" do
     expect(destination_gateway).to have_received(:save)
   end
 
-  context 'given results from the source gateway' do
+  context "given results from the source gateway" do
     let(:results) do
       [
         {
-          ip: '127.0.0.1',
+          ip: "127.0.0.1",
           location_id: 1
         }
       ]
@@ -35,7 +35,7 @@ describe PerformancePlatform::UseCase::SynchronizeIpLocations do
 
     let(:source_gateway) { double(fetch: results) }
 
-    it 'passes results to the destination gateway' do
+    it "passes results to the destination gateway" do
       expect(destination_gateway).to have_received(:save).with(results)
     end
   end

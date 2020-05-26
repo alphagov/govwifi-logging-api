@@ -31,7 +31,7 @@ private
     Common::Base64.encode_array(
       [
         timestamp,
-        ENV.fetch('PERFORMANCE_DATASET'),
+        ENV.fetch("PERFORMANCE_DATASET"),
         stats[:period],
         stats[:metric_name]
       ]
@@ -39,7 +39,7 @@ private
   end
 
   def count_field_name
-    stats[:period] == 'month' ? 'month_count' : 'count'
+    stats[:period] == "month" ? "month_count" : "count"
   end
 
   attr_reader :stats, :timestamp, :date

@@ -1,4 +1,4 @@
-require 'date'
+require "date"
 
 class Gdpr::UseCase::PopulateUserLastLogin
   def initialize(session_gateway:, last_login_gateway:)

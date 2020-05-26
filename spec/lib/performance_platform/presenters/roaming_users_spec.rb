@@ -1,21 +1,21 @@
 describe PerformancePlatform::Presenter::RoamingUsers do
   before do
     Timecop.freeze(Date.new(2018, 2, 1))
-    ENV['PERFORMANCE_DATASET'] = 'some-dataset'
+    ENV["PERFORMANCE_DATASET"] = "some-dataset"
   end
 
   let(:gateway_results) do
     {
-      metric_name: 'some-metric-name',
+      metric_name: "some-metric-name",
       roaming: 100,
       active: 200,
-      period: 'week'
+      period: "week"
     }
   end
 
-  it 'presents the correct data' do
+  it "presents the correct data" do
     expected_result = {
-      metric_name: 'some-metric-name',
+      metric_name: "some-metric-name",
       payload: [
         {
           _id: "MjAxOC0wMS0zMVQwMDowMDowMCswMDowMHNvbWUtZGF0YXNldHdlZWtzb21lLW1ldHJpYy1uYW1lYWN0aXZl",

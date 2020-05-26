@@ -3,10 +3,10 @@ describe PerformancePlatform::Gateway::RoamingUsers do
 
   let(:location_ip_links) { DB[:ip_locations] }
   let(:sessions) { DB[:sessions] }
-  let(:ip_1) { '7.7.7.7' }
-  let(:ip_2) { '8.8.8.8' }
+  let(:ip_1) { "7.7.7.7" }
+  let(:ip_2) { "8.8.8.8" }
   let(:yesterday) { Date.today - 1 }
-  let(:period) { 'week' }
+  let(:period) { "week" }
 
   before do
     sessions.truncate
@@ -16,76 +16,76 @@ describe PerformancePlatform::Gateway::RoamingUsers do
     location_ip_links.insert(ip: ip_2, location_id: 2)
   end
 
-  it 'adds the metric name' do
-    expect(subject.fetch_stats.fetch(:metric_name)).to eq('roaming-users')
+  it "adds the metric name" do
+    expect(subject.fetch_stats.fetch(:metric_name)).to eq("roaming-users")
   end
 
-  context 'weekly' do
-    it 'adds the period to the payload' do
-      expect(subject.fetch_stats.fetch(:period)).to eq('week')
+  context "weekly" do
+    it "adds the period to the payload" do
+      expect(subject.fetch_stats.fetch(:period)).to eq("week")
     end
 
-    context 'given a user has visited more than 1 location' do
-      it 'counts as roaming' do
-        create_session(ip_1, 'alice', yesterday)
-        create_session(ip_2, 'alice', yesterday)
+    context "given a user has visited more than 1 location" do
+      it "counts as roaming" do
+        create_session(ip_1, "alice", yesterday)
+        create_session(ip_2, "alice", yesterday)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(1)
         expect(subject.fetch_stats.fetch(:active)).to eq(1)
       end
     end
 
-    context 'given only some users have visited more than 1 location' do
-      it 'counts only those users as roaming' do
-        create_session(ip_1, 'alice', yesterday)
-        create_session(ip_2, 'alice', yesterday)
-        create_session(ip_1, 'sally', yesterday)
-        create_session(ip_1, 'john', yesterday)
+    context "given only some users have visited more than 1 location" do
+      it "counts only those users as roaming" do
+        create_session(ip_1, "alice", yesterday)
+        create_session(ip_2, "alice", yesterday)
+        create_session(ip_1, "sally", yesterday)
+        create_session(ip_1, "john", yesterday)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(1)
       end
 
-      context 'given users have only visited one location' do
-        it 'does not count them as roaming' do
-          create_session(ip_1, 'alice', yesterday)
-          create_session(ip_1, 'john', yesterday)
+      context "given users have only visited one location" do
+        it "does not count them as roaming" do
+          create_session(ip_1, "alice", yesterday)
+          create_session(ip_1, "john", yesterday)
 
           expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
         end
       end
     end
 
-    context 'given unsucessful logins' do
-      it 'does not count them as roaming' do
-        create_session(ip_1, 'alice', yesterday, 0)
+    context "given unsucessful logins" do
+      it "does not count them as roaming" do
+        create_session(ip_1, "alice", yesterday, 0)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
     end
   end
 
-  context 'outside the timeframe' do
-    context 'week' do
-      let(:period) { 'week' }
+  context "outside the timeframe" do
+    context "week" do
+      let(:period) { "week" }
 
-      it 'does not count them as roaming' do
-        create_session(ip_1, 'alice', Date.today - 8)
-        create_session(ip_2, 'alice', Date.today - 8)
+      it "does not count them as roaming" do
+        create_session(ip_1, "alice", Date.today - 8)
+        create_session(ip_2, "alice", Date.today - 8)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
     end
 
-    context 'month' do
-      let(:period) { 'month' }
+    context "month" do
+      let(:period) { "month" }
 
-      it 'adds the period to the payload' do
-        expect(subject.fetch_stats.fetch(:period)).to eq('month')
+      it "adds the period to the payload" do
+        expect(subject.fetch_stats.fetch(:period)).to eq("month")
       end
 
-      it 'does not count them as roaming' do
-        create_session(ip_1, 'alice', Date.today - 32)
-        create_session(ip_2, 'alice', Date.today - 32)
+      it "does not count them as roaming" do
+        create_session(ip_1, "alice", Date.today - 32)
+        create_session(ip_2, "alice", Date.today - 32)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end

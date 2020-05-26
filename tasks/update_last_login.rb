@@ -1,4 +1,4 @@
-require 'date'
+require "date"
 
 task :update_yesterdays_last_login do
   Gdpr::UseCase::PopulateUserLastLogin.new(
