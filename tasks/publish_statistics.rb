@@ -13,7 +13,7 @@ end
 PERIODS = {
   daily: "day",
   weekly: "week",
-  monthly: "month"
+  monthly: "month",
 }.freeze
 
 PERIODS.each do |adverbial, period|

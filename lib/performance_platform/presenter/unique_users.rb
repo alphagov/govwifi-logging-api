@@ -15,9 +15,9 @@ class PerformancePlatform::Presenter::UniqueUsers
           _timestamp: timestamp,
           dataType: stats[:metric_name],
           period: stats[:period],
-          count_field_name => stats[:count]
+          count_field_name => stats[:count],
         }
-      ]
+      ],
     }
   end
 

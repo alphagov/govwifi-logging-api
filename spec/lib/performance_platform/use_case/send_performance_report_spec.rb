@@ -19,7 +19,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
         body: data[:payload].to_json,
         headers: {
           "Content-Type" => "application/json",
-          "Authorization" => "Bearer #{bearer_token}"
+          "Authorization" => "Bearer #{bearer_token}",
         },
       )
       .to_return(
@@ -46,7 +46,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
       {
         users: 3,
         metric_name: "active-users",
-        period: "week"
+        period: "week",
       }
     }
 
@@ -60,9 +60,9 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
             dataType: "active-users",
             period: "week",
             type: "users",
-            count: 3
+            count: 3,
           }
-        ]
+        ],
       }
     }
 
@@ -83,7 +83,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
         {
           metric_name: "unique-users",
           period: "week",
-          count: 5
+          count: 5,
         }
       }
 
@@ -96,9 +96,9 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
               _timestamp: "2018-07-16T00:00:00+00:00",
               dataType: "unique-users",
               period: "week",
-              count: 5
+              count: 5,
             }
-          ]
+          ],
         }
       }
 
@@ -113,7 +113,7 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
         {
           metric_name: "unique-users",
           period: "month",
-          count: 12345
+          count: 12345,
         }
       }
 
@@ -126,9 +126,9 @@ describe PerformancePlatform::UseCase::SendPerformanceReport do
               _timestamp: "2018-07-16T00:00:00+00:00",
               dataType: "unique-users",
               period: "month",
-              month_count: 12345
+              month_count: 12345,
             }
-          ]
+          ],
         }
       }
 

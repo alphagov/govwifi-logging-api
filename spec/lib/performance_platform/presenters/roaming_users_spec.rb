@@ -9,7 +9,7 @@ describe PerformancePlatform::Presenter::RoamingUsers do
       metric_name: "some-metric-name",
       roaming: 100,
       active: 200,
-      period: "week"
+      period: "week",
     }
   end
 
@@ -23,7 +23,7 @@ describe PerformancePlatform::Presenter::RoamingUsers do
           count: 200,
           dataType: "some-metric-name",
           period: "week",
-          type: "active"
+          type: "active",
         }, 
 {
           _id: "MjAxOC0wMS0zMVQwMDowMDowMCswMDowMHNvbWUtZGF0YXNldHdlZWtzb21lLW1ldHJpYy1uYW1lcm9hbWluZw==",
@@ -31,9 +31,9 @@ describe PerformancePlatform::Presenter::RoamingUsers do
           count: 100,
           dataType: "some-metric-name",
           period: "week",
-          type: "roaming"
+          type: "roaming",
         }
-      ]
+      ],
     }
 
     expect(subject.present(stats: gateway_results)).to eq(expected_result)

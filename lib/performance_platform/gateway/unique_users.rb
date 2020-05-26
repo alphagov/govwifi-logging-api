@@ -8,7 +8,7 @@ class PerformancePlatform::Gateway::UniqueUsers
     {
       count: result[:count].to_i,
       metric_name: "unique-users",
-      period: period
+      period: period,
     }
   end
 

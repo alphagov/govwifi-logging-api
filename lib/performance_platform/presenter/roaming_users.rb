@@ -12,7 +12,7 @@ class PerformancePlatform::Presenter::RoamingUsers
       payload: [
         as_hash(stats[:active], "active"),
         as_hash(stats[:roaming], "roaming")
-      ]
+      ],
     }
   end
 
@@ -25,7 +25,7 @@ private
       dataType: stats[:metric_name],
       period: stats[:period],
       type: type,
-      count: count
+      count: count,
     }
   end
 
