@@ -17,7 +17,7 @@ class App < Sinatra::Base
       [
         req.body.read
       ].tap { req.body.rewind }
-    }]
+    }],
   )
 
   configure do

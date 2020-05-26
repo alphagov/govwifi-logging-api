@@ -31,8 +31,8 @@ module Logging
     def create_cert_session
       Session.create(
         session_params.merge(
-          cert_name: @params.fetch("cert_name")
-        )
+          cert_name: @params.fetch("cert_name"),
+        ),
       )
     end
 
