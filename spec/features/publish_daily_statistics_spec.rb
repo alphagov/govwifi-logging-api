@@ -50,11 +50,11 @@ describe "synchronizing IPs and locations" do
         },
         {
           ip: "186.3.1.1",
-                  location_id: 2,
+          location_id: 2,
         },
         {
           ip: "186.3.4.6",
-                  location_id: 3,
+          location_id: 3,
         },
       ]
     end

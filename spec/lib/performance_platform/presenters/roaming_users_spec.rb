@@ -27,11 +27,11 @@ describe PerformancePlatform::Presenter::RoamingUsers do
         },
         {
           _id: "MjAxOC0wMS0zMVQwMDowMDowMCswMDowMHNvbWUtZGF0YXNldHdlZWtzb21lLW1ldHJpYy1uYW1lcm9hbWluZw==",
-                  _timestamp: "2018-01-31T00:00:00+00:00",
-                  count: 100,
-                  dataType: "some-metric-name",
-                  period: "week",
-                  type: "roaming",
+          _timestamp: "2018-01-31T00:00:00+00:00",
+          count: 100,
+          dataType: "some-metric-name",
+          period: "week",
+          type: "roaming",
         },
       ],
     }
