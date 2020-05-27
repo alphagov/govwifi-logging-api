@@ -12,7 +12,7 @@ describe "daily session deletion" do
 
     it "deletes the session" do
       subject.execute
-      expect(session.all.map { |s| s.fetch(:username) }).to eq(%w(bob sally))
+      expect(session.all.map { |s| s.fetch(:username) }).to eq(%w[bob sally])
     end
   end
 end

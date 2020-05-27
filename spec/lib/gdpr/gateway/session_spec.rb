@@ -11,7 +11,7 @@ describe Gdpr::Gateway::Session do
 
     it "deletes the old sessions" do
       subject.delete_sessions
-      expect(session.all.map { |s| s.fetch(:username) }).to eq(%w(bob sally))
+      expect(session.all.map { |s| s.fetch(:username) }).to eq(%w[bob sally])
     end
   end
 
@@ -23,7 +23,7 @@ describe Gdpr::Gateway::Session do
 
     it "does not delete the sessions" do
       subject.delete_sessions
-      expect(session.all.map { |s| s.fetch(:username) }).to eq(%w(sally george))
+      expect(session.all.map { |s| s.fetch(:username) }).to eq(%w[sally george])
     end
   end
 
