@@ -32,7 +32,7 @@ if %w[production staging].include?(ENV["RACK_ENV"])
   end
 end
 
-module Common;
+module Common
 end
 
 module PerformancePlatform
