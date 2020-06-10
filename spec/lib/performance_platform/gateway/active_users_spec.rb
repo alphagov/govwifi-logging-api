@@ -14,14 +14,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: Time.zone.today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 1,
+          start: Time.zone.today - 1,
           success: 1,
         )
       end
@@ -40,14 +40,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: Time.zone.today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 2,
+          start: Time.zone.today - 2,
           success: 1,
         )
       end
@@ -66,14 +66,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: Time.zone.today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 10,
+          start: Time.zone.today - 10,
           success: 1,
         )
       end
@@ -92,14 +92,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: Time.zone.today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 1,
+          start: Time.zone.today - 1,
           success: 0,
         )
       end
@@ -118,7 +118,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today,
+          start: Time.zone.today,
           success: 1,
         )
       end
@@ -141,14 +141,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: Time.zone.today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 26,
+          start: Time.zone.today - 26,
           success: 1,
         )
       end
@@ -167,14 +167,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 14,
+          start: Time.zone.today - 14,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 20,
+          start: Time.zone.today - 20,
           success: 1,
         )
       end
@@ -193,14 +193,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 33,
+          start: Time.zone.today - 33,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 36,
+          start: Time.zone.today - 36,
           success: 1,
         )
       end

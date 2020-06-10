@@ -8,7 +8,7 @@ describe Gdpr::UseCase::PopulateUserLastLogin do
     )
   end
 
-  let(:today) { Date.today }
+  let(:today) { Time.zone.today }
   let(:yesterday) { today.prev_day }
   let(:tomorrow) { today.next_day }
 

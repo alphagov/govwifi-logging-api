@@ -4,9 +4,9 @@ describe Gdpr::Gateway::Session do
 
   context "Given some sessions are older than 32 days" do
     before do
-      session.insert(start: Date.today, username: "bob")
-      session.insert(start: Date.today, username: "sally")
-      session.insert(start: Date.today - 33, username: "george")
+      session.insert(start: Time.zone.today, username: "bob")
+      session.insert(start: Time.zone.today, username: "sally")
+      session.insert(start: Time.zone.today - 33, username: "george")
     end
 
     it "deletes the old sessions" do
@@ -17,8 +17,8 @@ describe Gdpr::Gateway::Session do
 
   context "Given all sessions are recent" do
     before do
-      session.insert(start: Date.today, username: "sally")
-      session.insert(start: Date.today, username: "george")
+      session.insert(start: Time.zone.today, username: "sally")
+      session.insert(start: Time.zone.today, username: "george")
     end
 
     it "does not delete the sessions" do
@@ -29,8 +29,8 @@ describe Gdpr::Gateway::Session do
 
   context "Given all sessions are old" do
     before do
-      session.insert(start: Date.today - 33, username: "Adam")
-      session.insert(start: Date.today - 33, username: "Betty")
+      session.insert(start: Time.zone.today - 33, username: "Adam")
+      session.insert(start: Time.zone.today - 33, username: "Betty")
     end
 
     it "deletes the sessions" do

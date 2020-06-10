@@ -1,5 +1,5 @@
 class PerformancePlatform::Presenter::RoamingUsers
-  def initialize(date: Date.today.to_s)
+  def initialize(date: Time.zone.today.to_s)
     @date = Date.parse(date)
   end
 

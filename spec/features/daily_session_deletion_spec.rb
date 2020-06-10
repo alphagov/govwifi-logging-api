@@ -5,9 +5,9 @@ describe "daily session deletion" do
   context "Given sessions older than 3 months" do
     before do
       session.delete
-      session.insert(start: Date.today, username: "bob")
-      session.insert(start: Date.today, username: "sally")
-      session.insert(start: Date.today - 120, username: "george")
+      session.insert(start: Time.zone.today, username: "bob")
+      session.insert(start: Time.zone.today, username: "sally")
+      session.insert(start: Time.zone.today - 120, username: "george")
     end
 
     it "deletes the session" do

@@ -3,7 +3,7 @@ require "date"
 describe Gdpr::Gateway::SetLastLogin do
   let(:subject) { described_class.new }
   let(:username) { "borris" }
-  let(:today) { Date.today }
+  let(:today) { Time.zone.today }
   let(:yesterday) { today.prev_day }
   let(:tomorrow) { today.next_day }
   let(:userdetails) { USER_DB[:userdetails] }

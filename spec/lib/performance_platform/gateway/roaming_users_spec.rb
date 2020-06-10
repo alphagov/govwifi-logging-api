@@ -5,7 +5,7 @@ describe PerformancePlatform::Gateway::RoamingUsers do
   let(:sessions) { DB[:sessions] }
   let(:ip_1) { "7.7.7.7" }
   let(:ip_2) { "8.8.8.8" }
-  let(:yesterday) { Date.today - 1 }
+  let(:yesterday) { Time.zone.today - 1 }
   let(:period) { "week" }
 
   before do
@@ -69,8 +69,8 @@ describe PerformancePlatform::Gateway::RoamingUsers do
       let(:period) { "week" }
 
       it "does not count them as roaming" do
-        create_session(ip_1, "alice", Date.today - 8)
-        create_session(ip_2, "alice", Date.today - 8)
+        create_session(ip_1, "alice", Time.zone.today - 8)
+        create_session(ip_2, "alice", Time.zone.today - 8)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
@@ -84,8 +84,8 @@ describe PerformancePlatform::Gateway::RoamingUsers do
       end
 
       it "does not count them as roaming" do
-        create_session(ip_1, "alice", Date.today - 32)
-        create_session(ip_2, "alice", Date.today - 32)
+        create_session(ip_1, "alice", Time.zone.today - 32)
+        create_session(ip_2, "alice", Time.zone.today - 32)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end

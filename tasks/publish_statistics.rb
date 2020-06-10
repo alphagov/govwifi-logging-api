@@ -20,7 +20,7 @@ PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_statistics".to_sym
 
   task name, [:date] do |_, args|
-    args.with_defaults(date: Date.today.to_s)
+    args.with_defaults(date: Time.zone.today.to_s)
     logger.info("Publishing #{adverbial} statistics with #{args[:date]}")
     performance_gateway = PerformancePlatform::Gateway::PerformanceReport.new
     active_users_gateway = PerformancePlatform::Gateway::ActiveUsers.new(period: period, date: args[:date])

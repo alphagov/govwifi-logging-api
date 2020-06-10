@@ -1,5 +1,5 @@
 class PerformancePlatform::Gateway::RoamingUsers
-  def initialize(period:, date: Date.today.to_s)
+  def initialize(period:, date: Time.zone.today.to_s)
     @period = period.to_s
     @date = Date.parse(date)
   end

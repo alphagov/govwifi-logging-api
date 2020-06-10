@@ -2,7 +2,7 @@ require "date"
 
 describe Gdpr::Gateway::Session do
   let(:subject) { described_class.new }
-  let(:today) { Date.today }
+  let(:today) { Time.zone.today }
   let(:yesterday) { today.prev_day }
   let(:session) { DB[:sessions] }
 

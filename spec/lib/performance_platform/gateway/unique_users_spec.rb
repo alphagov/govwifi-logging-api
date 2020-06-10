@@ -3,7 +3,7 @@ describe PerformancePlatform::Gateway::UniqueUsers do
 
   let(:session_repository) { DB[:sessions] }
   let(:today_thursday) { Date.new(2018, 2, 1) }
-  let(:eight_days_ago_wednesday) { Date.today - 8 }
+  let(:eight_days_ago_wednesday) { Time.zone.today - 8 }
   let(:six_days_ago_monday) { Date.new(2018, 1, 29) }
   let(:five_days_ago_saturday) { Date.new(2018, 1, 27) }
   let(:four_days_ago_sunday) { Date.new(2018, 1, 14) }
