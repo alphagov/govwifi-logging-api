@@ -13,6 +13,7 @@ gem "sinatra"
 gem "sinatra-contrib"
 
 group :test do
+  gem "guard-rspec"
   gem "rack-test"
   gem "rspec"
   gem "rubocop-govuk"
