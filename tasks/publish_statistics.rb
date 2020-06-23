@@ -41,3 +41,25 @@ PERIODS.each do |adverbial, period|
     ).execute(presenter: roaming_users_presenter)
   end
 end
+
+PERIODS.each do |adverbial, period|
+  name = "publish_#{adverbial}_metrics".to_sym
+
+  task name, [:date] do |_, args|
+    args.with_defaults(date: Date.today.to_s)
+
+    logger.info("Creating #{adverbial} metrics for S3 with #{args[:date]}")
+
+    metrics = Metrics::ActiveUsers.new(period: period, date: args[:date])
+
+    logger.info("[#{metrics.key}] Generating metrics...")
+
+    metrics.generate!
+
+    logger.info("[#{metrics.key}] Uploading metrics...")
+
+    metrics.publish!
+
+    logger.info("[#{metrics.key}] Done.")
+  end
+end
