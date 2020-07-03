@@ -10,7 +10,7 @@ private
   end
 
   def only_hex(mac)
-    mac.gsub(/[^0-F]/, '')
+    mac.gsub(/[^0-F]/, "")
   end
 
   def ietf_format(mac)

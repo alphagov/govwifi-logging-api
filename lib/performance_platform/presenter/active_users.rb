@@ -10,8 +10,8 @@ class PerformancePlatform::Presenter::ActiveUsers
     {
       metric_name: stats[:metric_name],
       payload: [
-        as_hash(stats[:users], 'users'),
-      ]
+        as_hash(stats[:users], "users"),
+      ],
     }
   end
 
@@ -28,7 +28,7 @@ private
       dataType: stats[:metric_name],
       period: stats[:period],
       type: type,
-      count: count
+      count: count,
     }
   end
 
@@ -36,11 +36,11 @@ private
     Common::Base64.encode_array(
       [
         timestamp,
-        ENV.fetch('PERFORMANCE_DATASET'),
+        ENV.fetch("PERFORMANCE_DATASET"),
         stats[:period],
         stats[:metric_name],
-        type
-      ]
+        type,
+      ],
     )
   end
 

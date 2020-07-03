@@ -7,8 +7,8 @@ class PerformancePlatform::Gateway::UniqueUsers
   def fetch_stats
     {
       count: result[:count].to_i,
-      metric_name: 'unique-users',
-      period: period
+      metric_name: "unique-users",
+      period: period,
     }
   end
 

@@ -3,7 +3,7 @@ module Logging
     def execute(params:)
       @params = params
 
-      return handle_username_request unless @params['cert_name'].present?
+      return handle_username_request unless @params["cert_name"].present?
 
       create_cert_session
     end
@@ -31,32 +31,32 @@ module Logging
     def create_cert_session
       Session.create(
         session_params.merge(
-          cert_name: @params.fetch('cert_name')
-        )
+          cert_name: @params.fetch("cert_name"),
+        ),
       )
     end
 
     def session_params
       {
         start: Time.now,
-        mac: formatted_mac(@params.fetch('mac')),
-        ap: ap(@params.fetch('called_station_id')),
-        siteIP: @params.fetch('site_ip_address'),
-        building_identifier: building_identifier(@params.fetch('called_station_id')),
-        success: access_accept?
+        mac: formatted_mac(@params.fetch("mac")),
+        ap: ap(@params.fetch("called_station_id")),
+        siteIP: @params.fetch("site_ip_address"),
+        building_identifier: building_identifier(@params.fetch("called_station_id")),
+        success: access_accept?,
       }
     end
 
     def access_reject?
-      @params.fetch('authentication_result') == 'Access-Reject'
+      @params.fetch("authentication_result") == "Access-Reject"
     end
 
     def access_accept?
-      @params.fetch('authentication_result') == 'Access-Accept'
+      @params.fetch("authentication_result") == "Access-Accept"
     end
 
     def username
-      @params.fetch('username')
+      @params.fetch("username")
     end
 
     def formatted_mac(unformatted_mac)
@@ -75,11 +75,11 @@ module Logging
       mac = formatted_mac(unformatted_mac)
       return mac if valid_mac?(mac)
 
-      ''
+      ""
     end
 
     def handle_username_request
-      return true if username == 'HEALTH'
+      return true if username == "HEALTH"
 
       create_user_session
     end

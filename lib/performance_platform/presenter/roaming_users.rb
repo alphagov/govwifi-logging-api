@@ -10,9 +10,9 @@ class PerformancePlatform::Presenter::RoamingUsers
     {
       metric_name: stats[:metric_name],
       payload: [
-        as_hash(stats[:active], 'active'),
-        as_hash(stats[:roaming], 'roaming')
-      ]
+        as_hash(stats[:active], "active"),
+        as_hash(stats[:roaming], "roaming"),
+      ],
     }
   end
 
@@ -25,7 +25,7 @@ private
       dataType: stats[:metric_name],
       period: stats[:period],
       type: type,
-      count: count
+      count: count,
     }
   end
 
@@ -37,11 +37,11 @@ private
     Common::Base64.encode_array(
       [
         timestamp,
-        ENV.fetch('PERFORMANCE_DATASET'),
+        ENV.fetch("PERFORMANCE_DATASET"),
         stats[:period],
         stats[:metric_name],
-        type
-      ]
+        type,
+      ],
     )
   end
 

@@ -9,8 +9,8 @@ class PerformancePlatform::Gateway::ActiveUsers
 
     {
       users: result[:total],
-      metric_name: 'active-users',
-      period: period
+      metric_name: "active-users",
+      period: period,
     }
   end
 

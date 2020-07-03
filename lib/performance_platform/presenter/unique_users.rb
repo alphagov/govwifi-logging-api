@@ -15,9 +15,9 @@ class PerformancePlatform::Presenter::UniqueUsers
           _timestamp: timestamp,
           dataType: stats[:metric_name],
           period: stats[:period],
-          count_field_name => stats[:count]
-        }
-      ]
+          count_field_name => stats[:count],
+        },
+      ],
     }
   end
 
@@ -31,15 +31,15 @@ private
     Common::Base64.encode_array(
       [
         timestamp,
-        ENV.fetch('PERFORMANCE_DATASET'),
+        ENV.fetch("PERFORMANCE_DATASET"),
         stats[:period],
-        stats[:metric_name]
-      ]
+        stats[:metric_name],
+      ],
     )
   end
 
   def count_field_name
-    stats[:period] == 'month' ? 'month_count' : 'count'
+    stats[:period] == "month" ? "month_count" : "count"
   end
 
   attr_reader :stats, :timestamp, :date
