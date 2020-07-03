@@ -68,7 +68,7 @@ module Logging
     end
 
     def building_identifier(called_station_id)
-      called_station_id if !valid_mac?(formatted_mac(called_station_id))
+      called_station_id unless valid_mac?(formatted_mac(called_station_id))
     end
 
     def ap(unformatted_mac)
