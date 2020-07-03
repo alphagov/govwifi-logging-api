@@ -40,7 +40,7 @@ serve: build
 	$(DOCKER_COMPOSE) up -d app
 
 lint: build
-	$(DOCKER_COMPOSE) run --rm app bundle exec govuk-lint-ruby
+	$(DOCKER_COMPOSE) run --rm app bundle exec rubocop
 
 test: serve
 	./mysql/bin/wait_for_mysql
