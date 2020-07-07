@@ -12,7 +12,7 @@ class App < Sinatra::Base
 
   sensible_logging(
     logger: Logger.new(STDOUT),
-    log_tags: [->(req) {
+    log_tags: [lambda { |req|
       req.body.rewind
       [
         req.body.read,

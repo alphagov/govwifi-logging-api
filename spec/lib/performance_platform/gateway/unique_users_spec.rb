@@ -12,7 +12,7 @@ describe PerformancePlatform::Gateway::UniqueUsers do
 
   before do
     DB[:sessions].truncate
-    Timecop.freeze(Date.new(2018, 2, 1)) #THURSDAY
+    Timecop.freeze(Date.new(2018, 2, 1)) # THURSDAY
   end
 
   after do
