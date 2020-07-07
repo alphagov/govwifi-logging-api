@@ -17,13 +17,13 @@ module Metrics
       @period = attrs[:period]
       @date = attrs[:date]
 
-      @s3 = Aws::S3::Client.new(region: 'eu-west-2')
+      @s3 = Aws::S3::Client.new(region: "eu-west-2")
     end
 
     def generate!
       gateway = PerformancePlatform::Gateway::ActiveUsers.new(
         period: period,
-        date: date
+        date: date,
       )
 
       @report = gateway.fetch_stats
@@ -35,15 +35,15 @@ module Metrics
 
     def publish!
       if @report.nil?
-        raise 'Nothing to publish; call generate! before publishing.'
+        raise "Nothing to publish; call generate! before publishing."
       end
 
-      bucket = ENV.fetch('S3_METRICS_BUCKET')
+      bucket = ENV.fetch("S3_METRICS_BUCKET")
 
       @s3.put_object(
         bucket: bucket,
         key: key,
-        body: report.to_json.to_s
+        body: report.to_json.to_s,
       )
     end
   end
