@@ -4,10 +4,10 @@ describe Metrics::ActiveUsers do
   subject { Metrics::ActiveUsers.new(period: 'month', date: Date.today.to_s) }
 
   before do
-    @client_double = double
+    @s3_client_double = double
 
-    allow(@client_double).to receive(:put_object)
-    allow(Aws::S3::Client).to receive(:new).and_return(@client_double)
+    allow(@s3_client_double).to receive(:put_object)
+    allow(Aws::S3::Client).to receive(:new).and_return(@s3_client_double)
   end
 
   it 'stores the date' do
@@ -81,7 +81,7 @@ describe Metrics::ActiveUsers do
       it 'writes the JSON string of the report into the S3 metrics bucket' do
         subject.publish!
 
-        expect(@client_double)
+        expect(@s3_client_double)
           .to have_received(:put_object).with(
             bucket: 'stub-bucket',
             key: :some_key,
