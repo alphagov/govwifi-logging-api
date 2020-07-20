@@ -11,11 +11,11 @@ describe Metrics::ActiveUsers do
   end
 
   it 'stores the date' do
-    expect(subject.period).to eq 'month'
+    expect(subject.date).to eq Date.today.to_s
   end
 
   it 'stores the period' do
-    expect(subject.date).to eq Date.today.to_s
+    expect(subject.period).to eq "month"
   end
 
   it 'rejects invalid periods' do
