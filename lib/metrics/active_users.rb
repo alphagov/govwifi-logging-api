@@ -30,7 +30,7 @@ module Metrics
     end
 
     def key
-      "logging-api-active-users-#{period}-#{date}"
+      "active-users-#{period}-#{date}"
     end
 
     def publish!
