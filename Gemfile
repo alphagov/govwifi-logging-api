@@ -8,7 +8,7 @@ gem "rake", "~> 13.0"
 gem "require_all"
 gem "sensible_logging", "~> 0.4.1"
 gem "sentry-raven"
-gem "sequel", "~> 5.34"
+gem "sequel", "~> 5.35"
 gem "sinatra"
 gem "sinatra-contrib"
 
