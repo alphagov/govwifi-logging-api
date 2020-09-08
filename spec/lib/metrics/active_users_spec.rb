@@ -54,7 +54,7 @@ describe Metrics::ActiveUsers do
   describe "key" do
     it "returns a key for the S3 upload" do
       expect(subject.key)
-        .to eq "active-users-#{subject.period}-#{subject.date}"
+        .to eq "active-users/active-users-#{subject.period}-#{subject.date}"
     end
   end
 
