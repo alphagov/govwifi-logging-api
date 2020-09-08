@@ -30,7 +30,7 @@ module Metrics
     end
 
     def key
-      "active-users-#{period}-#{date}"
+      "active-users/active-users-#{period}-#{date}"
     end
 
     def publish!
