@@ -1,21 +1,25 @@
 # frozen_string_literal: true
 
+require_relative "./s3_fake_client"
+
 describe Metrics::ActiveUsers do
-  subject { Metrics::ActiveUsers.new(period: "month", date: Date.today.to_s) }
+  let(:today) { Date.today }
+  let(:earlier_today) { Date.today - 0.5 }
+  let(:yesterday) { today - 1 }
+  let(:last_month) { today - 31 }
+  let(:period) { "week" }
+  let(:s3_client) { Metrics.fake_s3_client }
+
+  subject do
+    Metrics::ActiveUsers.new(period: period,
+                             date: today.to_s)
+  end
 
   before do
-    @s3_client_double = double
-
-    allow(@s3_client_double).to receive(:put_object)
-    allow(Aws::S3::Client).to receive(:new).and_return(@s3_client_double)
-  end
-
-  it "stores the date" do
-    expect(subject.period).to eq "month"
-  end
-
-  it "stores the period" do
-    expect(subject.date).to eq Date.today.to_s
+    ENV["S3_METRICS_BUCKET"] = "stub-bucket"
+    DB[:sessions].truncate
+    USER_DB[:userdetails].truncate
+    allow(Services).to receive(:s3_client).and_return s3_client
   end
 
   it "rejects invalid periods" do
@@ -23,70 +27,56 @@ describe Metrics::ActiveUsers do
       .to raise_error(ArgumentError)
   end
 
-  describe "generate!" do
+  describe "#execute" do
     before do
-      @gateway_double = instance_double(
-        PerformancePlatform::Gateway::ActiveUsers,
-      )
+      session_params = { "start" => start_date,
+                         "stop" => today,
+                         "siteIP" => "1.2.3.4",
+                         "success" => 1,
+                         "username" => "User" }
 
-      allow(@gateway_double).to receive(:fetch_stats).and_return :result
-      allow(PerformancePlatform::Gateway::ActiveUsers)
-        .to receive(:new)
-        .and_return @gateway_double
+      Session.create(session_params)
 
-      subject.generate!
+      subject.execute
+
+      result = s3_client.get_object(bucket: ENV.fetch("S3_METRICS_BUCKET"), key: subject.key).body.read
+      parsed_result = JSON.parse(result)
+      @active_users = parsed_result["users"]
     end
 
-    it "delegates to the performance platform gateway" do
-      expect(PerformancePlatform::Gateway::ActiveUsers)
-        .to have_received(:new)
-        .with(period: subject.period, date: subject.date)
+    describe "The start date is yesterday and the period is a week" do
+      let(:start_date) { yesterday }
+      let(:period) { "week" }
 
-      expect(@gateway_double)
-        .to have_received(:fetch_stats)
-    end
-
-    it "stores the result in an instance variable" do
-      expect(subject.report).to eq :result
-    end
-  end
-
-  describe "key" do
-    it "returns a key for the S3 upload" do
-      expect(subject.key)
-        .to eq "active-users/active-users-#{subject.period}-#{subject.date}"
-    end
-  end
-
-  describe "publish!" do
-    before do
-      data = double
-
-      allow(data).to receive_message_chain("to_json.to_s").and_return :payload
-      allow(subject).to receive(:report).and_return data
-      allow(subject).to receive(:key).and_return :some_key
-
-      ENV["S3_METRICS_BUCKET"] = "stub-bucket"
-    end
-
-    context "when the report is nil" do
-      it "throws an error" do
-        expect { subject.publish! }.to raise_error(/call generate!/)
+      it "uploads 1 active user to S3" do
+        expect(@active_users).to eq(1)
       end
     end
 
-    context "when the report has been generated" do
-      before { subject.generate! }
+    describe "The start date is a month ago and the period is a week" do
+      let(:start_date) { last_month }
+      let(:period) { "week" }
 
-      it "writes the JSON string of the report into the S3 metrics bucket" do
-        subject.publish!
+      it "uploads 0 active users to S3" do
+        expect(@active_users).to eq(0)
+      end
+    end
 
-        expect(@s3_client_double)
-          .to have_received(:put_object).with(
-            bucket: "stub-bucket",
-            key: :some_key,
-            body: :payload,
-          )
+    describe "The start date is a month ago and the period is a day" do
+      let(:start_date) { last_month }
+      let(:period) { "day" }
+
+      it "uploads 0 active and 0 roaming users to S3" do
+        expect(@active_users).to eq(0)
+      end
+    end
+
+    describe "The start date is earlier today and the period is a day" do
+      let(:start_date) { today - 0.5 }
+      let(:period) { "day" }
+
+      it "uploads 1 active user to S3" do
+        expect(@active_users).to eq(1)
       end
     end
   end

@@ -52,13 +52,9 @@ PERIODS.each do |adverbial, period|
 
     metrics = Metrics::ActiveUsers.new(period: period, date: args[:date])
 
-    logger.info("[#{metrics.key}] Generating metrics...")
+    logger.info("[#{metrics.key}] Fetching and uploading metrics...")
 
-    metrics.generate!
-
-    logger.info("[#{metrics.key}] Uploading metrics...")
-
-    metrics.publish!
+    metrics.execute
 
     logger.info("[#{metrics.key}] Done.")
   end
