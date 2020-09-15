@@ -39,8 +39,9 @@ end
 
 PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_metrics".to_sym
+  dependent_tasks = adverbial == :daily ? [:synchronize_ip_locations] : []
 
-  task name, [:date] do |_, args|
+  task name, [:date] => dependent_tasks do |_, args|
     args.with_defaults(date: Date.today.to_s)
 
     logger.info("Creating #{adverbial} metrics for S3 with #{args[:date]}")
