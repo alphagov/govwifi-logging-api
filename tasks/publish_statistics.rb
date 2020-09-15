@@ -2,12 +2,7 @@ require "logger"
 logger = Logger.new(STDOUT)
 
 task :synchronize_ip_locations do
-  source_gateway = PerformancePlatform::Gateway::S3IpLocations.new
-  destination_gateway = PerformancePlatform::Gateway::SequelIPLocations.new
-  PerformancePlatform::UseCase::SynchronizeIpLocations.new(
-    source_gateway: source_gateway,
-    destination_gateway: destination_gateway,
-  ).execute
+  Metrics::IPSynchronizer.execute
 end
 
 PERIODS = {

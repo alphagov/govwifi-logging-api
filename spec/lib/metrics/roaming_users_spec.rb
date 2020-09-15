@@ -19,8 +19,9 @@ describe Metrics::RoamingUsers do
     ENV["S3_METRICS_BUCKET"] = "stub-bucket"
     DB[:sessions].truncate
     USER_DB[:userdetails].truncate
-    PerformancePlatform::Gateway::SequelIPLocations.new.save([{ "ip" => "1.2.3.4", "location_id" => 1234 },
-                                                              { "ip" => "2.3.4.5", "location_id" => 2345 }])
+    DB[:ip_locations].truncate
+    DB[:ip_locations].insert("ip" => "1.2.3.4", "location_id" => 1234)
+    DB[:ip_locations].insert("ip" => "2.3.4.5", "location_id" => 2345)
     allow(Services).to receive(:s3_client).and_return s3_client
   end
 
