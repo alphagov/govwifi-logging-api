@@ -2,12 +2,7 @@ require "logger"
 logger = Logger.new(STDOUT)
 
 task :synchronize_ip_locations do
-  source_gateway = PerformancePlatform::Gateway::S3IpLocations.new
-  destination_gateway = PerformancePlatform::Gateway::SequelIPLocations.new
-  PerformancePlatform::UseCase::SynchronizeIpLocations.new(
-    source_gateway: source_gateway,
-    destination_gateway: destination_gateway,
-  ).execute
+  Metrics::IPSynchronizer.execute
 end
 
 PERIODS = {
@@ -44,8 +39,9 @@ end
 
 PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_metrics".to_sym
+  dependent_tasks = adverbial == :daily ? [:synchronize_ip_locations] : []
 
-  task name, [:date] do |_, args|
+  task name, [:date] => dependent_tasks do |_, args|
     args.with_defaults(date: Date.today.to_s)
 
     logger.info("Creating #{adverbial} metrics for S3 with #{args[:date]}")
