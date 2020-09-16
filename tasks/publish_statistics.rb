@@ -2,7 +2,7 @@ require "logger"
 logger = Logger.new(STDOUT)
 
 task :synchronize_ip_locations do
-  Metrics::IPSynchronizer.execute
+  Metrics::IPSynchronizer.new.execute
 end
 
 PERIODS = {
