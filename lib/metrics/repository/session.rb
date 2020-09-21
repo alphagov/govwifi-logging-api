@@ -1,4 +1,4 @@
-class PerformancePlatform::Repository::Session < Sequel::Model(:sessions)
+class Metrics::Repository::Session < Sequel::Model(:sessions)
   dataset_module do
     def active_users_stats(period:, date:)
       DB.fetch("

@@ -3,7 +3,7 @@
 module Metrics
   # Utility class to generate and publish a set of metrics for the
   # provided period and date arguments. It delegates the actual
-  # generation to PerformancePlatform::Gateway::ActiveUsers and will
+  # generation to Metrics::Gateway::ActiveUsers and will
   # upload the result in the S3 bucket designated through
   # ENV['S3_METRICS_BUCKET'].
   class ActiveUsers
@@ -27,7 +27,7 @@ module Metrics
   private
 
     def stats
-      gateway = PerformancePlatform::Gateway::ActiveUsers.new(
+      gateway = Metrics::Gateway::ActiveUsers.new(
         period: @period,
         date: @date,
       )

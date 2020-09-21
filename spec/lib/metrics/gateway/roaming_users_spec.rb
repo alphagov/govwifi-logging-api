@@ -1,4 +1,4 @@
-describe PerformancePlatform::Gateway::RoamingUsers do
+describe Metrics::Gateway::RoamingUsers do
   subject { described_class.new(period: period) }
 
   let(:location_ip_links) { DB[:ip_locations] }
