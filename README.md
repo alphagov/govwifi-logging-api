@@ -8,7 +8,7 @@ N.B. The private GovWifi [build repository][build-repo] contains instructions on
 
 - [Overview](#overview)
   - [Sinatra routes](#sinatra-routes)
-  - [Statistics sent over to the performance platform](#statistics-sent-over-to-the-performance-platform)
+  - [Statistics sent over to S3](#statistics-sent-over-to-s3)
     - [Send statistics manually](#send-statistics-manually)
       - [Account Usage](#account-usage)
       - [Unique Users](#unique-users)
@@ -22,7 +22,7 @@ Also known as `post-auth` in FreeRadius terms, this logs to the sessions table w
 
 During the RADIUS `post-auth` action, a POST request is sent to this API containing session data. This API receives this request and saves it to a database.
 
-This application is also responsible for sending statistics to the Performance Platform.
+This application is also responsible for sending statistics to S3.
 
 It stores the following details along with this:
 
@@ -47,7 +47,7 @@ params:
   :authentication_result
 ```
 
-## Statistics sent over to the performance platform
+## Statistics sent over to S3
 
 - Account Usage
 - Unique Users
