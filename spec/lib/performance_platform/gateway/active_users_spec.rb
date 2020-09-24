@@ -1,4 +1,4 @@
-describe Metrics::Gateway::ActiveUsers do
+describe PerformancePlatform::Gateway::ActiveUsers do
   let(:sessions) { DB[:sessions] }
   let(:result) { subject.fetch_stats }
 
