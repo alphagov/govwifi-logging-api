@@ -1,4 +1,4 @@
-class Metrics::Gateway::RoamingUsers
+class PerformancePlatform::Gateway::RoamingUsers
   def initialize(period:, date: Date.today.to_s)
     @period = period.to_s
     @date = Date.parse(date)
@@ -16,7 +16,7 @@ class Metrics::Gateway::RoamingUsers
 private
 
   def repository
-    Metrics::Repository::Session
+    PerformancePlatform::Repository::Session
   end
 
   def active_users_count

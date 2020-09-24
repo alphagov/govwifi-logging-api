@@ -21,7 +21,7 @@ module Metrics
   private
 
     def stats
-      gateway = Metrics::Gateway::RoamingUsers.new(
+      gateway = PerformancePlatform::Gateway::RoamingUsers.new(
         period: @period,
         date: @date.to_s,
       )
