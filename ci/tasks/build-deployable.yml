@@ -29,4 +29,5 @@ run:
     - '-exc'
     - |
       echo "$TAG" > image/tag
+      echo "testing pipelines"
       build
