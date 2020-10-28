@@ -29,6 +29,5 @@ run:
     - '-exc'
     - |
       echo "$TAG" > image/tag
-      echo "$DOCKERTEST"
-      img login -u ((docker_hub_username)) -p ((docker_hub_authtoken))
+      echo "$DOCKER_HUB_AUTHTOKEN_ENV" | img login -u ((docker_hub_username)) --password-stdin
       build
