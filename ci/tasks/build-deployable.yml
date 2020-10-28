@@ -30,5 +30,5 @@ run:
     - |
       echo "$TAG" > image/tag
       echo "testing pipelines"
-      img docker login -u ((docker_hub_username))
+      img login -u ((docker_hub_username)) -p ((docker_hub_authtoken))
       build
