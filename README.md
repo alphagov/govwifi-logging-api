@@ -83,6 +83,15 @@ The [Makefile](Makefile) contains commonly used commands for working with this a
 Merging to `master` will automatically deploy this API to staging.
 To deploy to production, choose _Deploy to production_ in the Concourse Pipeline.
 
+## How to contribute
+
+1. Fork the project
+2. Create a feature or fix branch
+3. Make your changes (with tests if possible)
+4. Run and linter: `make lint`
+5. Run and pass tests `make test`
+6. Raise a pull request
+
 ## Licence
 
 This codebase is released under [the MIT License][mit].
