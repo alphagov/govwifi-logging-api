@@ -47,4 +47,8 @@ module Gdpr
   module UseCase; end
 end
 
+module Volumetrics
+  module UseCase; end
+end
+
 require_all "lib"
