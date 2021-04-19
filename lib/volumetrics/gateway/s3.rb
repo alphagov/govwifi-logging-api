@@ -15,7 +15,7 @@ private
   end
 
   def list_objects(continuation_token = nil)
-    response = Services.s3_client.list_objects_v2({ bucket: bucket, continuation_token: continuation_token })
+    response = Services.s3_client.list_objects_v2({ bucket: bucket, prefix: "volumetrics/", continuation_token: continuation_token })
     objects = response.data.contents
 
     if response.data.is_truncated

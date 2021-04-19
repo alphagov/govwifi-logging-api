@@ -1,4 +1,4 @@
-describe Volumetrics::Gateway::Elasticsearch, :focus do
+describe Volumetrics::Gateway::Elasticsearch do
   let(:elasticsearch_client) { double(index: nil) }
   let(:url) { "http://#{ENV['VOLUMETRICS_ENDPOINT']}:9200/volumetrics/object/bar" }
 

@@ -8,7 +8,7 @@ describe Volumetrics::Gateway::S3 do
     allow(Services).to receive(:s3_client).and_return s3_client
 
     100.times do |t|
-      s3_client.put_object({ bucket: "stub_bucket", key: "foo/bar-#{t}" })
+      s3_client.put_object({ bucket: "stub-bucket", key: "foo/bar-#{t}", body: { foo: "bar-#{t}" }.to_json })
     end
 
     1500.times do |t|
