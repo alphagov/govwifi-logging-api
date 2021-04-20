@@ -6,13 +6,12 @@ describe Volumetrics::UseCase::SyncS3ToElasticsearch do
     )
   end
 
-  let(:s3_gateway) {
-    double(fetch: [
-      { filename: "baz", data: {} },
-    ])
-  }
-
+  let(:s3_gateway) { double }
   let(:elasticsearch_gateway) { double(write: nil) }
+
+  before do
+    allow(s3_gateway).to receive(:each).and_yield({ key: "baz", data: {} }).and_return %w[baz]
+  end
 
   context "Given s3 and elasticsearch gateways" do
     before(:each) do
@@ -20,7 +19,7 @@ describe Volumetrics::UseCase::SyncS3ToElasticsearch do
     end
 
     it "calls fetch on the s3 gateway" do
-      expect(s3_gateway).to have_received(:fetch)
+      expect(s3_gateway).to have_received(:each)
     end
 
     it "calls write on the elasticsearch gateway with expected args" do
