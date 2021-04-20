@@ -2,7 +2,6 @@ require "elasticsearch"
 
 class Volumetrics::Gateway::Elasticsearch
   def write(key, data)
-
     client = Elasticsearch::Client.new host: ENV["VOLUMETRICS_ENDPOINT"]
 
     client.index(
