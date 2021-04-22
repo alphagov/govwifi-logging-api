@@ -21,6 +21,26 @@ module Metrics
                        { body: fake_s3.dig(bucket, key) }
                      }
       )
+      client.stub_responses(
+        :list_objects_v2,
+        lambda { |context|
+          bucket = context.params[:bucket]
+          continuation_token = context.params[:continuation_token]
+          prefix = context.params[:prefix]
+
+          keys = fake_s3[bucket].keys
+                                .select { |k| !prefix || k.slice(0, prefix.length) == prefix }
+                                .map { |key| { key: key } }
+
+          continuation_token && {
+            contents: keys[1000..1999],
+          } || {
+            contents: keys[0..999],
+            is_truncated: true,
+            next_continuation_token: "foo",
+          }
+        },
+      )
     end
   end
 end
