@@ -10,8 +10,8 @@ class Volumetrics::UseCase::SyncS3ToElasticsearch
   def execute
     record_count = 0
 
-    @s3_gateway.each do |record|
-      @elasticsearch_gateway.write(record[:key], record[:data])
+    @s3_gateway.each do |key, data|
+      @elasticsearch_gateway.write(key, data)
       record_count += 1
     end
 

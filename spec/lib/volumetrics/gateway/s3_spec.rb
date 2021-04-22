@@ -21,10 +21,10 @@ describe Volumetrics::Gateway::S3 do
   end
 
   it "has expected first object" do
-    expect(subject.to_a.first).to eq({ key: "foo-0", body: { "bar" => "baz-0" } })
+    expect(subject.to_a.first).to eq([ "foo-0", { "bar" => "baz-0" } ])
   end
 
   it "has expected last object" do
-    expect(subject.to_a.last).to eq({ key: "foo-1499", body: { "bar" => "baz-1499" } })
+    expect(subject.to_a.last).to eq([ "foo-1499", { "bar" => "baz-1499" } ])
   end
 end
