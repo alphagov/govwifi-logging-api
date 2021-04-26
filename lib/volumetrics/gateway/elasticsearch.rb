@@ -6,8 +6,6 @@ class Volumetrics::Gateway::Elasticsearch
 
     client.index(
       index: "volumetrics",
-      type: "object",
-      id: key,
       body: data,
     )
   end
