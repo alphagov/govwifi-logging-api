@@ -10,7 +10,7 @@ describe Volumetrics::UseCase::SyncS3ToElasticsearch do
   let(:elasticsearch_gateway) { double(write: nil) }
 
   before do
-    allow(s3_gateway).to receive(:each).and_yield("baz", {}).and_return %w[baz]
+    allow(s3_gateway).to receive(:each).and_yield("baz", { foo: "bar" }).and_return %w[baz]
   end
 
   context "Given s3 and elasticsearch gateways" do
@@ -23,7 +23,7 @@ describe Volumetrics::UseCase::SyncS3ToElasticsearch do
     end
 
     it "calls write on the elasticsearch gateway with expected args" do
-      expect(elasticsearch_gateway).to have_received(:write).with("baz", {})
+      expect(elasticsearch_gateway).to have_received(:write).with({ foo: "bar" })
     end
   end
 end
