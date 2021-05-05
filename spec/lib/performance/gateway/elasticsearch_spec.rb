@@ -1,4 +1,4 @@
-describe Volumetrics::Gateway::Elasticsearch do
+describe Performance::Gateway::Elasticsearch do
   let(:elasticsearch_client) { double(index: nil) }
   let(:url) { "http://#{ENV['VOLUMETRICS_ENDPOINT']}:9200/volumetrics/_doc" }
 

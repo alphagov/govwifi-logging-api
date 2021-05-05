@@ -1,8 +1,8 @@
-class Volumetrics::UseCase::SendToElasticsearch
+class Performance::UseCase::SendToElasticsearch
   def initialize(
-    elasticsearch_gateway: Volumetrics::Gateway::Elasticsearch,
+    elasticsearch_gateway: Performance::Gateway::Elasticsearch,
     logger: Logger.new(STDOUT),
-    data_fetcher: Volumetrics::UseCase::FetchData
+    data_fetcher: Performance::UseCase::FetchData
   )
     @elasticsearch_gateway = elasticsearch_gateway
     @logger = logger

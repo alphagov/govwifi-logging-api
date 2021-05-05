@@ -1,4 +1,4 @@
-class Volumetrics::Gateway::S3
+class Performance::Gateway::S3
   include Enumerable
 
   PREFIX = "volumetrics/".freeze

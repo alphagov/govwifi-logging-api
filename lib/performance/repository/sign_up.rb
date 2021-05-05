@@ -1,4 +1,4 @@
-class Volumetrics::Repository::SignUp < Sequel::Model(USER_DB[:userdetails])
+class Performance::Repository::SignUp < Sequel::Model(USER_DB[:userdetails])
   dataset_module do
     def all(date)
       where(Sequel.lit("date(created_at) <= '#{date - 1}'"))

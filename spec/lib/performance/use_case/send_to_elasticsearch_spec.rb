@@ -1,9 +1,9 @@
-describe Volumetrics::UseCase::SendToElasticsearch do
+describe Performance::UseCase::SendToElasticsearch do
   before do
     USER_DB[:userdetails].truncate
   end
 
-  let(:user_repository) { Class.new(Volumetrics::Repository::SignUp) { unrestrict_primary_key } }
+  let(:user_repository) { Class.new(Performance::Repository::SignUp) { unrestrict_primary_key } }
   let(:elasticsearch_client) { spy }
 
   context "given a signup" do
@@ -24,7 +24,7 @@ describe Volumetrics::UseCase::SendToElasticsearch do
         sponsored_cumulative: 0,
         sponsored_period_before: 0,
       }
-      Volumetrics::UseCase::SendToElasticsearch.new.execute
+      Performance::UseCase::SendToElasticsearch.new.execute
       expect(elasticsearch_client).to have_received(:index).with({ index: "volumetrics",
                                                                    body: expected_hash })
     end

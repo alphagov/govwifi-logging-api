@@ -1,6 +1,6 @@
 require "elasticsearch"
 
-class Volumetrics::Gateway::Elasticsearch
+class Performance::Gateway::Elasticsearch
   def write(data)
     client = Services.elasticsearch_client
 
