@@ -1,4 +1,4 @@
-class Performance::UseCase::FetchData
+class Performance::UseCase::FetchVolumetricsData
   attr_reader :period
 
   def initialize(date: Date.today.to_s, period: "day")

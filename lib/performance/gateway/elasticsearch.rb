@@ -1,11 +1,15 @@
 require "elasticsearch"
 
 class Performance::Gateway::Elasticsearch
+  def initialize(index)
+    @index = index
+  end
+
   def write(data)
     client = Services.elasticsearch_client
 
     client.index(
-      index: "volumetrics",
+      index: @index,
       body: data,
     )
   end

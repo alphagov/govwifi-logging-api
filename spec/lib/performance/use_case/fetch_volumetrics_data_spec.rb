@@ -1,4 +1,4 @@
-describe Performance::UseCase::FetchData do
+describe Performance::UseCase::FetchVolumetricsData do
   let(:user_repository) { Class.new(Performance::Repository::SignUp) { unrestrict_primary_key } }
 
   before do
