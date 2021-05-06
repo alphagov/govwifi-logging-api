@@ -1,4 +1,4 @@
-class Volumetrics::UseCase::FetchData
+class Performance::UseCase::FetchVolumetricsData
   attr_reader :period
 
   def initialize(date: Date.today.to_s, period: "day")
@@ -26,7 +26,7 @@ private
   attr_reader :date
 
   def repository
-    Volumetrics::Repository::SignUp
+    Performance::Repository::SignUp
   end
 
   def signups_period_before

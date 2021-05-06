@@ -1,5 +1,5 @@
-describe Volumetrics::UseCase::FetchData do
-  let(:user_repository) { Class.new(Volumetrics::Repository::SignUp) { unrestrict_primary_key } }
+describe Performance::UseCase::FetchVolumetricsData do
+  let(:user_repository) { Class.new(Performance::Repository::SignUp) { unrestrict_primary_key } }
 
   before do
     USER_DB[:userdetails].truncate

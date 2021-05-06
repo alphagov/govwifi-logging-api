@@ -1,4 +1,4 @@
-describe Volumetrics::UseCase::SyncS3ToElasticsearch do
+describe Performance::UseCase::SyncS3ToElasticsearch do
   subject do
     described_class.new(
       s3_gateway: s3_gateway,

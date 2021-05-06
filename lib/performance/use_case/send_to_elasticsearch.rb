@@ -1,8 +1,8 @@
-class Volumetrics::UseCase::SendToElasticsearch
+class Performance::UseCase::SendToElasticsearch
   def initialize(
-    elasticsearch_gateway: Volumetrics::Gateway::Elasticsearch,
+    elasticsearch_gateway: Performance::Gateway::Elasticsearch.new("volumetrics"),
     logger: Logger.new(STDOUT),
-    data_fetcher: Volumetrics::UseCase::FetchData
+    data_fetcher: Performance::UseCase::FetchVolumetricsData
   )
     @elasticsearch_gateway = elasticsearch_gateway
     @logger = logger
@@ -11,7 +11,7 @@ class Volumetrics::UseCase::SendToElasticsearch
 
   def execute
     data = @data_fetcher.fetch
-    @elasticsearch_gateway.new.write data
+    @elasticsearch_gateway.write data
     @logger.info "Wrote volumetrics data point '#{data}' to Elasticsearch"
   end
 end

@@ -1,6 +1,6 @@
 require "logger"
 
-class Volumetrics::UseCase::SyncS3ToElasticsearch
+class Performance::UseCase::SyncS3ToElasticsearch
   def initialize(s3_gateway:, elasticsearch_gateway:, logger: Logger.new(STDOUT))
     @s3_gateway = s3_gateway
     @elasticsearch_gateway = elasticsearch_gateway
