@@ -17,7 +17,7 @@ class PerformancePlatform::Gateway::ActiveUsers
 private
 
   def repository
-    PerformancePlatform::Repository::Session
+    Performance::Repository::Session
   end
 
   attr_reader :period, :date
