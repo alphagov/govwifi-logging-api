@@ -1,14 +1,16 @@
 class Performance::UseCase::FetchVolumetricsData
-  attr_reader :period
+  VALID_PERIODS = %w[week day month].freeze
 
   def initialize(date: Date.today.to_s, period: "day")
+    raise ArgumentError unless VALID_PERIODS.include? attrs[:period]
+
     @date = Date.parse(date)
     @period = period
   end
 
   def fetch
     {
-      period: period,
+      period: @period,
       metric_name: "volumetrics",
       period_before: signups_period_before.count,
       cumulative: signups_cumulative.count,
@@ -23,18 +25,16 @@ class Performance::UseCase::FetchVolumetricsData
 
 private
 
-  attr_reader :date
-
   def repository
     Performance::Repository::SignUp
   end
 
   def signups_period_before
-    repository.send("#{period}_before", date)
+    repository.send("#{@period}_before", @date)
   end
 
   def signups_cumulative
-    repository.all(date)
+    repository.all(@date)
   end
 
   def sms_signups_period_before
