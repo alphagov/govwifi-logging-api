@@ -10,7 +10,7 @@ module Metrics
       @date = Date.parse(date)
     end
 
-    def execute
+    def to_s3
       S3Publisher.publish key, stats
     end
 

@@ -44,7 +44,7 @@ describe Metrics::CompletionRate do
       FactoryBot.create(:user_details, :not_logged_in, :self_signed, created_at: last_week)
       FactoryBot.create(:user_details, :not_logged_in, :self_signed, created_at: last_year)
 
-      subject.execute
+      subject.to_s3
 
       result = s3_client.get_object(bucket: ENV.fetch("S3_METRICS_BUCKET"), key: subject.key).body.read
       @parsed_result = JSON.parse(result)

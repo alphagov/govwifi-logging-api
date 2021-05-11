@@ -41,7 +41,7 @@ describe Metrics::RoamingUsers do
       Session.create(session_params.merge(username: "User1", "siteIP" => "2.3.4.5"))
       Session.create(session_params.merge(username: "User2"))
 
-      subject.execute
+      subject.to_s3
 
       result = s3_client.get_object(bucket: ENV.fetch("S3_METRICS_BUCKET"), key: subject.key).body.read
       parsed_result = JSON.parse(result)

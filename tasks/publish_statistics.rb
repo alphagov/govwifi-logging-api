@@ -54,7 +54,7 @@ PERIODS.each do |adverbial, period|
     metrics_list.each do |metrics|
       logger.info("[#{metrics.key}] Fetching and uploading metrics...")
 
-      metrics.execute
+      metrics.to_s3
 
       logger.info("[#{metrics.key}] Done.")
     end
