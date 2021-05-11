@@ -53,5 +53,4 @@ module Performance
   module UseCase; end
 end
 
-require './lib/user'
 require_all "lib"
