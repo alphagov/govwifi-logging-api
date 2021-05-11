@@ -13,6 +13,10 @@ module Metrics
       S3Publisher.publish key, stats
     end
 
+    def to_elasticsearch
+      Performance::Gateway::Elasticsearch.new('completion_rate').write(stats)
+    end
+
     def key
       "completion_rate/completion_rate-#{@period}-#{@date}"
     end

@@ -14,6 +14,10 @@ module Metrics
       S3Publisher.publish key, stats
     end
 
+    def to_elasticsearch
+      Performance::Gateway::Elasticsearch.new('roaming_users').write(stats)
+    end
+
     def key
       "roaming-users/roaming-users-#{@period}-#{@date}"
     end

@@ -13,6 +13,10 @@ module Metrics
       S3Publisher.publish key, stats
     end
 
+    def to_elasticsearch
+      Performance::Gateway::Elasticsearch.new('volumetrics').write(stats)
+    end
+
     def key
       "volumetrics/volumetrics-#{@period}-#{@date}"
     end
