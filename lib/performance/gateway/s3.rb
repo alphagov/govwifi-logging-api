@@ -27,6 +27,9 @@ private
     end
 
     objects
+  rescue Aws::S3::Errors::AccessDenied => e
+    warn "Failed to connect to S3 with bucket: #{bucket.inspect}, prefix: #{@prefix.inspect}, continuation_token: #{continuation_token.inspect}"
+    raise e
   end
 
   def bucket
