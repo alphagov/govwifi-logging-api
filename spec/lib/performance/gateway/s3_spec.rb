@@ -1,7 +1,8 @@
 require_relative "../../metrics/s3_fake_client"
 
-describe Volumetrics::Gateway::S3 do
+describe Performance::Gateway::S3 do
   let(:s3_client) { Metrics.fake_s3_client }
+  let(:subject) { described_class.new("volumetrics") }
 
   before do
     ENV["S3_METRICS_BUCKET"] = "stub-bucket"

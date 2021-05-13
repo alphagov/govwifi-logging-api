@@ -47,8 +47,9 @@ module Gdpr
   module UseCase; end
 end
 
-module Volumetrics
+module Performance
   module Gateway; end
+  module Repository; end
   module UseCase; end
 end
 
