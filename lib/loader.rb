@@ -53,4 +53,5 @@ module Performance
   module UseCase; end
 end
 
+require_all "lib/performance_platform"
 require_all "lib"
