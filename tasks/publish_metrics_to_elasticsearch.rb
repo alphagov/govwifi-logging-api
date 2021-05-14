@@ -1,3 +1,12 @@
+require "logger"
+logger = Logger.new(STDOUT)
+
+PERIODS = {
+  daily: "day",
+  weekly: "week",
+  monthly: "month",
+}.freeze
+
 PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_metrics_to_elasticsearch".to_sym
 
