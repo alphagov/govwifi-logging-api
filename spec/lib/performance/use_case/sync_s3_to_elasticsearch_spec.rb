@@ -10,7 +10,7 @@ describe Performance::UseCase::SyncS3ToElasticsearch do
   let(:elasticsearch_gateway) { double(write: nil) }
 
   before do
-    allow(s3_gateway).to receive(:each).and_yield("baz", { foo: "bar" }).and_return %w[baz]
+    allow(s3_gateway).to receive(:each).and_yield("baz-2020-01-01", { foo: "bar" }).and_return %w[baz]
   end
 
   context "Given s3 and elasticsearch gateways" do
@@ -23,7 +23,7 @@ describe Performance::UseCase::SyncS3ToElasticsearch do
     end
 
     it "calls write on the elasticsearch gateway with expected args" do
-      expect(elasticsearch_gateway).to have_received(:write).with({ foo: "bar" })
+      expect(elasticsearch_gateway).to have_received(:write).with("baz-2020-01-01", { date: "2020-01-01", foo: "bar" })
     end
   end
 end

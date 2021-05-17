@@ -10,8 +10,11 @@ class Performance::UseCase::SyncS3ToElasticsearch
   def execute
     record_count = 0
 
-    @s3_gateway.each do |_key, data|
-      @elasticsearch_gateway.write(data)
+    @s3_gateway.each do |key, data|
+      date = key[-10, 10]
+      data.merge!({ date: date })
+
+      @elasticsearch_gateway.write(key, data)
       record_count += 1
     end
 
