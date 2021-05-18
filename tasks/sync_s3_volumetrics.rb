@@ -5,12 +5,12 @@ task :sync_s3_volumetrics do
   ).execute
 
   Performance::UseCase::SyncS3ToElasticsearch.new(
-    elasticsearch_gateway: Performance::Gateway::Elasticsearch.new("active-users"),
+    elasticsearch_gateway: Performance::Gateway::Elasticsearch.new("active_users"),
     s3_gateway: Performance::Gateway::S3.new("active-users"),
   ).execute
 
   Performance::UseCase::SyncS3ToElasticsearch.new(
-    elasticsearch_gateway: Performance::Gateway::Elasticsearch.new("roaming-users"),
+    elasticsearch_gateway: Performance::Gateway::Elasticsearch.new("roaming_users"),
     s3_gateway: Performance::Gateway::S3.new("roaming-users"),
   ).execute
 
