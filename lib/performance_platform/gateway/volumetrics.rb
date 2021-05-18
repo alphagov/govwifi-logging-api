@@ -9,6 +9,7 @@ class PerformancePlatform::Gateway::Volumetrics
   def fetch_stats
     {
       period: period,
+      date: date.to_s,
       metric_name: "volumetrics",
       period_before: signups_period_before.count,
       cumulative: signups_cumulative.count,

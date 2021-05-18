@@ -26,7 +26,8 @@ describe Metrics::MetricSender do
   let(:active_users_expected_hash) do
     { "metric_name" => "active-users",
       "period" => "week",
-      "users" => 0 }
+      "users" => 0,
+      "date" => today.to_s }
   end
 
   let(:completion_rate_expected_hash) do
@@ -39,6 +40,7 @@ describe Metrics::MetricSender do
       "email_logged_in" => 0,
       "sponsor_registered" => 0,
       "sponsor_logged_in" => 0,
+      "date" => today.to_s,
     }
   end
 
@@ -46,7 +48,8 @@ describe Metrics::MetricSender do
     { "active" => 0,
       "metric_name" => "roaming-users",
       "period" => "week",
-      "roaming" => 0 }
+      "roaming" => 0,
+      "date" => today.to_s }
   end
 
   let(:volumetrics_expected_hash) do
@@ -61,6 +64,7 @@ describe Metrics::MetricSender do
       "email_cumulative" => 0,
       "sponsored_cumulative" => 0,
       "sponsored_period_before" => 0,
+      "date" => today.to_s,
     }
   end
 
@@ -103,7 +107,7 @@ describe Metrics::MetricSender do
     it "sends roaming users data to S3" do
       roaming_users.to_s3
       expect(s3_contents("roaming_users/roaming_users-week-#{today}"))
-        .to eq({ "active" => 0, "metric_name" => "roaming-users", "period" => "week", "roaming" => 0 })
+        .to eq({ "active" => 0, "metric_name" => "roaming-users", "period" => "week", "roaming" => 0, "date" => today.to_s })
     end
     it "sends volumetrics data to S3" do
       volumetrics.to_s3

@@ -5,7 +5,8 @@ describe PerformancePlatform::Gateway::RoamingUsers do
   let(:sessions) { DB[:sessions] }
   let(:ip_1) { "7.7.7.7" }
   let(:ip_2) { "8.8.8.8" }
-  let(:yesterday) { Date.today - 1 }
+  let(:today) { Date.today }
+  let(:yesterday) { today - 1 }
   let(:period) { "week" }
 
   before do
@@ -18,6 +19,10 @@ describe PerformancePlatform::Gateway::RoamingUsers do
 
   it "adds the metric name" do
     expect(subject.fetch_stats.fetch(:metric_name)).to eq("roaming-users")
+  end
+
+  it "adds the date" do
+    expect(subject.fetch_stats.fetch(:date)).to eq(today.to_s)
   end
 
   context "weekly" do
@@ -69,8 +74,8 @@ describe PerformancePlatform::Gateway::RoamingUsers do
       let(:period) { "week" }
 
       it "does not count them as roaming" do
-        create_session(ip_1, "alice", Date.today - 8)
-        create_session(ip_2, "alice", Date.today - 8)
+        create_session(ip_1, "alice", today - 8)
+        create_session(ip_2, "alice", today - 8)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
@@ -84,8 +89,8 @@ describe PerformancePlatform::Gateway::RoamingUsers do
       end
 
       it "does not count them as roaming" do
-        create_session(ip_1, "alice", Date.today - 32)
-        create_session(ip_2, "alice", Date.today - 32)
+        create_session(ip_1, "alice", today - 32)
+        create_session(ip_2, "alice", today - 32)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end

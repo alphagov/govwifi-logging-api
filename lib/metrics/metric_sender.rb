@@ -22,7 +22,7 @@ module Metrics
 
       @metric = metric
       @period = period
-      @date = date
+      @date = date.to_s
     end
 
     def to_s3
