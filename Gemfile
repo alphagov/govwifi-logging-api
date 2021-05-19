@@ -2,7 +2,7 @@ source "http://rubygems.org"
 ruby File.read(".ruby-version").chomp
 
 gem "aws-sdk-s3", "~> 1"
-gem "elasticsearch"
+gem "elasticsearch", "~> 7.9"
 gem "mysql2"
 gem "puma"
 gem "rake", "~> 13.0"
