@@ -10,6 +10,7 @@ class PerformancePlatform::Gateway::RoamingUsers
       roaming: roaming_users_count,
       metric_name: "roaming-users",
       period: period,
+      date: date.to_s,
     }
   end
 
