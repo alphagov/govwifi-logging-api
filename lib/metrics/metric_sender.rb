@@ -26,15 +26,15 @@ module Metrics
     end
 
     def to_s3
-      S3Publisher.publish key, stats
+      S3Publisher.publish "#{@metric}/#{key}", stats
     end
 
     def to_elasticsearch
-      Performance::Gateway::Elasticsearch.new(@metric.to_s).write(stats)
+      Performance::Gateway::Elasticsearch.new(@metric.to_s).write(key, stats)
     end
 
     def key
-      "#{@metric}/#{@metric}-#{@period}-#{@date}"
+      "#{@metric}-#{@period}-#{@date}"
     end
 
   private
