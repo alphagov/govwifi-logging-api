@@ -1,6 +1,6 @@
 require_relative "./s3_fake_client"
 
-module Metrics
+module Performance::Metrics
   describe IPSynchronizer do
     let(:ip_locations) do
       [{
@@ -14,7 +14,7 @@ module Metrics
     end
 
     let(:s3_client) do
-      Metrics.fake_s3_client
+      Performance::Metrics.fake_s3_client
     end
 
     before :each do

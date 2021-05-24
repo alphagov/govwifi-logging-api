@@ -42,9 +42,10 @@ end
 
 module Performance
   module Gateway; end
+  module Metrics; end
   module Repository; end
   module UseCase; end
 end
 
-require_all "lib/performance"
+require_all "lib/performance/use_case"
 require_all "lib"

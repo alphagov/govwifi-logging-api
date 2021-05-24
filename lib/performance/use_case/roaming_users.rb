@@ -17,7 +17,7 @@ class Performance::UseCase::RoamingUsers
 private
 
   def repository
-    PerformancePlatform::Repository::Session
+    Performance::Repository::Session
   end
 
   def active_users_count

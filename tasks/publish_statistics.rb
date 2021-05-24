@@ -2,7 +2,7 @@ require "logger"
 logger = Logger.new(STDOUT)
 
 task :synchronize_ip_locations do
-  Metrics::IPSynchronizer.new.execute
+  Performance::Metrics::IPSynchronizer.new.execute
 end
 
 PERIODS = {
@@ -22,7 +22,7 @@ PERIODS.each do |adverbial, period|
 
     metrics_list = %i[active_users completion_rate roaming_users volumetrics]
     metrics_list.each do |metrics|
-      metric_sender = Metrics::MetricSender.new(period: period, date: args[:date], metric: metrics)
+      metric_sender = Performance::Metrics::MetricSender.new(period: period, date: args[:date], metric: metrics)
       logger.info("[#{metric_sender.key}] Fetching and uploading metrics...")
 
       metric_sender.to_s3

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Metrics
+module Performance::Metrics
   # Utility class to generate and publish a set of metrics for the
   # provided period and date arguments. It delegates the actual
   # generation to PerformancePlatform::Gateway::ActiveUsers and will
