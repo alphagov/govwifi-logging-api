@@ -1,4 +1,4 @@
-class PerformancePlatform::Gateway::ActiveUsers
+class Performance::UseCase::ActiveUsers
   def initialize(period:, date: Date.today.to_s)
     @period = period
     @date = Date.parse(date)

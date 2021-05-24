@@ -1,4 +1,4 @@
-class PerformancePlatform::Gateway::Volumetrics
+class Performance::UseCase::Volumetrics
   attr_reader :period
 
   def initialize(date: Date.today.to_s, period: "day")

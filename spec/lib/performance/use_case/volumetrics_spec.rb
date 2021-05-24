@@ -1,4 +1,4 @@
-describe PerformancePlatform::Gateway::Volumetrics do
+describe Performance::UseCase::Volumetrics do
   let(:user_repository) { Class.new(Performance::Repository::SignUp) { unrestrict_primary_key } }
   let(:today) { Date.today }
 
