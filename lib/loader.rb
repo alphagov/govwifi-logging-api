@@ -35,13 +35,6 @@ end
 module Common
 end
 
-module PerformancePlatform
-  module Gateway; end
-  module Repository; end
-  module UseCase; end
-  module Presenter; end
-end
-
 module Gdpr
   module Gateway; end
   module UseCase; end
