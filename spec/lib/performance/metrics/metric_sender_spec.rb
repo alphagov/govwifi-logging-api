@@ -2,25 +2,25 @@
 
 require_relative "./s3_fake_client"
 
-describe Metrics::MetricSender do
+describe Performance::Metrics::MetricSender do
   let(:today) { Date.today }
-  let(:s3_client) { Metrics.fake_s3_client }
+  let(:s3_client) { Performance::Metrics.fake_s3_client }
   let(:elasticsearch_client) { spy }
 
   subject(:active_users) do
-    Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :active_users)
+    Performance::Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :active_users)
   end
 
   subject(:completion_rate) do
-    Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :completion_rate)
+    Performance::Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :completion_rate)
   end
 
   subject(:roaming_users) do
-    Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :roaming_users)
+    Performance::Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :roaming_users)
   end
 
   subject(:volumetrics) do
-    Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :volumetrics)
+    Performance::Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :volumetrics)
   end
 
   let(:active_users_expected_hash) do
@@ -75,12 +75,12 @@ describe Metrics::MetricSender do
   end
 
   it "rejects invalid periods" do
-    expect { Metrics::MetricSender.new(period: "foo", date: Date.today.to_s, metric: :active_users) }
+    expect {  Performance::Metrics::MetricSender.new(period: "foo", date: Date.today.to_s, metric: :active_users) }
       .to raise_error(ArgumentError)
   end
 
   it "rejects invalid stats" do
-    expect { Metrics::MetricSender.new(period: "week", date: Date.today.to_s, metric: :foo) }
+    expect {  Performance::Metrics::MetricSender.new(period: "week", date: Date.today.to_s, metric: :foo) }
       .to raise_error(ArgumentError)
   end
 

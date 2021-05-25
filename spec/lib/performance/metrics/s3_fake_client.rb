@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Metrics
+module Performance::Metrics
   def self.fake_s3_client
     fake_s3 = {}
     Aws::S3::Client.new(stub_responses: true).tap do |client|

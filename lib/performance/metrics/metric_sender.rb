@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Metrics
+module Performance::Metrics
   # Utility class to generate and publish a set of metrics for the
   # provided period and date arguments. It delegates the actual
   # generation to PerformancePlatform::Gateway::ActiveUsers and will
@@ -10,10 +10,10 @@ module Metrics
     VALID_PERIODS = %w[week day month].freeze
     VALID_STATS = %w[active_users completion_rate roaming_users volumetrics].freeze
     STATS = {
-      active_users: PerformancePlatform::Gateway::ActiveUsers,
-      completion_rate: PerformancePlatform::Gateway::CompletionRate,
-      roaming_users: PerformancePlatform::Gateway::RoamingUsers,
-      volumetrics: PerformancePlatform::Gateway::Volumetrics,
+      active_users: Performance::UseCase::ActiveUsers,
+      completion_rate: Performance::UseCase::CompletionRate,
+      roaming_users: Performance::UseCase::RoamingUsers,
+      volumetrics: Performance::UseCase::Volumetrics,
     }.freeze
 
     def initialize(period:, date:, metric:)
