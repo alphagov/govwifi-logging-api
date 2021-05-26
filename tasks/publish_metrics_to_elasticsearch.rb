@@ -1,7 +1,7 @@
 require "logger"
 logger = Logger.new(STDOUT)
 
-Performance::Metrics::MetricSender::VALID_PERIODS.each do |adverbial, period|
+Performance::Metrics::MetricSender::PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_metrics_to_elasticsearch".to_sym
 
   task name, [:date] do |_, args|
