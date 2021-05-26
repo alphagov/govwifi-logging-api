@@ -5,13 +5,7 @@ task :synchronize_ip_locations do
   Performance::Metrics::IPSynchronizer.new.execute
 end
 
-PERIODS = {
-  daily: "day",
-  weekly: "week",
-  monthly: "month",
-}.freeze
-
-PERIODS.each do |adverbial, period|
+Performance::Metrics::MetricSender::VALID_PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_metrics".to_sym
   dependent_tasks = adverbial == :daily ? [:synchronize_ip_locations] : []
 
