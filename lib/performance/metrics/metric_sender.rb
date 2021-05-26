@@ -7,8 +7,12 @@ module Performance::Metrics
   # upload the result in the S3 bucket designated through
   # ENV['S3_METRICS_BUCKET'].
   class MetricSender
-    VALID_PERIODS = %w[week day month].freeze
-    VALID_STATS = %w[active_users completion_rate roaming_users volumetrics].freeze
+    PERIODS = {
+      daily: "day",
+      weekly: "week",
+      monthly: "month",
+    }.freeze
+
     STATS = {
       active_users: Performance::UseCase::ActiveUsers,
       completion_rate: Performance::UseCase::CompletionRate,
@@ -17,7 +21,7 @@ module Performance::Metrics
     }.freeze
 
     def initialize(period:, date:, metric:)
-      raise ArgumentError unless VALID_PERIODS.include? period
+      raise ArgumentError unless PERIODS.values.include? period
       raise ArgumentError unless STATS.keys.include? metric
 
       @metric = metric
