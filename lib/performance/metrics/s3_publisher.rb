@@ -1,4 +1,4 @@
-module Metrics
+module Performance::Metrics
   class S3Publisher
     def self.publish(key, stats)
       bucket = ENV.fetch("S3_METRICS_BUCKET")

@@ -1,4 +1,4 @@
-describe PerformancePlatform::Gateway::ActiveUsers do
+describe Performance::UseCase::ActiveUsers do
   let(:sessions) { DB[:sessions] }
   let(:result) { subject.fetch_stats }
   let(:today) { Date.today }

@@ -1,4 +1,4 @@
-class PerformancePlatform::Gateway::ActiveUsers
+class Performance::UseCase::ActiveUsers
   def initialize(period:, date: Date.today.to_s)
     @period = period
     @date = Date.parse(date)
@@ -18,7 +18,7 @@ class PerformancePlatform::Gateway::ActiveUsers
 private
 
   def repository
-    PerformancePlatform::Repository::Session
+    Performance::Repository::Session
   end
 
   attr_reader :period, :date

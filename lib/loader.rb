@@ -35,13 +35,6 @@ end
 module Common
 end
 
-module PerformancePlatform
-  module Gateway; end
-  module Repository; end
-  module UseCase; end
-  module Presenter; end
-end
-
 module Gdpr
   module Gateway; end
   module UseCase; end
@@ -49,9 +42,10 @@ end
 
 module Performance
   module Gateway; end
+  module Metrics; end
   module Repository; end
   module UseCase; end
 end
 
-require_all "lib/performance_platform"
+require_all "lib/performance/use_case"
 require_all "lib"
