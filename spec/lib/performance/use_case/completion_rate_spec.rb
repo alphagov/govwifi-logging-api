@@ -1,4 +1,4 @@
-describe PerformancePlatform::Gateway::CompletionRate do
+describe Performance::UseCase::CompletionRate do
   let(:user_repo) { Class.new(Performance::Repository::SignUp) { unrestrict_primary_key } }
   let(:today) { Date.today }
   before do
