@@ -123,22 +123,22 @@ describe Performance::Metrics::MetricSender do
     it "indexes active users data into Elasticsearch" do
       active_users.to_elasticsearch
       expect(elasticsearch_client).to have_received(:index)
-        .with({ index: "active_users", id: "active_users-week-#{today}", body: active_users_expected_hash.symbolize_keys })
+        .with({ index: Performance::Metrics::ELASTICSEARCH_INDEX, id: "active_users-week-#{today}", body: active_users_expected_hash.symbolize_keys })
     end
     it "indexes completion rate data into Elasticsearch" do
       completion_rate.to_elasticsearch
       expect(elasticsearch_client).to have_received(:index)
-        .with({ index: "completion_rate", id: "completion_rate-week-#{today}", body: completion_rate_expected_hash.symbolize_keys })
+        .with({ index: Performance::Metrics::ELASTICSEARCH_INDEX, id: "completion_rate-week-#{today}", body: completion_rate_expected_hash.symbolize_keys })
     end
     it "indexes roaming users into Elasticsearch" do
       roaming_users.to_elasticsearch
       expect(elasticsearch_client).to have_received(:index)
-        .with({ index: "roaming_users", id: "roaming_users-week-#{today}", body: roaming_users_expected_hash.symbolize_keys })
+        .with({ index: Performance::Metrics::ELASTICSEARCH_INDEX, id: "roaming_users-week-#{today}", body: roaming_users_expected_hash.symbolize_keys })
     end
     it "indexes volumetrics data into Elasticsearch" do
       volumetrics.to_elasticsearch
       expect(elasticsearch_client).to have_received(:index)
-        .with({ index: "volumetrics", id: "volumetrics-week-#{today}", body: volumetrics_expected_hash.symbolize_keys })
+        .with({ index: Performance::Metrics::ELASTICSEARCH_INDEX, id: "volumetrics-week-#{today}", body: volumetrics_expected_hash.symbolize_keys })
     end
   end
 end
