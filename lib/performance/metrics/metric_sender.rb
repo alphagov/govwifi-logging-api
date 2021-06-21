@@ -34,7 +34,7 @@ module Performance::Metrics
     end
 
     def to_elasticsearch
-      Performance::Gateway::Elasticsearch.new(@metric.to_s).write(key, stats)
+      Performance::Gateway::Elasticsearch.new(ELASTICSEARCH_INDEX).write(key, stats)
     end
 
     def key
