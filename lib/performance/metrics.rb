@@ -1,3 +1,3 @@
 module Performance::Metrics
-  ELASTICSEARCH_INDEX = "GovWifi-metrics".freeze
+  ELASTICSEARCH_INDEX = "govwifi-metrics".freeze
 end
