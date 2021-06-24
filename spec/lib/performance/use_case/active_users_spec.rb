@@ -1,6 +1,7 @@
-describe PerformancePlatform::Gateway::ActiveUsers do
+describe Performance::UseCase::ActiveUsers do
   let(:sessions) { DB[:sessions] }
   let(:result) { subject.fetch_stats }
+  let(:today) { Date.today }
 
   before do
     sessions.truncate
@@ -14,14 +15,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 1,
+          start: today - 1,
           success: 1,
         )
       end
@@ -31,6 +32,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           users: 2,
           metric_name: "active-users",
           period: "week",
+          date: today.to_s,
         )
       end
     end
@@ -40,14 +42,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 2,
+          start: today - 2,
           success: 1,
         )
       end
@@ -57,6 +59,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           users: 1,
           metric_name: "active-users",
           period: "week",
+          date: today.to_s,
         )
       end
     end
@@ -66,14 +69,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 10,
+          start: today - 10,
           success: 1,
         )
       end
@@ -83,6 +86,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           users: 1,
           metric_name: "active-users",
           period: "week",
+          date: today.to_s,
         )
       end
     end
@@ -92,14 +96,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 1,
+          start: today - 1,
           success: 0,
         )
       end
@@ -109,6 +113,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           users: 1,
           metric_name: "active-users",
           period: "week",
+          date: today.to_s,
         )
       end
     end
@@ -118,7 +123,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today,
+          start: today,
           success: 1,
         )
       end
@@ -128,6 +133,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           users: 0,
           metric_name: "active-users",
           period: "week",
+          date: today.to_s,
         )
       end
     end
@@ -141,14 +147,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 1,
+          start: today - 1,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 26,
+          start: today - 26,
           success: 1,
         )
       end
@@ -158,6 +164,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           users: 2,
           metric_name: "active-users",
           period: "month",
+          date: today.to_s,
         )
       end
     end
@@ -167,14 +174,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 14,
+          start: today - 14,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 20,
+          start: today - 20,
           success: 1,
         )
       end
@@ -184,6 +191,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           users: 1,
           metric_name: "active-users",
           period: "month",
+          date: today.to_s,
         )
       end
     end
@@ -193,14 +201,14 @@ describe PerformancePlatform::Gateway::ActiveUsers do
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "alice",
-          start: Date.today - 33,
+          start: today - 33,
           success: 1,
         )
 
         sessions.insert(
           siteIP: "12.12.12.12",
           username: "bob",
-          start: Date.today - 36,
+          start: today - 36,
           success: 1,
         )
       end
@@ -210,6 +218,7 @@ describe PerformancePlatform::Gateway::ActiveUsers do
           users: 0,
           metric_name: "active-users",
           period: "month",
+          date: today.to_s,
         )
       end
     end

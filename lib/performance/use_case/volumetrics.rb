@@ -1,4 +1,4 @@
-class Performance::UseCase::FetchVolumetricsData
+class Performance::UseCase::Volumetrics
   attr_reader :period
 
   def initialize(date: Date.today.to_s, period: "day")
@@ -6,9 +6,10 @@ class Performance::UseCase::FetchVolumetricsData
     @period = period
   end
 
-  def fetch
+  def fetch_stats
     {
       period: period,
+      date: date.to_s,
       metric_name: "volumetrics",
       period_before: signups_period_before.count,
       cumulative: signups_cumulative.count,
