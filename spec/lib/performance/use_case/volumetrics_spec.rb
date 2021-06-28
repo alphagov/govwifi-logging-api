@@ -1,5 +1,6 @@
-describe Performance::UseCase::FetchVolumetricsData do
+describe Performance::UseCase::Volumetrics do
   let(:user_repository) { Class.new(Performance::Repository::SignUp) { unrestrict_primary_key } }
+  let(:today) { Date.today }
 
   before do
     USER_DB[:userdetails].truncate
@@ -7,7 +8,7 @@ describe Performance::UseCase::FetchVolumetricsData do
 
   context "given no signups" do
     it "returns stats with zero signups" do
-      expect(subject.fetch).to eq(
+      expect(subject.fetch_stats).to eq(
         period_before: 0,
         cumulative: 0,
         sms_period_before: 0,
@@ -18,6 +19,7 @@ describe Performance::UseCase::FetchVolumetricsData do
         email_cumulative: 0,
         sponsored_cumulative: 0,
         sponsored_period_before: 0,
+        date: today.to_s,
       )
     end
   end
@@ -28,57 +30,57 @@ describe Performance::UseCase::FetchVolumetricsData do
     end
 
     it "compares sign up creation date by date only" do
-      expect(subject.fetch[:period_before]).to eq(1)
+      expect(subject.fetch_stats[:period_before]).to eq(1)
     end
   end
 
   context "given 3 signups yesterday" do
     before do
       3.times do |i|
-        user_repository.create(username: "new #{i}", created_at: Date.today - 1)
+        user_repository.create(username: "new #{i}", created_at: today - 1)
       end
     end
 
     it "returns signups for yesterday" do
-      expect(subject.fetch[:period_before]).to eq(3)
+      expect(subject.fetch_stats[:period_before]).to eq(3)
     end
 
     it "returns same cumulative number of signups" do
-      expect(subject.fetch[:cumulative]).to eq(3)
+      expect(subject.fetch_stats[:cumulative]).to eq(3)
     end
   end
 
   context "given 5 signups yesterday and 1 day before that" do
     before do
-      user_repository.create(username: "old", created_at: Date.today - 2)
+      user_repository.create(username: "old", created_at: today - 2)
 
       5.times do |i|
-        user_repository.create(username: "new #{i}", created_at: Date.today - 1)
+        user_repository.create(username: "new #{i}", created_at: today - 1)
       end
     end
 
     it "returns zero signups 5 signups for yesterday" do
-      expect(subject.fetch[:period_before]).to eq(5)
+      expect(subject.fetch_stats[:period_before]).to eq(5)
     end
 
     it "returns zero signups 6 signups cumulative" do
-      expect(subject.fetch[:cumulative]).to eq(6)
+      expect(subject.fetch_stats[:cumulative]).to eq(6)
     end
   end
 
   context "given 2 signups today" do
     before do
       2.times do |i|
-        user_repository.create(username: i, created_at: Date.today)
+        user_repository.create(username: i, created_at: today)
       end
     end
 
     it "returns zero signups for yesterday" do
-      expect(subject.fetch[:period_before]).to eq(0)
+      expect(subject.fetch_stats[:period_before]).to eq(0)
     end
 
     it "returns zero signups cumulative" do
-      expect(subject.fetch[:cumulative]).to eq(0)
+      expect(subject.fetch_stats[:cumulative]).to eq(0)
     end
   end
 
@@ -88,46 +90,46 @@ describe Performance::UseCase::FetchVolumetricsData do
         username: "Email 1",
         contact: "foo@bar.com",
         sponsor: "foo@bar.com",
-        created_at: Date.today - 1,
+        created_at: today - 1,
       )
 
       user_repository.create(
         username: "Email 2",
         contact: "foo@baz.com",
         sponsor: "foo@baz.com",
-        created_at: Date.today - 1,
+        created_at: today - 1,
       )
 
       user_repository.create(
         username: "SMS",
         contact: "+0123456789",
         sponsor: "+0123456789",
-        created_at: Date.today - 1,
+        created_at: today - 1,
       )
     end
 
     it "counts all of them against cumulative singups" do
-      expect(subject.fetch[:cumulative]).to eq(3)
+      expect(subject.fetch_stats[:cumulative]).to eq(3)
     end
 
     it "counts all of them against yesterdays signups" do
-      expect(subject.fetch[:period_before]).to eq(3)
+      expect(subject.fetch_stats[:period_before]).to eq(3)
     end
 
     it "calculates SMS cumulative signups" do
-      expect(subject.fetch[:sms_cumulative]).to eq(1)
+      expect(subject.fetch_stats[:sms_cumulative]).to eq(1)
     end
 
     it "calculates SMS yesterdays signups" do
-      expect(subject.fetch[:sms_period_before]).to eq(1)
+      expect(subject.fetch_stats[:sms_period_before]).to eq(1)
     end
 
     it "calculates email cumulative signups" do
-      expect(subject.fetch[:email_cumulative]).to eq(2)
+      expect(subject.fetch_stats[:email_cumulative]).to eq(2)
     end
 
     it "calculates email yesterdays signups" do
-      expect(subject.fetch[:email_period_before]).to eq(2)
+      expect(subject.fetch_stats[:email_period_before]).to eq(2)
     end
   end
 
@@ -135,7 +137,7 @@ describe Performance::UseCase::FetchVolumetricsData do
     before do
       user_repository.create(
         username: "SMS old",
-        created_at: Date.today - 6,
+        created_at: today - 6,
         contact: "+1123456789",
         sponsor: "+1123456789",
       )
@@ -144,24 +146,24 @@ describe Performance::UseCase::FetchVolumetricsData do
         username: "SMS new",
         contact: "+0123456789",
         sponsor: "+0123456789",
-        created_at: Date.today - 1,
+        created_at: today - 1,
       )
     end
 
     it "counts them against cumulative singups" do
-      expect(subject.fetch[:cumulative]).to eq(2)
+      expect(subject.fetch_stats[:cumulative]).to eq(2)
     end
 
     it "counts them against yesterdays signups" do
-      expect(subject.fetch[:period_before]).to eq(1)
+      expect(subject.fetch_stats[:period_before]).to eq(1)
     end
 
     it "counts them against SMS cumulative signups" do
-      expect(subject.fetch[:sms_cumulative]).to eq(2)
+      expect(subject.fetch_stats[:sms_cumulative]).to eq(2)
     end
 
     it "counts them against SMS yesterdays signups" do
-      expect(subject.fetch[:sms_period_before]).to eq(1)
+      expect(subject.fetch_stats[:sms_period_before]).to eq(1)
     end
   end
 
@@ -169,7 +171,7 @@ describe Performance::UseCase::FetchVolumetricsData do
     before do
       user_repository.create(
         username: "Email old",
-        created_at: Date.today - 5,
+        created_at: today - 5,
         contact: "foo@bar.com",
         sponsor: "foo@bar.com",
       )
@@ -178,24 +180,24 @@ describe Performance::UseCase::FetchVolumetricsData do
         username: "Email new",
         contact: "foo@baz.com",
         sponsor: "foo@baz.com",
-        created_at: Date.today - 1,
+        created_at: today - 1,
       )
     end
 
     it "counts them against cumulative singups" do
-      expect(subject.fetch[:cumulative]).to eq(2)
+      expect(subject.fetch_stats[:cumulative]).to eq(2)
     end
 
     it "counts them against yesterdays signups" do
-      expect(subject.fetch[:period_before]).to eq(1)
+      expect(subject.fetch_stats[:period_before]).to eq(1)
     end
 
     it "counts them against email cumulative signups" do
-      expect(subject.fetch[:email_cumulative]).to eq(2)
+      expect(subject.fetch_stats[:email_cumulative]).to eq(2)
     end
 
     it "counts them against email signups yesterday" do
-      expect(subject.fetch[:email_period_before]).to eq(1)
+      expect(subject.fetch_stats[:email_period_before]).to eq(1)
     end
   end
 
@@ -205,23 +207,23 @@ describe Performance::UseCase::FetchVolumetricsData do
         username: "Email",
         contact: "foo@bar.com",
         sponsor: "sponsor@bar.com",
-        created_at: Date.today - 1,
+        created_at: today - 1,
       )
 
       user_repository.create(
         username: "SMS",
         contact: "foo@baz.com",
         sponsor: "sponsor@baz.com",
-        created_at: Date.today - 2,
+        created_at: today - 2,
       )
     end
 
     it "counts both of them to cumulative number of sponsored sign ups" do
-      expect(subject.fetch[:sponsored_cumulative]).to eq(2)
+      expect(subject.fetch_stats[:sponsored_cumulative]).to eq(2)
     end
 
     it "counts one of them as sponsored sign up yesterday" do
-      expect(subject.fetch[:sponsored_period_before]).to eq(1)
+      expect(subject.fetch_stats[:sponsored_period_before]).to eq(1)
     end
   end
 
@@ -245,11 +247,11 @@ describe Performance::UseCase::FetchVolumetricsData do
     end
 
     it "counts both of them to cumulative number of sponsored sign ups" do
-      expect(subject.fetch[:sponsored_cumulative]).to eq(1)
+      expect(subject.fetch_stats[:sponsored_cumulative]).to eq(1)
     end
 
     it "counts one of them as sponsored sign up yesterday" do
-      expect(subject.fetch[:sponsored_period_before]).to eq(1)
+      expect(subject.fetch_stats[:sponsored_period_before]).to eq(1)
     end
   end
 
@@ -257,14 +259,14 @@ describe Performance::UseCase::FetchVolumetricsData do
     subject { described_class.new(period: "month") }
 
     before do
-      yesterday = Date.today.prev_day
+      yesterday = today.prev_day
       user_repository.create(username: "Email", contact: "foo@bar.com", created_at: yesterday.prev_month)
       user_repository.create(username: "SMS", contact: "1234567", created_at: yesterday.prev_day)
       user_repository.create(username: "Notme", contact: "2345678", created_at: yesterday.prev_month.prev_day)
     end
 
     it "counts signups for the previous month" do
-      expect(subject.fetch[:period_before]).to eq(2)
+      expect(subject.fetch_stats[:period_before]).to eq(2)
     end
   end
 end
