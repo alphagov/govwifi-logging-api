@@ -1,6 +1,6 @@
 require "aws-sdk-s3"
 
-module Metrics
+module Performance::Metrics
   class IPSynchronizer
     def execute
       truncate_ip_locations
