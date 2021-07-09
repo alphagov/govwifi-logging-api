@@ -43,7 +43,6 @@ lint: build
 	$(DOCKER_COMPOSE) run --rm app bundle exec rubocop
 
 test: serve
-	./mysql/bin/wait_for_mysql
 	$(DOCKER_COMPOSE) run --rm app rspec
 	$(MAKE) stop
 
