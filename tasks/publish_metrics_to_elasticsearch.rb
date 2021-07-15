@@ -1,10 +1,11 @@
 require "logger"
+require "./lib/performance/metrics"
 logger = Logger.new(STDOUT)
 
 Performance::Metrics::PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_metrics_to_elasticsearch".to_sym
 
-  task name, [:date] do |_, args|
+  task name, [:date] => :load_env do |_, args|
     args.with_defaults(date: Date.today.to_s)
 
     logger.info("Creating #{adverbial} metrics for Elasticsearch with #{args[:date]}")

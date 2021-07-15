@@ -1,4 +1,7 @@
-require "./lib/loader"
+desc "require all classes"
+task :load_env do
+  require "./lib/loader"
+end
 
 require "./tasks/publish_metrics_to_elasticsearch"
 require "./tasks/publish_statistics"
