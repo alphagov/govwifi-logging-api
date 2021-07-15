@@ -7,12 +7,6 @@ module Performance::Metrics
   # upload the result in the S3 bucket designated through
   # ENV['S3_METRICS_BUCKET'].
   class MetricSender
-    PERIODS = {
-      daily: "day",
-      weekly: "week",
-      monthly: "month",
-    }.freeze
-
     STATS = {
       active_users: Performance::UseCase::ActiveUsers,
       completion_rate: Performance::UseCase::CompletionRate,
