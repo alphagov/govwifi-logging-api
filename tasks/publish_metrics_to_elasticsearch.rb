@@ -1,6 +1,6 @@
 require "logger"
 require "./lib/performance/metrics"
-logger = Logger.new(STDOUT)
+logger = Logger.new($stdout)
 
 Performance::Metrics::PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_metrics_to_elasticsearch".to_sym

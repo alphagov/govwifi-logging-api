@@ -1,6 +1,6 @@
 require "logger"
 require "./lib/performance/metrics"
-logger = Logger.new(STDOUT)
+logger = Logger.new($stdout)
 
 task :synchronize_ip_locations do
   Performance::Metrics::IPSynchronizer.new.execute
