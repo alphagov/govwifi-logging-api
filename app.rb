@@ -11,7 +11,7 @@ class App < Sinatra::Base
   register Sinatra::SensibleLogging
 
   sensible_logging(
-    logger: Logger.new(STDOUT),
+    logger: Logger.new($stdout),
     log_tags: [lambda { |req|
       req.body.rewind
       [

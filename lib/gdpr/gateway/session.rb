@@ -3,7 +3,7 @@ require "logger"
 class Gdpr::Gateway::Session
   SESSION_BATCH_SIZE = 500
   def delete_sessions
-    logger = Logger.new(STDOUT)
+    logger = Logger.new($stdout)
 
     logger.info("Starting daily session deletion")
 

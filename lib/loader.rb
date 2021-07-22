@@ -37,13 +37,17 @@ end
 
 module Gdpr
   module Gateway; end
+
   module UseCase; end
 end
 
 module Performance
   module Gateway; end
+
   module Metrics; end
+
   module Repository; end
+
   module UseCase; end
 end
 

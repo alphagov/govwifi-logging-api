@@ -8,7 +8,7 @@ class Performance::Gateway::S3
   def each(&block)
     keys.each do |key|
       json = Services.s3_client.get_object(bucket: bucket, key: key)
-      block.call(key[@prefix.length..-1], JSON.parse(json.body.read))
+      block.call(key[@prefix.length..], JSON.parse(json.body.read))
     end
   end
 
