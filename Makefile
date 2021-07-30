@@ -38,7 +38,6 @@ serve: build
 	$(DOCKER_COMPOSE) up -d user_db
 	./mysql_user/bin/wait_for_mysql
 	$(DOCKER_COMPOSE) up -d app
-	$(DOCKER_COMPOSE) run --rm app bundle exec rake db:migrate
 
 lint: build
 	$(DOCKER_COMPOSE) run --rm app bundle exec rubocop
