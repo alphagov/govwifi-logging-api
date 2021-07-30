@@ -14,6 +14,7 @@ describe App do
           called_station_id: nil,
           site_ip_address: nil,
           authentication_result: authentication_result,
+          task_id: "arn:aws:ecs:task_id",
         }.to_json
       end
       let(:post_auth_request) { post "/logging/post-auth", request_body }
@@ -57,6 +58,7 @@ describe App do
         called_station_id: nil,
         site_ip_address: nil,
         authentication_result: authentication_result,
+        task_id: "arn:aws:ecs:task_id",
       }.to_json
     end
     let(:post_auth_request) { post "/logging/post-auth", request_body }

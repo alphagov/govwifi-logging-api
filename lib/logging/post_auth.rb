@@ -44,6 +44,7 @@ module Logging
         siteIP: @params.fetch("site_ip_address"),
         building_identifier: building_identifier(@params.fetch("called_station_id")),
         success: access_accept?,
+        task_id: @params.fetch("task_id"),
       }
     end
 

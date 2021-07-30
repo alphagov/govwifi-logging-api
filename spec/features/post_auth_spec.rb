@@ -10,6 +10,7 @@ describe App do
     let(:called_station_id) { "01-39-38-25-2A-80" }
     let(:site_ip_address) { "93.11.238.187" }
     let(:cert_name) { "" }
+    let(:task_id) { "arn:aws:ecs:task_id" }
     let(:request_body) do
       {
         username: username,
@@ -18,6 +19,7 @@ describe App do
         called_station_id: called_station_id,
         site_ip_address: site_ip_address,
         authentication_result: authentication_result,
+        task_id: task_id,
       }.to_json
     end
     let(:post_auth_request) { post "/logging/post-auth", request_body }
@@ -60,6 +62,7 @@ describe App do
           expect(session.mac).to eq(mac)
           expect(session.ap).to eq(called_station_id)
           expect(session.siteIP).to eq(site_ip_address)
+          expect(session.task_id).to eq(task_id)
         end
 
         context 'Given the "Called Station ID" is an MAC address' do
