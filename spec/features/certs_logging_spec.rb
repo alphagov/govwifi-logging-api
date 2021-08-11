@@ -15,11 +15,13 @@ describe App do
           site_ip_address: nil,
           authentication_result: authentication_result,
           task_id: "arn:aws:ecs:task_id",
+          authentication_reply: authentication_reply,
         }.to_json
       end
       let(:post_auth_request) { post "/logging/post-auth", request_body }
       let(:cert_name) { "Example Certificate Common Name" }
       let(:authentication_result) { "Access-Accept" }
+      let(:authentication_reply) { "This is a reply message" }
 
       before { post_auth_request }
 
@@ -49,7 +51,7 @@ describe App do
     let(:username) { "ABCDE" }
     let(:mac) { "DA-59-19-8B-39-2D" }
     let(:authentication_result) { "Access-Accept" }
-
+    let(:authentication_reply) { "This is a reply message" }
     let(:request_body) do
       {
         username: username,
@@ -59,6 +61,7 @@ describe App do
         site_ip_address: nil,
         authentication_result: authentication_result,
         task_id: "arn:aws:ecs:task_id",
+        authentication_reply: authentication_reply,
       }.to_json
     end
     let(:post_auth_request) { post "/logging/post-auth", request_body }
