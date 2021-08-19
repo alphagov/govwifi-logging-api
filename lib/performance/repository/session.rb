@@ -1,5 +1,17 @@
 class Performance::Repository::Session < Sequel::Model(:sessions)
   dataset_module do
+    def request_stats(date_time:)
+      sql_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
+      sql = "SELECT
+               '#{sql_time}' AS time,
+               siteIP,
+               COUNT(CASE WHEN success='1' THEN 1 end) AS Successes,
+               COUNT(CASE WHEN success='0' THEN 1 end) AS Failures
+             FROM sessions WHERE start BETWEEN date_sub('#{sql_time}', INTERVAL 1 HOUR) AND '#{sql_time}'
+             GROUP BY siteIP"
+      DB.fetch(sql).to_a
+    end
+
     def active_users_stats(period:, date:)
       DB.fetch("
         SELECT

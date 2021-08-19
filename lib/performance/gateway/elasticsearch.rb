@@ -14,4 +14,12 @@ class Performance::Gateway::Elasticsearch
       body: data,
     )
   end
+
+  def bulk_write(data_array)
+    client = Services.elasticsearch_client
+    client.bulk(
+      index: @index,
+      body: data_array,
+    )
+  end
 end
