@@ -45,7 +45,27 @@ describe Performance::Metrics::RequestStatsSender do
 
     Performance::Metrics::RequestStatsSender.new(date_time: time).send_data
     expect(elasticsearch_client).to have_received(:bulk).with(index: Performance::Metrics::RequestStatsSender::SESSION_INDEX,
-                                                              body: match_array([{ time: time_string, Failures: 1, Successes: 2, siteIP: "12.12.12.12" },
-                                                                                 { time: time_string, Failures: 0, Successes: 1, siteIP: "20.20.20.20" }]))
+                                                              body: [
+                                                                {
+                                                                  index: {
+                                                                    data: {
+                                                                      time: time_string,
+                                                                      Failures: 1,
+                                                                      Successes: 2,
+                                                                      siteIP: "12.12.12.12",
+                                                                    },
+                                                                  },
+                                                                },
+                                                                {
+                                                                  index: {
+                                                                    data: {
+                                                                      time: time_string,
+                                                                      Failures: 0,
+                                                                      Successes: 1,
+                                                                      siteIP: "20.20.20.20",
+                                                                    },
+                                                                  },
+                                                                },
+                                                              ])
   end
 end
