@@ -2,8 +2,9 @@ class Performance::Repository::Session < Sequel::Model(:sessions)
   dataset_module do
     def request_stats(date_time:)
       sql_time = date_time.strftime("%Y-%m-%d %H:%M:%S")
+      elasticsearch_time = date_time.strftime("%Y-%m-%dT%H:%M:%S")
       sql = "SELECT
-               '#{sql_time}' AS time,
+               '#{elasticsearch_time}' AS time,
                siteIP,
                COUNT(CASE WHEN success='1' THEN 1 end) AS Successes,
                COUNT(CASE WHEN success='0' THEN 1 end) AS Failures

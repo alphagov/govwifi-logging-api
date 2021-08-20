@@ -4,7 +4,7 @@ describe Performance::Metrics::RequestStatsSender do
   let(:ip1) { "12.12.12.12" }
   let(:ip2) { "20.20.20.20" }
   let(:ip3) { "20.30.40.50" }
-  let(:time_string) { "2021-08-18 15:18:08" }
+  let(:time_string) { "2021-08-18T15:18:08" }
   let(:time) { Time.parse(time_string) }
 
   before :each do
