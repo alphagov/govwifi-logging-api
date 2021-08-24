@@ -6,6 +6,7 @@ end
 require "./tasks/migrate"
 require "./tasks/publish_metrics_to_elasticsearch"
 require "./tasks/publish_statistics"
+require "./tasks/send_request_statistics"
 require "./tasks/session_deletion"
 require "./tasks/sync_s3_volumetrics"
 require "./tasks/update_last_login"

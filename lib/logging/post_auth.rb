@@ -45,6 +45,7 @@ module Logging
         building_identifier: building_identifier(@params.fetch("called_station_id")),
         success: access_accept?,
         task_id: @params.fetch("task_id"),
+        authentication_reply: @params.fetch("authentication_reply"),
       }
     end
 
