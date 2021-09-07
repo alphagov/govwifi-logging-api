@@ -10,15 +10,9 @@ class App < Sinatra::Base
   use Raven::Rack if defined? Raven
   register Sinatra::SensibleLogging
 
-  sensible_logging(
-    logger: Logger.new($stdout),
-    log_tags: [lambda { |req|
-      req.body.rewind
-      [
-        req.body.read,
-      ].tap { req.body.rewind }
-    }],
-  )
+#   sensible_logging(
+#     logger: Logger.new($stdout)
+#   )
 
   configure do
     enable :json
@@ -38,8 +32,15 @@ class App < Sinatra::Base
   end
 
   post "/logging/post-auth" do
-    Logging::PostAuth.new.execute(params: JSON.parse(request.body.read))
+    logger = Logger.new($stdout)
+    request_body = request.body.read
+    client_ip = request.ip() || 'n/a'
+
+    Logging::PostAuth.new.execute(params: JSON.parse(request_body))
 
     status 204
+
+    message = "method=#{request.request_method()} path=#{request.path_info()} client=#{client_ip} status=#{status}"
+    logger.info(message + request_body)
   end
 end
