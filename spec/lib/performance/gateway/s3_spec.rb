@@ -27,4 +27,11 @@ describe Performance::Gateway::S3 do
   it "has expected last object" do
     expect(subject.to_a.last).to eq(["foo-1499", { "bar" => "baz-1499" }])
   end
+
+  it "raises an exception and logs a warning" do
+    expect(subject).to receive(:warn)
+      .with(%(Failed to connect to S3 with bucket: "stub-bucket", prefix: "volumetrics/", continuation_token: nil))
+    s3_client.stub_responses(:list_objects_v2, Aws::S3::Errors::AccessDenied.new("context", "message"))
+    expect { subject.to_a }.to raise_error(Aws::S3::Errors::AccessDenied)
+  end
 end
