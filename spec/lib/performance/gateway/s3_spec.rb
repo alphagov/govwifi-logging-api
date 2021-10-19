@@ -2,10 +2,9 @@ require_relative "../metrics/s3_fake_client"
 
 describe Performance::Gateway::S3 do
   let(:s3_client) { Performance::Metrics.fake_s3_client }
-  let(:subject) { described_class.new("volumetrics") }
+  let(:subject) { described_class.new("volumetrics", "stub-bucket") }
 
   before do
-    ENV["S3_METRICS_BUCKET"] = "stub-bucket"
     allow(Services).to receive(:s3_client).and_return s3_client
 
     100.times do |t|
