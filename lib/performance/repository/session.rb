@@ -13,12 +13,13 @@ class Performance::Repository::Session < Sequel::Model(:sessions)
       DB.fetch(sql).to_a
     end
 
-    def active_users_stats(period:, date:)
-      DB.fetch("
-        SELECT
-          count(distinct(username)) as total
-        FROM sessions WHERE start BETWEEN date_sub('#{date - 1}', INTERVAL 1 #{period}) AND '#{date - 1}'
-          AND sessions.success = 1").first
+    def active_users_stats(period: nil, date: nil)
+      sql = "SELECT
+               count(distinct(username)) as total
+             FROM sessions WHERE
+               sessions.success = 1"
+      sql += " AND start BETWEEN date_sub('#{date - 1}', INTERVAL 1 #{period}) AND '#{date - 1}'" unless date.nil? || period.nil?
+      DB.fetch(sql).first.fetch(:total)
     end
 
     def roaming_users_count(period:, date:)
@@ -39,7 +40,7 @@ class Performance::Repository::Session < Sequel::Model(:sessions)
                 roam_count > 1)
              as roaming_count"
 
-      DB.fetch(sql).first
+      DB.fetch(sql).first.fetch(:total_roaming)
     end
   end
 end

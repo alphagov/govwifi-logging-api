@@ -5,10 +5,10 @@ class Performance::UseCase::ActiveUsers
   end
 
   def fetch_stats
-    result = repository.active_users_stats(period: period, date: date) || Hash.new(0)
+    result = repository.active_users_stats(period: period, date: date)
 
     {
-      users: result[:total],
+      users: result,
       metric_name: "active-users",
       period: period,
       date: date.to_s,
