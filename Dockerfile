@@ -18,4 +18,4 @@ COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["bundle", "exec", "puma", "-p", "8080", "--quiet"]
+CMD ["bundle", "exec", "puma", "-p", "8080", "--quiet", "--threads", "8:32"]
