@@ -2,13 +2,13 @@ require "logger"
 require "./lib/performance/metrics"
 logger = Logger.new($stdout)
 
-task :synchronize_ip_locations do
+task synchronize_ip_locations: :load_env do
   Performance::Metrics::IPSynchronizer.new.execute
 end
 
 Performance::Metrics::PERIODS.each do |adverbial, period|
   name = "publish_#{adverbial}_metrics".to_sym
-  dependent_tasks = adverbial == :daily ? %i[synchronize_ip_locations load_env] : [:load_env]
+  dependent_tasks = adverbial == :daily ? %i[load_env synchronize_ip_locations] : [:load_env]
 
   task name, [:date] => dependent_tasks do |_, args|
     args.with_defaults(date: Date.today.to_s)
