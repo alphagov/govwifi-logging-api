@@ -11,7 +11,7 @@ DB = Sequel.connect(
   user: ENV.fetch("DB_USER"),
   password: ENV.fetch("DB_PASS"),
   read_timeout: 9999,
-  max_connections: 16,
+  max_connections: 32,
 )
 
 USER_DB = Sequel.connect(
@@ -21,7 +21,7 @@ USER_DB = Sequel.connect(
   user: ENV.fetch("USER_DB_USER"),
   password: ENV.fetch("USER_DB_PASS"),
   read_timeout: 9999,
-  max_connections: 16,
+  max_connections: 32,
 )
 
 if %w[production staging].include?(ENV["RACK_ENV"])
