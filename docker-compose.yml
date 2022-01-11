@@ -8,6 +8,10 @@ services:
       MYSQL_DATABASE: govwifi_test
     expose:
       - "3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-proot"]
+      timeout: 5s
+      retries: 10
 
   user_db:
     build: ./mysql_user
@@ -16,6 +20,10 @@ services:
       MYSQL_DATABASE: govwifi_user_test
     expose:
       - "3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uroot", "-proot"]
+      timeout: 5s
+      retries: 10
 
   app:
     build: .
@@ -30,3 +38,8 @@ services:
       USER_DB_HOSTNAME: user_db
     expose:
       - "8080"
+    depends_on:
+      db:
+        condition: service_healthy
+      user_db:
+        condition: service_healthy
