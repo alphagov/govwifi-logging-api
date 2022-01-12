@@ -33,14 +33,10 @@ prebuild:
 	$(DOCKER_COMPOSE) up --no-start
 
 serve: build
-	$(DOCKER_COMPOSE) up -d db
-	./mysql/bin/wait_for_mysql
-	$(DOCKER_COMPOSE) up -d user_db
-	./mysql_user/bin/wait_for_mysql
 	$(DOCKER_COMPOSE) up -d app
 
 lint: build
-	$(DOCKER_COMPOSE) run --rm app bundle exec rubocop
+	$(DOCKER_COMPOSE) run --no-deps --rm app bundle exec rubocop
 
 test: serve
 	$(DOCKER_COMPOSE) run --rm app rspec
