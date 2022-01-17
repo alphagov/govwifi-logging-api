@@ -1,11 +1,4 @@
 BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --jobs 20 --retry 5'
-
-ifdef DEPLOYMENT
-	BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --without test'
-endif
-
-
-BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --jobs 20 --retry 5'
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 
 ifdef ON_CONCOURSE
@@ -21,7 +14,6 @@ ifndef ON_CONCOURSE
 endif
 
 DOCKER_BUILD_CMD = $(DOCKER_COMPOSE) build $(BUNDLE_FLAGS)
-
 
 build: stop
 ifndef ON_CONCOURSE
