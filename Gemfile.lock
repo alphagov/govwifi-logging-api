@@ -206,6 +206,7 @@ DEPENDENCIES
   rack-test
   rake (~> 13.0)
   require_all
+  rexml
   rspec
   rubocop-govuk
   sensible_logging (~> 0.4.3)
