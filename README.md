@@ -1,5 +1,4 @@
 # GovWifi Logging API
-
 The GovWifi frontend uses this API to record each authentication request. It is stored in a database and this data is used for reporting and debugging.
 
 N.B. The private GovWifi [build repository][build-repo] contains instructions on how to build GovWifi end-to-end - the sites, services and infrastructure.
