@@ -30,7 +30,7 @@ module Performance::Metrics
 
           keys = fake_s3[bucket].keys
                                 .select { |k| !prefix || k.slice(0, prefix.length) == prefix }
-                                .map { |key| { key: key } }
+                                .map { |key| { key: } }
 
           continuation_token && {
             contents: keys[1000..1999],

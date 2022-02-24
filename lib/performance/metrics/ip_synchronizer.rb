@@ -13,7 +13,7 @@ module Performance::Metrics
       bucket = ENV.fetch("S3_PUBLISHED_LOCATIONS_IPS_BUCKET")
       key = ENV.fetch("S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY")
 
-      response = Services.s3_client.get_object(bucket: bucket, key: key)
+      response = Services.s3_client.get_object(bucket:, key:)
       JSON.parse(response.body.read)
     end
 

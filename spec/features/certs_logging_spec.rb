@@ -67,7 +67,7 @@ describe App do
     let(:post_auth_request) { post "/logging/post-auth", request_body }
 
     before do
-      User.create(username: username)
+      User.create(username:)
       post_auth_request
     end
 

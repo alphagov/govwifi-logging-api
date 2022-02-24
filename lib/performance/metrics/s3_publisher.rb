@@ -4,8 +4,8 @@ module Performance::Metrics
       bucket = ENV.fetch("S3_METRICS_BUCKET")
 
       Services.s3_client.put_object(
-        bucket: bucket,
-        key: key,
+        bucket:,
+        key:,
         body: stats.to_json.to_s,
       )
     end

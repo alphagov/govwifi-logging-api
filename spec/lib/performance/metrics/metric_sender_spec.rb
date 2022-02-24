@@ -86,7 +86,7 @@ describe Performance::Metrics::MetricSender do
 
   def s3_contents(key)
     contents = s3_client.get_object(bucket: ENV.fetch("S3_METRICS_BUCKET"),
-                                    key: key)
+                                    key:)
     JSON.parse(contents.body.read)
   end
 
