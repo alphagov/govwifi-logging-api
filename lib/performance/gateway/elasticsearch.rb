@@ -19,7 +19,7 @@ class Performance::Gateway::Elasticsearch
     client = Services.elasticsearch_client
     client.bulk(
       index: @index,
-      body: data_array.map { |data| { index: { data: data } } },
+      body: data_array.map { |data| { index: { data: } } },
     )
   end
 end

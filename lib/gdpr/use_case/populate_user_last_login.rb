@@ -7,8 +7,8 @@ class Gdpr::UseCase::PopulateUserLastLogin
   end
 
   def execute(date: Date.today)
-    usernames = session_gateway.active_users(date: date)
-    last_login_gateway.set(date: date, usernames: usernames)
+    usernames = session_gateway.active_users(date:)
+    last_login_gateway.set(date:, usernames:)
   end
 
 private

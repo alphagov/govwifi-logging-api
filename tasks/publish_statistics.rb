@@ -17,7 +17,7 @@ Performance::Metrics::PERIODS.each do |adverbial, period|
 
     metrics_list = %i[active_users completion_rate roaming_users volumetrics]
     metrics_list.each do |metrics|
-      metric_sender = Performance::Metrics::MetricSender.new(period: period, date: args[:date], metric: metrics)
+      metric_sender = Performance::Metrics::MetricSender.new(period:, date: args[:date], metric: metrics)
       logger.info("[#{metric_sender.key}] Fetching and uploading metrics...")
 
       metric_sender.to_s3

@@ -8,7 +8,7 @@ class Performance::Gateway::S3
 
   def each(&block)
     keys.each do |key|
-      json = Services.s3_client.get_object(bucket: @bucket, key: key)
+      json = Services.s3_client.get_object(bucket: @bucket, key:)
       block.call(key[@prefix.length..], JSON.parse(json.body.read))
     end
   end
@@ -20,7 +20,7 @@ private
   end
 
   def list_objects(continuation_token = nil)
-    response = Services.s3_client.list_objects_v2({ bucket: @bucket, prefix: @prefix, continuation_token: continuation_token })
+    response = Services.s3_client.list_objects_v2({ bucket: @bucket, prefix: @prefix, continuation_token: })
     objects = response.data.contents
 
     if response.data.is_truncated

@@ -25,8 +25,8 @@ describe App do
       }.to_json
     end
     let(:post_auth_request) { post "/logging/post-auth", request_body }
-    let!(:create_user) { User.create(username: username) }
-    let(:user) { User.find(username: username) }
+    let!(:create_user) { User.create(username:) }
+    let(:user) { User.find(username:) }
     let(:session) { Session.first }
 
     before do

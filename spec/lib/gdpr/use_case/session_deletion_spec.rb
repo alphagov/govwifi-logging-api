@@ -1,7 +1,7 @@
 describe Gdpr::UseCase::SessionDeletion do
   subject do
     described_class.new(
-      session_gateway: session_gateway,
+      session_gateway:,
     )
   end
 

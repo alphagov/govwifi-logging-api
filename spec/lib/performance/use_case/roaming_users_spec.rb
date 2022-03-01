@@ -1,5 +1,5 @@
 describe Performance::UseCase::RoamingUsers do
-  subject { described_class.new(period: period) }
+  subject { described_class.new(period:) }
 
   let(:location_ip_links) { DB[:ip_locations] }
   let(:sessions) { DB[:sessions] }
@@ -100,6 +100,6 @@ describe Performance::UseCase::RoamingUsers do
 private
 
   def create_session(ip, username, start, success = 1)
-    sessions.insert(siteIP: ip, username: username, start: start, success: success)
+    sessions.insert(siteIP: ip, username:, start:, success:)
   end
 end

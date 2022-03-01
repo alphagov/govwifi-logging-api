@@ -2,9 +2,9 @@ require_relative "../metrics/s3_fake_client"
 describe Performance::UseCase::SyncS3ToDataBucket do
   subject do
     described_class.new(
-      s3_gateway: s3_gateway,
-      dest_bucket: dest_bucket,
-      dest_key: dest_key,
+      s3_gateway:,
+      dest_bucket:,
+      dest_key:,
     )
   end
 

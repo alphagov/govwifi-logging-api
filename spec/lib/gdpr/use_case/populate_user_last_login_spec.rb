@@ -32,12 +32,12 @@ describe Gdpr::UseCase::PopulateUserLastLogin do
     let(:session_date) { today }
 
     before do
-      userdetails.insert(username: username, last_login: current_last_login)
-      sessions.insert(username: username, start: session_date)
+      userdetails.insert(username:, last_login: current_last_login)
+      sessions.insert(username:, start: session_date)
     end
 
     def user
-      userdetails.first(username: username)
+      userdetails.first(username:)
     end
 
     context "when the user logs in for the first time" do
