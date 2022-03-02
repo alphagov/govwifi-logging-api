@@ -27,6 +27,7 @@ class Performance::Repository::Session < Sequel::Model(:sessions)
                 username, count(distinct(location_id)) as roam_count
               FROM
                 sessions s
+              USE INDEX (start_siteIP_successs)
               INNER JOIN
                 ip_locations il on s.siteIP = il.ip
               WHERE
