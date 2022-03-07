@@ -20,7 +20,6 @@ USER_DB = Sequel.connect(
   database: ENV.fetch("USER_DB_NAME"),
   user: ENV.fetch("USER_DB_USER"),
   password: ENV.fetch("USER_DB_PASS"),
-  read_timeout: 9999,
   max_connections: 32,
 )
 
