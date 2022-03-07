@@ -1,5 +1,9 @@
 desc "require all classes"
 task :load_env do
+  # Set a long connection timeout here, since some of the queries run
+  # through the rake tasks may take several hours to complete
+  ::DB_CONNECTION_TIMEOUT = 12 * 60 * 60
+
   require "./lib/loader"
 end
 

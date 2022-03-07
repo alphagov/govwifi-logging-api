@@ -4,6 +4,11 @@ require "sequel"
 require "sensible_logging"
 require "sinatra/base"
 require "sinatra/json"
+
+# Set a short connection timeout, since queries here need to execute
+# before the request times out
+DB_CONNECTION_TIMEOUT = 10
+
 require "./lib/loader"
 
 class App < Sinatra::Base
