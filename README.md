@@ -54,20 +54,30 @@ params:
 
 ### Send statistics manually
 
-You can trigger statistics to be sent manually by running the command below locally.
-Ensure that your ~/.aws/credentials is set up correctly.
-Populate the date argument to the Rake task with the date that you want to send the statistics for.
+You can trigger statistics to be sent manually by running the command
+below locally.
+
+Populate the date argument to the Rake task with the date that you
+want to send the statistics for.
 
 #### Weekly Statistics
 
 ```shell
-aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_weekly_statistics['2018-12-01']\"] }] }" --network-configuration "{ \"awsvpcConfiguration\": { \"assignPublicIp\": \"ENABLED\", \"subnets\": [\"subnet-XXXXXXX\", \"subnet-XXXXXX\"],\"securityGroups\": [\"sg-XXXXXX\"]}}" --region eu-west-2 --launch-type FARGATE
+aws ecs run-task --cluster wifi-api-cluster \
+  --task-definition logging-api-scheduled-task-wifi --count 1 --region eu-west-2 \
+  --launch-type FARGATE --platform-version 1.3.0 \
+  --network-configuration '{ "awsvpcConfiguration": { "assignPublicIp": "ENABLED", "subnets": ["subnet-XXXXXXXX","subnet-XXXXXXXX","subnet-XXXXXXXXXXXXXXXX"], "securityGroups": ["sg-XXXXXXXX","sg-XXXXXXXX","sg-XXXXXXXX"]}}' \
+  --overrides '{ "containerOverrides": [{ "name": "logging", "command": ["bundle", "exec", "rake", "publish_weekly_metrics[2018-12-01]"] }] }'
 ```
 
 #### Monthly Statistics
 
 ```shell
-aws ecs run-task --cluster wifi-api-cluster --task-definition logging-api-task-wifi --count 1 --overrides "{ \"containerOverrides\": [{ \"name\": \"logging\", \"command\": [\"bundle\", \"exec\", \"rake\", \"publish_monthly_statistics['2018-12-01']\"] }] }" --network-configuration "{ \"awsvpcConfiguration\": { \"assignPublicIp\": \"ENABLED\", \"subnets\": [\"subnet-XXXXXXX\", \"subnet-XXXXXX\"],\"securityGroups\": [\"sg-XXXXXX\"]}}" --region eu-west-2 --launch-type FARGATE
+aws ecs run-task --cluster wifi-api-cluster \
+  --task-definition logging-api-scheduled-task-wifi --count 1 --region eu-west-2 \
+  --launch-type FARGATE --platform-version 1.3.0 \
+  --network-configuration '{ "awsvpcConfiguration": { "assignPublicIp": "ENABLED", "subnets": ["subnet-XXXXXXXX","subnet-XXXXXXXX","subnet-XXXXXXXXXXXXXXXX"], "securityGroups": ["sg-XXXXXXXX","sg-XXXXXXXX","sg-XXXXXXXX"]}}' \
+  --overrides '{ "containerOverrides": [{ "name": "logging", "command": ["bundle", "exec", "rake", "publish_monthly_metrics[2018-12-01]"] }] }'
 ```
 
 ## Developing
