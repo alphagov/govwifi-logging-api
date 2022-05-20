@@ -34,12 +34,22 @@ describe Performance::Metrics::MetricSender do
     {
       "metric_name" => "completion-rate",
       "period" => "week",
+      "all_registered" => 0,
+      "all_logged_in" => 0,
       "sms_registered" => 0,
       "sms_logged_in" => 0,
       "email_registered" => 0,
       "email_logged_in" => 0,
       "sponsor_registered" => 0,
       "sponsor_logged_in" => 0,
+      "cumulative_all_registered" => 0,
+      "cumulative_all_logged_in" => 0,
+      "cumulative_sms_registered" => 0,
+      "cumulative_sms_logged_in" => 0,
+      "cumulative_email_registered" => 0,
+      "cumulative_email_logged_in" => 0,
+      "cumulative_sponsor_registered" => 0,
+      "cumulative_sponsor_logged_in" => 0,
       "date" => today.to_s,
     }
   end
