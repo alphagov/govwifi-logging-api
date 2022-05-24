@@ -25,12 +25,12 @@ class Performance::Repository::SignUp < Sequel::Model(USER_DB[:userdetails])
     end
 
     def week_before(date)
-      where(Sequel.lit("date(created_at) BETWEEN '#{date - 14}' AND '#{date - 7}'"))
+      yesterday = date.prev_day
+      where(Sequel.lit("date(created_at) BETWEEN '#{yesterday - 6}' AND '#{yesterday}'"))
     end
 
     def month_before(date)
-      yesterday = date.prev_day
-      where(Sequel.lit("date(created_at) BETWEEN '#{yesterday.prev_month}' AND '#{yesterday}'"))
+      where(Sequel.lit("date(created_at) BETWEEN '#{date.prev_month}' AND '#{date.prev_day}'"))
     end
 
     def with_successful_login
