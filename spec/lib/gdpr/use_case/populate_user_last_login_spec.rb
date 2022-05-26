@@ -58,6 +58,10 @@ describe Gdpr::UseCase::PopulateUserLastLogin do
         subject.execute(date: today)
         expect(user[:last_login].to_date).to eq(today)
       end
+
+      it "counts the number of users updated" do
+        expect(subject.execute(date: today)).to eq(1)
+      end
     end
 
     context "when the user was last logged in today" do
