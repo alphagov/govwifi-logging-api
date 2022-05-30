@@ -22,7 +22,7 @@ class Gdpr::Gateway::Session
 
   def active_users(date:)
     Session.select(:username).distinct
-      .where(Sequel.lit("DATE(start) = ?", date))
+      .where(Sequel.lit("start >= ? and start < ?", date, date.next_day))
       .map(:username)
   end
 end
