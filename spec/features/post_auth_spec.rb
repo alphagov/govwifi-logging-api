@@ -14,14 +14,14 @@ describe App do
     let(:authentication_reply) { "This is a reply message" }
     let(:request_body) do
       {
-        username: username,
-        cert_name: cert_name,
-        mac: mac,
-        called_station_id: called_station_id,
-        site_ip_address: site_ip_address,
-        authentication_result: authentication_result,
-        task_id: task_id,
-        authentication_reply: authentication_reply,
+        username:,
+        cert_name:,
+        mac:,
+        called_station_id:,
+        site_ip_address:,
+        authentication_result:,
+        task_id:,
+        authentication_reply:,
       }.to_json
     end
     let(:post_auth_request) { post "/logging/post-auth", request_body }

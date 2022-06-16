@@ -8,14 +8,14 @@ describe App do
     shared_examples "logging" do
       let(:request_body) do
         {
-          username: username,
-          cert_name: cert_name,
+          username:,
+          cert_name:,
           mac: nil,
           called_station_id: nil,
           site_ip_address: nil,
-          authentication_result: authentication_result,
+          authentication_result:,
           task_id: "arn:aws:ecs:task_id",
-          authentication_reply: authentication_reply,
+          authentication_reply:,
         }.to_json
       end
       let(:post_auth_request) { post "/logging/post-auth", request_body }
@@ -54,14 +54,14 @@ describe App do
     let(:authentication_reply) { "This is a reply message" }
     let(:request_body) do
       {
-        username: username,
+        username:,
         cert_name: nil,
-        mac: mac,
+        mac:,
         called_station_id: nil,
         site_ip_address: nil,
-        authentication_result: authentication_result,
+        authentication_result:,
         task_id: "arn:aws:ecs:task_id",
-        authentication_reply: authentication_reply,
+        authentication_reply:,
       }.to_json
     end
     let(:post_auth_request) { post "/logging/post-auth", request_body }

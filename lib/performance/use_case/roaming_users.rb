@@ -9,7 +9,7 @@ class Performance::UseCase::RoamingUsers
       active: active_users_count,
       roaming: roaming_users_count,
       metric_name: "roaming-users",
-      period: period,
+      period:,
       date: date.to_s,
     }
   end
