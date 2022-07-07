@@ -11,7 +11,7 @@ params:
   SERVICE_NAME: "logging-api-service"
   CLUSTER_NAME: "api-cluster"
   TASK_NAME: "logging-api"
-  CONTAINER_NAME: "logging"
+  CONTAINER_NAME: "logging-api"
 
 inputs:
   - name: src
