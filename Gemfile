@@ -10,7 +10,7 @@ gem "require_all"
 gem "rexml"
 gem "sensible_logging", "~> 0.4.3"
 gem "sentry-raven"
-gem "sequel", "~> 5.57"
+gem "sequel", "~> 5.58"
 gem "sinatra"
 gem "sinatra-contrib"
 
