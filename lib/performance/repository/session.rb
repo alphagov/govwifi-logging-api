@@ -21,28 +21,18 @@ class Performance::Repository::Session < Sequel::Model(:sessions)
           AND sessions.success = 1").first
     end
 
-    def roaming_users_count(period:, date:)
-      # This hint is probably only helpful for the shorter
-      # periods. Ideally the database would figure this out on it's
-      # own.
-      use_index = if %w[day week].include? period
-                    "
-              USE INDEX (start_siteIP_successs)"
-                  else
-                    ""
-                  end
-
+    def roaming_users_count(period:)
       sql = "SELECT COUNT(*) as total_roaming FROM (
               SELECT
                 username, count(distinct(location_id)) as roam_count
               FROM
-                sessions s #{use_index}
+                sessions s
               INNER JOIN
                 ip_locations il on s.siteIP = il.ip
               WHERE
                 s.success = 1
               AND
-                start BETWEEN date_sub('#{date}', INTERVAL 1 #{period}) AND '#{date}'
+                start > date_sub(CURDATE(), INTERVAL 1 #{period})
               GROUP BY
                 username
               HAVING
