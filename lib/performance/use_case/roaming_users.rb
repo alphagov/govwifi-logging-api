@@ -25,7 +25,7 @@ private
   end
 
   def roaming_users_count
-    repository.roaming_users_count(period:, date:).fetch(:total_roaming)
+    repository.roaming_users_count(period:).fetch(:total_roaming)
   end
 
   attr_reader :period, :date
