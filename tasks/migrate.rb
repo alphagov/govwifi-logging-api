@@ -10,6 +10,7 @@ namespace :db do
       database: ENV.fetch("DB_NAME"),
       user: ENV.fetch("DB_USER"),
       password: ENV.fetch("DB_PASS"),
+      logger: Logger.new($stdout),
     )
     Sequel::Migrator.run(db, "mysql/migrations", target: version)
   end
