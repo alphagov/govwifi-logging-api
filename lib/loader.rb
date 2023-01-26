@@ -50,5 +50,8 @@ module Performance
   module UseCase; end
 end
 
+module Smoketests
+end
+
 require_all "lib/performance/use_case"
 require_all "lib"
