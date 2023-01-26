@@ -91,7 +91,7 @@ The [Makefile](Makefile) contains commonly used commands for working with this a
 ### Deploying changes
 
 Merging to `master` will automatically deploy this API to staging.
-To deploy to production, choose _Deploy to production_ in the Concourse Pipeline.
+You can find in depth instructions on using our deploy process [here](https://docs.google.com/document/d/1ORrF2HwrqUu3tPswSlB0Duvbi3YHzvESwOqEY9-w6IQ/) (you must be member of the GovWifi Team to access this document).
 
 ## How to contribute
 
