@@ -1,24 +1,16 @@
 BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --jobs 20 --retry 5'
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 
-ifdef ON_CONCOURSE
-  DOCKER_COMPOSE += -f docker-compose.concourse.yml
-endif
-
 ifdef DEPLOYMENT
 	BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --without test'
 endif
 
-ifndef ON_CONCOURSE
-	DOCKER_COMPOSE += -f docker-compose.development.yml
-endif
+DOCKER_COMPOSE += -f docker-compose.development.yml
 
 DOCKER_BUILD_CMD = $(DOCKER_COMPOSE) build $(BUNDLE_FLAGS)
 
 build: stop
-ifndef ON_CONCOURSE
 	$(DOCKER_BUILD_CMD)
-endif
 
 prebuild:
 	$(DOCKER_BUILD_CMD)
