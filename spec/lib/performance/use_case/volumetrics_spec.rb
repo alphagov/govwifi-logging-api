@@ -262,7 +262,7 @@ describe Performance::UseCase::Volumetrics do
       yesterday = today.prev_day
       user_repository.create(username: "Email", contact: "foo@bar.com", created_at: yesterday.prev_month.next_day)
       user_repository.create(username: "SMS", contact: "1234567", created_at: yesterday.prev_day)
-      user_repository.create(username: "Notme", contact: "2345678", created_at: yesterday.prev_month)
+      user_repository.create(username: "Notme", contact: "2345678", created_at: yesterday.prev_month.prev_day)
     end
 
     it "counts signups for the previous month" do
