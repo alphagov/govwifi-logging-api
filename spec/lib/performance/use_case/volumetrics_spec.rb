@@ -4,6 +4,7 @@ describe Performance::UseCase::Volumetrics do
 
   before do
     USER_DB[:userdetails].truncate
+    Timecop.travel(Time.local(2022, 7, 15))
   end
 
   context "given no signups" do
@@ -259,10 +260,9 @@ describe Performance::UseCase::Volumetrics do
     subject { described_class.new(period: "month") }
 
     before do
-      yesterday = today.prev_day
-      user_repository.create(username: "Email", contact: "foo@bar.com", created_at: yesterday.prev_month)
-      user_repository.create(username: "SMS", contact: "1234567", created_at: yesterday.prev_day)
-      user_repository.create(username: "Notme", contact: "2345678", created_at: yesterday.prev_month.prev_day)
+      user_repository.create(username: "Email", contact: "foo@bar.com", created_at: Date.new(2022, 7, 1))
+      user_repository.create(username: "SMS", contact: "1234567", created_at: Date.new(2022, 6, 30))
+      user_repository.create(username: "Notme", contact: "2345678", created_at: Date.new(2022, 6, 1))
     end
 
     it "counts signups for the previous month" do
