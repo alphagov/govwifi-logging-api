@@ -2,6 +2,7 @@ version: '3.4'
 
 services:
   db:
+    platform: linux/x86_64
     build: ./mysql
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -14,6 +15,7 @@ services:
       retries: 10
 
   user_db:
+    platform: linux/x86_64
     build: ./mysql_user
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -26,6 +28,7 @@ services:
       retries: 10
 
   app:
+    platform: linux/x86_64
     build: .
     environment:
       DB_NAME: govwifi_test
@@ -36,6 +39,8 @@ services:
       USER_DB_PASS: root
       USER_DB_USER: root
       USER_DB_HOSTNAME: user_db
+    volumes:
+       - ".:/usr/src/app"
     expose:
       - "8080"
     depends_on:
