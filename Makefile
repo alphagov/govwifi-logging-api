@@ -1,8 +1,8 @@
-BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --jobs 20 --retry 5'
+BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --jobs 1 --retry 5'
 DOCKER_COMPOSE = docker-compose -f docker-compose.yml
 
 ifdef DEPLOYMENT
-	BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --without test'
+	BUNDLE_FLAGS = --build-arg BUNDLE_INSTALL_CMD='bundle install --without test, vscodedev'
 endif
 
 DOCKER_BUILD_CMD = $(DOCKER_COMPOSE) build $(BUNDLE_FLAGS)
