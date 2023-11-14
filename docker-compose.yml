@@ -28,7 +28,7 @@ services:
       retries: 10
 
   app:
-    platform: linux/arm64/v8
+    platform: linux/x86_64
     build: .
     environment:
       DB_NAME: govwifi_test
@@ -48,5 +48,3 @@ services:
         condition: service_healthy
       user_db:
         condition: service_healthy
-    stdin_open: true
-    tty: true
