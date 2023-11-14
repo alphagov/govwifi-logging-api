@@ -1,4 +1,4 @@
- describe App do
+describe App do
   before do
     DB[:sessions].truncate
     USER_DB[:userdetails].truncate
