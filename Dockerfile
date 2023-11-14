@@ -1,4 +1,4 @@
-FROM ruby:3.1.2-alpine
+FROM ruby:3.2.2-alpine
 ARG BUNDLE_INSTALL_CMD
 
 ENV S3_PUBLISHED_LOCATIONS_IPS_BUCKET 'stub-bucket'
@@ -6,13 +6,17 @@ ENV S3_PUBLISHED_LOCATIONS_IPS_OBJECT_KEY 'stub-key'
 
 WORKDIR /usr/src/app
 
+
 COPY Gemfile Gemfile.lock .ruby-version ./
+
+
 RUN apk --no-cache add --virtual .build-deps build-base && \
-  apk --no-cache add mysql-dev && \
-  ${BUNDLE_INSTALL_CMD} && \
-  apk del .build-deps
+apk --no-cache add mysql-dev && \
+${BUNDLE_INSTALL_CMD} && \
+apk del .build-deps
 
 COPY . .
+
 
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh

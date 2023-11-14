@@ -37,9 +37,9 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - BUNDLE_INSTALL_CMD="set -x ; bundle install --jobs 20 --retry 5"
+      - BUNDLE_INSTALL_CMD="bundle install --jobs 1 --retry 5 --without vscodedev"
       - echo Building the Docker image...
-      - docker build --build-arg BUNDLE_INSTALL_CMD='bundle install --jobs 20 --retry 5' -t $REPOSITORY_URI:$IMAGE_TAG .
+      - docker build --build-arg BUNDLE_INSTALL_CMD="$BUNDLE_INSTALL_CMD" -t $REPOSITORY_URI:$IMAGE_TAG .
   post_build:
     commands:
       - echo Build completed on `date`

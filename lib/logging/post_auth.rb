@@ -32,6 +32,9 @@ module Logging
       Session.create(
         session_params.merge(
           cert_name: @params.fetch("cert_name"),
+          cert_serial: @params.fetch("cert_serial"),
+          cert_issuer: @params.fetch("cert_issuer"),
+          cert_subject: @params.fetch("cert_subject"),
         ),
       )
     end

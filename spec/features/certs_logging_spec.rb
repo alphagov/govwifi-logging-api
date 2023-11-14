@@ -10,6 +10,9 @@ describe App do
         {
           username:,
           cert_name:,
+          cert_serial:,
+          cert_subject:,
+          cert_issuer:,
           mac: nil,
           called_station_id: nil,
           site_ip_address: nil,
@@ -20,6 +23,9 @@ describe App do
       end
       let(:post_auth_request) { post "/logging/post-auth", request_body }
       let(:cert_name) { "Example Certificate Common Name" }
+      let(:cert_issuer) { "Example Issuer" }
+      let(:cert_subject) { "Example Subject" }
+      let(:cert_serial) { "Example Serial" }
       let(:authentication_result) { "Access-Accept" }
       let(:authentication_reply) { "This is a reply message" }
 

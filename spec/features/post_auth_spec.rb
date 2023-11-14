@@ -10,6 +10,9 @@ describe App do
     let(:called_station_id) { "01-39-38-25-2A-80" }
     let(:site_ip_address) { "93.11.238.187" }
     let(:cert_name) { "" }
+    let(:cert_serial) { "732e7656424b5d3ca82db606acc580e26d1abca7" }
+    let(:cert_subject) { "\/CN=Client" }
+    let(:cert_issuer) { "\/CN=Intermediate CA" }
     let(:task_id) { "arn:aws:ecs:task_id" }
     let(:authentication_reply) { "This is a reply message" }
     let(:request_body) do
@@ -22,6 +25,9 @@ describe App do
         authentication_result:,
         task_id:,
         authentication_reply:,
+        cert_serial:,
+        cert_subject:,
+        cert_issuer:,
       }.to_json
     end
     let(:post_auth_request) { post "/logging/post-auth", request_body }
@@ -41,9 +47,15 @@ describe App do
 
         context "given a certificate authentication" do
           let(:cert_name) { "some_cert_name" }
+          let(:cert_serial) { "some_cert_serial" }
+          let(:cert_subject) { "some_cert_subject" }
+          let(:cert_issuer) { "some_cert_issuer" }
 
           it "records the cert name" do
             expect(session.cert_name).to eq(cert_name)
+            expect(session.cert_serial).to eq(cert_serial)
+            expect(session.cert_subject).to eq(cert_subject)
+            expect(session.cert_issuer).to eq(cert_issuer)
           end
         end
 
