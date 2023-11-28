@@ -6,8 +6,6 @@ class Services
   end
 
   def self.elasticsearch_client
-    # transport = Elasticsearch::Transport::Transport::HTTP::Faraday.new(@hosts)
-    # transport = OpenSearch::Transport::Transport::HTTP::Faraday.new(@hosts)
     @elasticsearch_client ||= OpenSearch::Client.new host: ENV["VOLUMETRICS_ENDPOINT"]
   end
 end
