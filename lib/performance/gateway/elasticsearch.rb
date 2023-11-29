@@ -1,5 +1,3 @@
-require "elasticsearch"
-
 class Performance::Gateway::Elasticsearch
   def initialize(index)
     @index = index

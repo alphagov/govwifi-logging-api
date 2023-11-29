@@ -7,17 +7,21 @@ describe Performance::Gateway::Elasticsearch do
   before do
     ENV["VOLUMETRICS_ENDPOINT"] = "foo"
 
-    stub_request(:put, url).with(
-      body: { foo: "bar" }.to_json,
-    ).to_return(status: 200)
+    stub_request(:put, url)
+      .with(
+        body: { foo: "bar" }.to_json,
+      )
+      .to_return(
+        status: 200,
+        body: "".dup,
+      )
 
     stub_request(:get, elasticsearch_url)
-    .to_return(status: 200,
-               body: {
-                 tagline: "You Know, for Search",
-                 version: { number: "7.9", build_flavor: "default" },
-               }.to_json,
-               headers: { "Content-Type" => "application/json" })
+    .to_return_json(
+      status: 200,
+      body: { version: { number: 7.9, distribution: "opensearch" } },
+      headers: {},
+    )
   end
 
   it "calls ElasticSearch API with expected args" do
