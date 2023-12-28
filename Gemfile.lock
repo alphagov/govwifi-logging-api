@@ -39,7 +39,7 @@ GEM
     diff-lcs (1.5.0)
     docile (1.4.0)
     e2mmap (0.1.0)
-    factory_bot (6.4.2)
+    factory_bot (6.4.4)
       activesupport (>= 5.0.0)
     faraday (2.7.12)
       base64
