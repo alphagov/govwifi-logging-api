@@ -36,5 +36,13 @@ class Performance::Repository::SignUp < Sequel::Model(USER_DB[:userdetails])
     def with_successful_login
       exclude(last_login: nil)
     end
+
+    def new_active_users(start_date, end_date)
+      where { created_at >= start_date }.where { created_at <= end_date }.exclude(last_login: nil).count
+    end
+
+    def new_inactive_users(start_date, end_date)
+      where { created_at >= start_date }.where { created_at <= end_date }.where(last_login: nil).count
+    end
   end
 end
