@@ -43,11 +43,7 @@ module Performance::Metrics
   private
 
     def stats
-      gateway = STATS[@metric].new(
-        period: @period,
-        date: @date,
-      )
-      gateway.fetch_stats
+      @stats ||= STATS[@metric].new(period: @period, date: @date).fetch_stats
     end
   end
 end

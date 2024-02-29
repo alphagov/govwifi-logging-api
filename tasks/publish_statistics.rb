@@ -21,6 +21,7 @@ Performance::Metrics::PERIODS.each do |adverbial, period|
       logger.info("[#{metric_sender.key}] Fetching and uploading metrics...")
 
       metric_sender.to_s3
+      metric_sender.to_elasticsearch
 
       logger.info("[#{metric_sender.key}] Done.")
     end
