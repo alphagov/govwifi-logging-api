@@ -10,11 +10,12 @@ module Performance::Metrics
     STATS = {
       active_users: Performance::UseCase::ActiveUsers,
       completion_rate: Performance::UseCase::CompletionRate,
+      inactive_users: Performance::UseCase::NewUsers,
       roaming_users: Performance::UseCase::RoamingUsers,
       volumetrics: Performance::UseCase::Volumetrics,
     }.freeze
 
-    def initialize(period:, date:, metric:)
+    def initialize(metric:, period: :daily, date: nil)
       raise ArgumentError unless PERIODS.values.include? period
       raise ArgumentError unless STATS.keys.include? metric
 
@@ -24,10 +25,14 @@ module Performance::Metrics
     end
 
     def to_s3
+      return if stats.nil?
+
       S3Publisher.publish "#{@metric}/#{key}", stats
     end
 
     def to_elasticsearch
+      return if stats.nil?
+
       Performance::Gateway::Elasticsearch.new(ELASTICSEARCH_INDEX).write(key, stats)
     end
 

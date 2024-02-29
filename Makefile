@@ -21,6 +21,7 @@ lint: build
 	$(DOCKER_COMPOSE) run --no-deps --rm app bundle exec rubocop
 
 test: serve
+	$(DOCKER_COMPOSE) run --rm app /usr/src/app/create_user_details.sh
 	$(DOCKER_COMPOSE) run --rm app rspec
 	$(MAKE) stop
 
