@@ -4,8 +4,9 @@ describe Performance::UseCase::Volumetrics do
 
   before do
     USER_DB[:userdetails].truncate
-    Timecop.travel(Time.local(2022, 7, 15))
   end
+
+  subject { Performance::UseCase::Volumetrics.new(date: today, period: "day") }
 
   context "given no signups" do
     it "returns stats with zero signups" do
@@ -229,7 +230,7 @@ describe Performance::UseCase::Volumetrics do
   end
 
   context "Date override" do
-    subject { described_class.new(date: "2018-08-10") }
+    subject { described_class.new(date: Date.parse("2018-08-10")) }
 
     before do
       user_repository.create(
@@ -257,7 +258,7 @@ describe Performance::UseCase::Volumetrics do
   end
 
   context "Stats for month" do
-    subject { described_class.new(period: "month") }
+    subject { described_class.new(period: "month", date: Date.new(2022, 7, 15)) }
 
     before do
       user_repository.create(username: "Email", contact: "foo@bar.com", created_at: Date.new(2022, 7, 1))

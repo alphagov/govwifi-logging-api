@@ -1,5 +1,5 @@
 describe Performance::UseCase::RoamingUsers do
-  subject { described_class.new(period:) }
+  subject { described_class.new(period:, date: today) }
 
   let(:location_ip_links) { DB[:ip_locations] }
   let(:sessions) { DB[:sessions] }

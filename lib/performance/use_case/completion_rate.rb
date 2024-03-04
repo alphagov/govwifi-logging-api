@@ -1,6 +1,6 @@
 class Performance::UseCase::CompletionRate
-  def initialize(date: Date.today.to_s, period: "week")
-    @date = Date.parse(date)
+  def initialize(date: Date.today, period: "week")
+    @date = date
     @period = period
   end
 

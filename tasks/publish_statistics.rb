@@ -16,7 +16,7 @@ Performance::Metrics::PERIODS.each do |adverbial, period|
     logger.info("Creating #{adverbial} metrics for S3 with #{args[:date]}")
 
     Performance::Metrics::MetricSender::STATS.each_key do |metrics|
-      metric_sender = Performance::Metrics::MetricSender.new(period:, date: args[:date], metric: metrics)
+      metric_sender = Performance::Metrics::MetricSender.new(period:, date: Date.parse(args[:date]), metric: metrics)
       logger.info("[#{metric_sender.key}] Fetching and uploading metrics...")
 
       metric_sender.to_s3
