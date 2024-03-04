@@ -1,7 +1,7 @@
 describe Performance::UseCase::NewUsers do
   let(:userdetails) { USER_DB[:userdetails] }
   let(:today) { Date.today }
-  let(:period) { :monthly }
+  let(:period) { "month" }
   subject { Performance::UseCase::NewUsers.new(period:).fetch_stats }
 
   before do
@@ -14,11 +14,11 @@ describe Performance::UseCase::NewUsers do
   end
 
   describe "the period is weekly" do
-    let(:period) { :weekly }
+    let(:period) { "week" }
     it { is_expected.to be_nil }
   end
   describe "the period is daily" do
-    let(:period) { :daily }
+    let(:period) { "day" }
     it { is_expected.to be_nil }
   end
   describe "active users" do
