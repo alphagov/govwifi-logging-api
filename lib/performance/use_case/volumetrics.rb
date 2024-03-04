@@ -1,8 +1,8 @@
 class Performance::UseCase::Volumetrics
   attr_reader :period
 
-  def initialize(date: Date.today.to_s, period: "day")
-    @date = Date.parse(date)
+  def initialize(date: Date.today, period: "day")
+    @date = date
     @period = period
   end
 

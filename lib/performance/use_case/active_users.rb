@@ -1,7 +1,7 @@
 class Performance::UseCase::ActiveUsers
-  def initialize(period:, date: Date.today.to_s)
+  def initialize(period:, date: Date.today)
     @period = period
-    @date = Date.parse(date)
+    @date = date
   end
 
   def fetch_stats

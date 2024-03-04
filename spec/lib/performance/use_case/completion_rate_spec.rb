@@ -2,7 +2,7 @@ describe Performance::UseCase::CompletionRate do
   let(:user_repo) { Class.new(Performance::Repository::SignUp) { unrestrict_primary_key } }
   let(:today) { "1 February 2020 1PM" }
   let(:period) { "day" }
-  subject { described_class.new(date: Date.parse(today).to_s, period:).fetch_stats }
+  subject { described_class.new(date: Date.parse(today), period:).fetch_stats }
   before do
     USER_DB[:userdetails].truncate
   end

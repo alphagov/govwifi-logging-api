@@ -15,13 +15,13 @@ module Performance::Metrics
       volumetrics: Performance::UseCase::Volumetrics,
     }.freeze
 
-    def initialize(metric:, period: :daily, date: nil)
+    def initialize(metric:, period: :daily, date: Date.today)
       raise ArgumentError unless PERIODS.values.include? period
       raise ArgumentError unless STATS.keys.include? metric
 
       @metric = metric
       @period = period
-      @date = date.to_s
+      @date = date
     end
 
     def to_s3

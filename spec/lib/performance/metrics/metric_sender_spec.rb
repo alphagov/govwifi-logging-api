@@ -8,19 +8,19 @@ describe Performance::Metrics::MetricSender do
   let(:elasticsearch_client) { spy }
 
   subject(:active_users) do
-    Performance::Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :active_users)
+    Performance::Metrics::MetricSender.new(period: "week", date: today, metric: :active_users)
   end
 
   subject(:completion_rate) do
-    Performance::Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :completion_rate)
+    Performance::Metrics::MetricSender.new(period: "week", date: today, metric: :completion_rate)
   end
 
   subject(:roaming_users) do
-    Performance::Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :roaming_users)
+    Performance::Metrics::MetricSender.new(period: "week", date: today, metric: :roaming_users)
   end
 
   subject(:volumetrics) do
-    Performance::Metrics::MetricSender.new(period: "week", date: today.to_s, metric: :volumetrics)
+    Performance::Metrics::MetricSender.new(period: "week", date: today, metric: :volumetrics)
   end
 
   let(:active_users_expected_hash) do
@@ -85,12 +85,12 @@ describe Performance::Metrics::MetricSender do
   end
 
   it "rejects invalid periods" do
-    expect {  Performance::Metrics::MetricSender.new(period: "foo", date: Date.today.to_s, metric: :active_users) }
+    expect {  Performance::Metrics::MetricSender.new(period: "foo", date: Date.today, metric: :active_users) }
       .to raise_error(ArgumentError)
   end
 
   it "rejects invalid stats" do
-    expect {  Performance::Metrics::MetricSender.new(period: "week", date: Date.today.to_s, metric: :foo) }
+    expect {  Performance::Metrics::MetricSender.new(period: "week", date: Date.today, metric: :foo) }
       .to raise_error(ArgumentError)
   end
 

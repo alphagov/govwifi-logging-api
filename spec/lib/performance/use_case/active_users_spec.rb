@@ -8,7 +8,7 @@ describe Performance::UseCase::ActiveUsers do
   end
 
   context "weekly active users" do
-    subject { described_class.new(period: "week") }
+    subject { described_class.new(period: "week", date: today) }
 
     context "with users connecting once each in a week" do
       before do
@@ -140,7 +140,7 @@ describe Performance::UseCase::ActiveUsers do
   end
 
   context "monthly active users" do
-    subject { described_class.new(period: "month") }
+    subject { described_class.new(period: "month", date: today) }
 
     context "with users connecting once each in a month" do
       before do
