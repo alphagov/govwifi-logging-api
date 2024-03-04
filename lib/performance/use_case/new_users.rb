@@ -7,7 +7,7 @@ class Performance::UseCase::NewUsers
   end
 
   def fetch_stats
-    return nil unless @period == :monthly
+    return nil unless @period == "month"
 
     {
       new_active_users: repository.new_active_users(@start_date, @end_date),
