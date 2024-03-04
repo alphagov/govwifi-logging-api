@@ -15,12 +15,12 @@ Performance::Metrics::PERIODS.each do |adverbial, period|
 
     logger.info("Creating #{adverbial} metrics for S3 with #{args[:date]}")
 
-    metrics_list = %i[active_users completion_rate roaming_users volumetrics]
-    metrics_list.each do |metrics|
+    Performance::Metrics::MetricSender::STATS.each_key do |metrics|
       metric_sender = Performance::Metrics::MetricSender.new(period:, date: args[:date], metric: metrics)
       logger.info("[#{metric_sender.key}] Fetching and uploading metrics...")
 
       metric_sender.to_s3
+      metric_sender.to_elasticsearch
 
       logger.info("[#{metric_sender.key}] Done.")
     end
