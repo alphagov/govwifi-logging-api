@@ -43,6 +43,7 @@ class App < Sinatra::Base
   end
 
   post "/logging/post-auth" do
+    request.body.rewind
     Logging::PostAuth.new.execute(params: JSON.parse(request.body.read))
 
     status 204
