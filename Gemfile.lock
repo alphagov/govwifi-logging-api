@@ -98,7 +98,7 @@ GEM
     require_all (3.0.0)
     reverse_markdown (2.1.1)
       nokogiri
-    rexml (3.3.7)
+    rexml (3.3.8)
     rspec (3.13.0)
       rspec-core (~> 3.13.0)
       rspec-expectations (~> 3.13.0)
