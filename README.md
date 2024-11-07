@@ -6,15 +6,18 @@ N.B. The private GovWifi [build repository][build-repo] contains instructions on
 
 ## Table of Contents
 
-- [Overview](#overview)
-  - [Sinatra routes](#sinatra-routes)
+- [GovWifi Logging API](#govwifi-logging-api)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+    - [Sinatra routes](#sinatra-routes)
   - [Statistics sent over to the performance platform](#statistics-sent-over-to-the-performance-platform)
     - [Send statistics manually](#send-statistics-manually)
-      - [Account Usage](#account-usage)
-      - [Unique Users](#unique-users)
-- [Developing](#developing)
-  - [Deploying changes](#deploying-changes)
-- [Licence](#licence)
+      - [Weekly Statistics](#weekly-statistics)
+      - [Monthly Statistics](#monthly-statistics)
+  - [Developing](#developing)
+    - [Deploying changes](#deploying-changes)
+  - [How to contribute](#how-to-contribute)
+  - [Licence](#licence)
 
 ## Overview
 
@@ -90,8 +93,8 @@ The [Makefile](Makefile) contains commonly used commands for working with this a
 
 ### Deploying changes
 
-Merging to `master` will automatically deploy this API to staging.
-You can find in depth instructions on using our deploy process [here](https://docs.google.com/document/d/1ORrF2HwrqUu3tPswSlB0Duvbi3YHzvESwOqEY9-w6IQ/) (you must be member of the GovWifi Team to access this document).
+Merging to `master` will automatically deploy this API to Dev and Staging via the Pipeline
+[You can find in depth instructions on using our deploy process here](https://docs.google.com/document/d/1ORrF2HwrqUu3tPswSlB0Duvbi3YHzvESwOqEY9-w6IQ/) (you must be member of the GovWifi Team to access this document).
 
 ## How to contribute
 

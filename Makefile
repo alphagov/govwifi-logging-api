@@ -33,4 +33,8 @@ stop:
 shell: serve
 	docker exec -it `docker-compose ps -q app | awk 'END{print}'` ash
 
+update: stop
+	bundle lock --update
+	$(MAKE) test
+
 .PHONY: build test serve stop lint shell

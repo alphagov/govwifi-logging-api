@@ -1,4 +1,4 @@
-name: logging-api lint and test
+name: logging-api lint and test to main branch
 on:
   push:
     branches:
@@ -9,15 +9,15 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run lint
         run: make lint
 
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run tests
         run: make test
