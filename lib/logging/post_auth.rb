@@ -11,17 +11,18 @@ module Logging
   private
 
     VALID_MAC_LENGTH = 17
+    VALID_USERNAME_LENGTH = 6
 
     def create_user_session
-      if invalid_username?(username)
-        handle_invalid_username
-      else
+      if valid_username?(username)
         Session.create(session_params.merge(username: username.to_s.upcase))
+      else
+        handle_invalid_username
       end
     end
 
-    def invalid_username?(username)
-      username.to_s.length > 6
+    def valid_username?(username)
+      username.to_s.length <= VALID_USERNAME_LENGTH
     end
 
     def handle_invalid_username

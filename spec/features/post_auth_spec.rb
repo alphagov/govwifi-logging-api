@@ -32,6 +32,7 @@ describe App do
     end
     let(:post_auth_request) { post "/logging/post-auth", request_body }
     let!(:create_user) { User.create(username:) }
+
     let(:user) { User.find(username:) }
     let(:session) { Session.first }
 
@@ -204,12 +205,18 @@ describe App do
         end
       end
     end
-  end
+    context "No logging attempt when " do
+      context "given a long mixed case username" do
+        let(:authentication_result) { "Access-Reject" }
+        let(:called_station_id) { "" }
+        let(:site_ip_address) { "" }
 
-  context "given a username longer than 6 characters" do
-    it "stops the error from blowing up" do
-      username = "very_long_username"
-      expect { get "/logging/post-auth/user/#{username}/cert-name//mac//ap//site//result/success" }.to_not raise_error
+        username = "abcdefghIjK"
+        it "returns a 404 status code" do
+          get "/logging/post-auth/user/#{username}/cert-name//mac//ap//site//result/success"
+          expect(last_response.status).to eq(404)
+        end
+      end
     end
   end
 end

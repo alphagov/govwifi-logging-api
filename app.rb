@@ -18,10 +18,10 @@ class App < Sinatra::Base
   sensible_logging(
     logger: Logger.new($stdout),
     log_tags: [lambda { |req|
-      req.body.rewind
+      req.body&.rewind
       [
-        req.body.read,
-      ].tap { req.body.rewind }
+        req.body&.read,
+      ].tap { req.body&.rewind }
     }],
   )
 
