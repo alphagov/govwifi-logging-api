@@ -42,18 +42,18 @@ GEM
     e2mmap (0.1.0)
     factory_bot (6.5.0)
       activesupport (>= 5.0.0)
-    faraday (2.12.0)
-      faraday-net_http (>= 2.0, < 3.4)
+    faraday (2.12.1)
+      faraday-net_http (>= 2.0, < 3.5)
       json
       logger
-    faraday-net_http (3.3.0)
-      net-http
+    faraday-net_http (3.4.0)
+      net-http (>= 0.5.0)
     hashdiff (1.1.1)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.6.0)
     jmespath (1.6.2)
-    json (2.8.1)
+    json (2.8.2)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
@@ -194,7 +194,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.6.0)
-    uri (1.0.1)
+    uri (1.0.2)
     webmock (3.24.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
