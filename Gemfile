@@ -17,16 +17,11 @@ gem "sinatra-contrib"
 
 group :test do
   gem "factory_bot"
+  gem "faker"
   gem "rack-test"
   gem "rspec"
   gem "rubocop-govuk"
   gem "simplecov"
   gem "timecop"
   gem "webmock"
-end
-
-group :vscodedev do
-  gem "debase", ">= 0.2.5.beta2"
-  gem "ruby-debug-ide"
-  gem "solargraph"
 end
