@@ -8,6 +8,7 @@ class Performance::UseCase::RoamingUsers
     {
       active: active_users_count,
       roaming: roaming_users_count,
+      cba: cba_users_count,
       metric_name: "roaming-users",
       period:,
       date: date.to_s,
@@ -26,6 +27,10 @@ private
 
   def roaming_users_count
     repository.roaming_users_count(period:).fetch(:total_roaming)
+  end
+
+  def cba_users_count
+    repository.cba_users_count(period:).fetch(:cba_count)
   end
 
   attr_reader :period, :date

@@ -41,5 +41,19 @@ class Performance::Repository::Session < Sequel::Model(:sessions)
 
       DB.fetch(sql).first
     end
+
+    def cba_users_count(period:)
+      sql = "SELECT COUNT(DISTINCT cert_serial, cert_issuer) AS cba_count
+             FROM
+               sessions
+             WHERE
+               username IS NULL
+             AND
+               start > date_sub(CURDATE(), INTERVAL 1 #{period})
+             AND
+               success = 1"
+
+      DB.fetch(sql).first
+    end
   end
 end

@@ -92,9 +92,28 @@ describe Performance::UseCase::RoamingUsers do
     end
   end
 
-private
-
-  def create_session(ip, username, start, success = 1)
-    sessions.insert(siteIP: ip, username:, start:, success:)
+  describe "cba users" do
+    before :each do
+      create_list(:session, 5, :cba, start: yesterday)
+    end
+    it "does not double count" do
+      create_list(:session, 5, :cba, cert_issuer: "/CN=gov/C=uk", cert_serial: "12345", start: yesterday)
+      expect(subject.fetch_stats.fetch(:cba)).to eq(6)
+    end
+    it "regards the same serial number, but different issuer as different certificates" do
+      create_list(:session, 5, :cba, cert_serial: "12345", start: yesterday)
+      expect(subject.fetch_stats.fetch(:cba)).to eq(10)
+    end
+    it "counts the number of cba users" do
+      expect(subject.fetch_stats.fetch(:cba)).to eq(5)
+    end
+    it "disregards non-cba users" do
+      create_list(:session, 3, start: yesterday)
+      expect(subject.fetch_stats.fetch(:cba)).to eq(5)
+    end
+    it "disregards cba users outside the time frame" do
+      create_list(:session, 3, :cba, start: today - 8)
+      expect(subject.fetch_stats.fetch(:cba)).to eq(5)
+    end
   end
 end

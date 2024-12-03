@@ -56,6 +56,7 @@ describe Performance::Metrics::MetricSender do
 
   let(:roaming_users_expected_hash) do
     { "active" => 0,
+      "cba" => 0,
       "metric_name" => "roaming-users",
       "period" => "week",
       "roaming" => 0,
@@ -117,7 +118,7 @@ describe Performance::Metrics::MetricSender do
     it "sends roaming users data to S3" do
       roaming_users.to_s3
       expect(s3_contents("roaming_users/roaming_users-week-#{today}"))
-        .to eq({ "active" => 0, "metric_name" => "roaming-users", "period" => "week", "roaming" => 0, "date" => today.to_s })
+        .to eq({ "active" => 0, "cba" => 0, "metric_name" => "roaming-users", "period" => "week", "roaming" => 0, "date" => today.to_s })
     end
     it "sends volumetrics data to S3" do
       volumetrics.to_s3
