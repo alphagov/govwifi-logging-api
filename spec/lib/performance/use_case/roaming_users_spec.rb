@@ -32,8 +32,8 @@ describe Performance::UseCase::RoamingUsers do
 
     context "given a user has visited more than 1 location" do
       it "counts as roaming" do
-        create_session(ip_1, "alice", yesterday)
-        create_session(ip_2, "alice", yesterday)
+        create(:session, siteIP: ip_1, username: "alice", start: yesterday)
+        create(:session, siteIP: ip_2, username: "alice", start: yesterday)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(1)
         expect(subject.fetch_stats.fetch(:active)).to eq(1)
@@ -42,19 +42,18 @@ describe Performance::UseCase::RoamingUsers do
 
     context "given only some users have visited more than 1 location" do
       it "counts only those users as roaming" do
-        create_session(ip_1, "alice", yesterday)
-        create_session(ip_2, "alice", yesterday)
-        create_session(ip_1, "sally", yesterday)
-        create_session(ip_1, "john", yesterday)
+        create(:session, siteIP: ip_1, username: "alice", start: yesterday)
+        create(:session, siteIP: ip_2, username: "alice", start: yesterday)
+        create(:session, siteIP: ip_1, username: "sally", start: yesterday)
+        create(:session, siteIP: ip_1, username: "john", start: yesterday)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(1)
       end
 
       context "given users have only visited one location" do
         it "does not count them as roaming" do
-          create_session(ip_1, "alice", yesterday)
-          create_session(ip_1, "john", yesterday)
-
+          create(:session, siteIP: ip_1, username: "alice", start: yesterday)
+          create(:session, siteIP: ip_1, username: "john", start: yesterday)
           expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
         end
       end
@@ -62,7 +61,7 @@ describe Performance::UseCase::RoamingUsers do
 
     context "given unsucessful logins" do
       it "does not count them as roaming" do
-        create_session(ip_1, "alice", yesterday, 0)
+        create(:session, :failed, start: yesterday)
 
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
@@ -74,9 +73,7 @@ describe Performance::UseCase::RoamingUsers do
       let(:period) { "week" }
 
       it "does not count them as roaming" do
-        create_session(ip_1, "alice", today - 8)
-        create_session(ip_2, "alice", today - 8)
-
+        create_list(:session, 5, start: today - 8)
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
     end
@@ -89,17 +86,34 @@ describe Performance::UseCase::RoamingUsers do
       end
 
       it "does not count them as roaming" do
-        create_session(ip_1, "alice", today - 32)
-        create_session(ip_2, "alice", today - 32)
-
+        create_list(:session, 5, start: today - 32)
         expect(subject.fetch_stats.fetch(:roaming)).to eq(0)
       end
     end
   end
 
-private
-
-  def create_session(ip, username, start, success = 1)
-    sessions.insert(siteIP: ip, username:, start:, success:)
+  describe "cba users" do
+    before :each do
+      create_list(:session, 5, :cba, start: yesterday)
+    end
+    it "does not double count" do
+      create_list(:session, 5, :cba, cert_issuer: "/CN=gov/C=uk", cert_serial: "12345", start: yesterday)
+      expect(subject.fetch_stats.fetch(:cba)).to eq(6)
+    end
+    it "regards the same serial number, but different issuer as different certificates" do
+      create_list(:session, 5, :cba, cert_serial: "12345", start: yesterday)
+      expect(subject.fetch_stats.fetch(:cba)).to eq(10)
+    end
+    it "counts the number of cba users" do
+      expect(subject.fetch_stats.fetch(:cba)).to eq(5)
+    end
+    it "disregards non-cba users" do
+      create_list(:session, 3, start: yesterday)
+      expect(subject.fetch_stats.fetch(:cba)).to eq(5)
+    end
+    it "disregards cba users outside the time frame" do
+      create_list(:session, 3, :cba, start: today - 8)
+      expect(subject.fetch_stats.fetch(:cba)).to eq(5)
+    end
   end
 end
